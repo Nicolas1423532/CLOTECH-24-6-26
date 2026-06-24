@@ -31,12 +31,20 @@ namespace ORM
                 dao.GuardarCambios();
             }
         }
+        public void BorrarFamilia(BE_Familia familia)
+        {
+            DataRow fila = dao.DtFamilia.Rows.Find(familia.Id_rol);
+            fila.Delete();
+            dao.GuardarCambios();
+        }
         public List<BE_Familia> ObtenerTodasLasFamilias()
         {
             List<BE_Familia> lstFamilias = new List<BE_Familia>();
             foreach (DataRow fila in dao.DtFamilia.Rows)
             {
-                lstFamilias.Add(new BE_Familia(fila.ItemArray));
+               
+               lstFamilias.Add(new BE_Familia(fila.ItemArray));
+
             }
             return lstFamilias;
         }

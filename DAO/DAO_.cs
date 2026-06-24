@@ -89,30 +89,30 @@ namespace DAO
             cmbPatenteXFamilia = new SqlCommandBuilder(adapPatenteXFamilia);
             ActualizarTablas();
             dtCliente.PrimaryKey = new DataColumn[] { dtCliente.Columns[0] };
-            dtUsuario.PrimaryKey = new DataColumn[] { dtUsuario.Columns[0] };
+            dtUsuario.PrimaryKey = new DataColumn[] { dtUsuario.Columns["Id_Usuario"] };
             dtProveedor.PrimaryKey = new DataColumn[] { dtProveedor.Columns[0] };
             dtProducto.PrimaryKey = new DataColumn[] { dtProducto.Columns[0] };
             dtFactura.PrimaryKey = new DataColumn[] { dtFactura.Columns[0] };
             dtDetalle.PrimaryKey = new DataColumn[] { dtDetalle.Columns[0] };
-            dtUsuarioXRol.PrimaryKey = new DataColumn[] { dtUsuarioXRol.Columns[0] };
-            dtRol.PrimaryKey = new DataColumn[] { dtRol.Columns[0] };
-            dtFamilia.PrimaryKey = new DataColumn[] { dtFamilia.Columns[0] };
-            dtPatente.PrimaryKey = new DataColumn[] { dtPatente.Columns[0] };
-            dtRolXFamilia.PrimaryKey = new DataColumn[] { dtRolXFamilia.Columns[0] };
-            dtFamiliaXFamilia.PrimaryKey = new DataColumn[] { dtFamiliaXFamilia.Columns[0] };
-            dtRolXPatente.PrimaryKey = new DataColumn[] { dtRolXPatente.Columns[0] };
-            dtPatenteXFamilia.PrimaryKey = new DataColumn[] { dtPatenteXFamilia.Columns[0] };
+            dtUsuarioXRol.PrimaryKey = new DataColumn[] { dtUsuarioXRol.Columns["Id_Usuario"], dtUsuarioXRol.Columns["Id_Rol"] };
+            dtRol.PrimaryKey = new DataColumn[] { dtRol.Columns["Id_Rol"] };
+            dtFamilia.PrimaryKey = new DataColumn[] { dtFamilia.Columns["Id_Familia"] };
+            dtPatente.PrimaryKey = new DataColumn[] { dtPatente.Columns["Id_Patente"] };
+            dtRolXFamilia.PrimaryKey = new DataColumn[] { dtRolXFamilia.Columns["Id_Rol"], dtRolXFamilia.Columns["Id_Familia"] };
+            dtFamiliaXFamilia.PrimaryKey = new DataColumn[] { dtFamiliaXFamilia.Columns["Id_Familia"], dtFamiliaXFamilia.Columns["Id_SubFamilia"] };
+            dtRolXPatente.PrimaryKey = new DataColumn[] { dtRolXPatente.Columns["Id_Rol"], dtRolXPatente.Columns["Id_Patente"] };
+            dtPatenteXFamilia.PrimaryKey = new DataColumn[] { dtPatenteXFamilia.Columns["Id_Patente"], dtPatenteXFamilia.Columns["Id_Familia"] };
 
-            relRolAFamilia = new DataRelation("Rol_A_Familia", dtRol.Columns[0], dtRolXFamilia.Columns[1]);
-            relFamiliaAlRol = new DataRelation("Familia_A_Rol", dtFamilia.Columns[0], dtRolXFamilia.Columns[2]);
-            relFamiliaPadre_A_SubFamilia = new DataRelation("Familia_Padre_A_SubFamilia", dtFamilia.Columns[0], dtFamiliaXFamilia.Columns[1]);
-            relFamiliaHija_A_FamiliaPadre = new DataRelation("Familia_Hija_A_FamiliaPadre", dtFamilia.Columns[0], dtFamiliaXFamilia.Columns[2]);
-            relFamiliaAPatente = new DataRelation("Familia_A_Patente", dtFamilia.Columns[0], dtPatenteXFamilia.Columns[2]);
-            relPatenteAFamilia = new DataRelation("Patente_A_Familia", dtPatente.Columns[0], dtPatenteXFamilia.Columns[1]);
-            relUsuario_A_Rol = new DataRelation("Usuario_A_Rol", dtUsuario.Columns[0], dtUsuarioXRol.Columns[1]);
-            relRol_A_Usuario = new DataRelation("Rol_A_Usuario", dtRol.Columns[0], dtUsuarioXRol.Columns[2]);
-            ds.Relations.AddRange(new DataRelation[] { RelUsuario_A_Rol,relRolAFamilia, relFamiliaAlRol, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre, relFamiliaAPatente, relPatenteAFamilia });
-
+            relRolAFamilia = new DataRelation("Rol_A_Familia", dtRol.Columns["Id_Rol"], dtRolXFamilia.Columns["Id_Rol"]);
+            relFamiliaAlRol = new DataRelation("Familia_A_Rol", dtFamilia.Columns["Id_Familia"], dtRolXFamilia.Columns["Id_Familia"]);
+            relFamiliaPadre_A_SubFamilia = new DataRelation("Familia_Padre_A_SubFamilia", dtFamilia.Columns["Id_Familia"], dtFamiliaXFamilia.Columns["Id_Familia"]);
+            relFamiliaHija_A_FamiliaPadre = new DataRelation("Familia_Hija_A_FamiliaPadre", dtFamilia.Columns["Id_Familia"], dtFamiliaXFamilia.Columns["Id_SubFamilia"]);
+            relFamiliaAPatente = new DataRelation("Familia_A_Patente", dtFamilia.Columns["Id_Familia"], dtPatenteXFamilia.Columns["Id_Familia"]);
+            relPatenteAFamilia = new DataRelation("Patente_A_Familia", dtPatente.Columns["Id_Patente"], dtPatenteXFamilia.Columns["Id_Patente"]);
+            relUsuario_A_Rol = new DataRelation("Usuario_A_Rol", dtUsuario.Columns["Id_Usuario"], dtUsuarioXRol.Columns["Id_Usuario"]);
+            relRol_A_Usuario = new DataRelation("Rol_A_Usuario", dtRol.Columns["Id_Rol"], dtUsuarioXRol.Columns["Id_Rol"]);
+            ds.Relations.AddRange(new DataRelation[] { relUsuario_A_Rol,relRol_A_Usuario,relRolAFamilia, relFamiliaAlRol, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre, relFamiliaAPatente, relPatenteAFamilia });
+            
         }
         private void ActualizarTablas()
         {

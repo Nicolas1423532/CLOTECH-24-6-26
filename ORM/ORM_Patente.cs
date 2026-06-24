@@ -31,6 +31,12 @@ namespace ORM
                 dao.GuardarCambios();
             }
         }
+        public void BorrarPatente(BE_Patente patente)
+        {
+            DataRow fila = dao.DtPatente.Rows.Find(patente.Id_rol);
+            fila.Delete();
+            dao.GuardarCambios();
+        }
         public List<BE_Patente> ObtenerTodasLasPatentes()
         {
             List<BE_Patente> lstPatentes = new List<BE_Patente>();
