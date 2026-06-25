@@ -149,7 +149,7 @@ namespace Vista
         {
             try
             {
-                //BE_Rol rolRaiz = foreverTreeView1.SelectedNode.Tag as BE_Rol;
+                if (foreverTreeView1.SelectedNode == null) { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 BE_Rol rol = new BE_Familia();
@@ -179,11 +179,9 @@ namespace Vista
             {
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                if(foreverTreeView1.SelectedNode.Text == "") { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 BE_Rol rol = foreverTreeView1.SelectedNode.Tag as BE_Rol;
-                if (usuario != null && rol != null)
-                {
-                    rolBll.Desasignar(usuario, rol);
-                }
+                rolBll.Desasignar(usuario, rol);
                 LlenarTreeViewPermisos(usuario.Id_usuario);
                 //BE_Rol rolRaiz = foreverTreeView1.SelectedNode.Tag as BE_Rol;
                 //if (rolRaiz != null)

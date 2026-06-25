@@ -133,11 +133,13 @@ namespace Vista
             {
                 bool resultado = false;
                 BE_Usuario usuario = new BE_Usuario();
+                if (foreverTreeView1.SelectedNode == null) { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
                 var nodoSeleccionado = foreverTreeView1.SelectedNode.Tag;
                 BE_Familia familia = new BE_Familia();
                 familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                familia.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
                 familiaBll.Asignar(nodoSeleccionado,usuario, familia);
                 LlenarTreeViewPermisos(usuario.Id_usuario);
             }
@@ -151,7 +153,7 @@ namespace Vista
         {
             try
             {
-                bool resultado = false;
+                if (foreverTreeView1.SelectedNode == null) { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
@@ -159,6 +161,7 @@ namespace Vista
                 BE_Rol rol = new BE_Familia();
                 BE_Familia familia = new BE_Familia();
                 familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                familia.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
                 familiaBll.Desasignar(nodoSeleccionado, familia);
                 LlenarTreeViewPermisos(usuario.Id_usuario);
             }

@@ -150,7 +150,7 @@ namespace BLL
         {
             string patronDni = @"^\d{7,8}$";
             string dniUsuario = usuario.Dni.ToString();
-            if (Information.IsNumeric(usuario.Nombre) || Information.IsNumeric(usuario.Apellido) || !Regex.IsMatch(dniUsuario,patronDni) || !Information.IsNumeric(usuario.Edad))
+            if (string.IsNullOrWhiteSpace(usuario.Id_usuario) || Information.IsNumeric(usuario.Nombre) || Information.IsNumeric(usuario.Apellido) || !Regex.IsMatch(dniUsuario,patronDni) || !Information.IsNumeric(usuario.Edad))
             {
                 throw new Exception("Los datos de usuario son incorrectos");
             }

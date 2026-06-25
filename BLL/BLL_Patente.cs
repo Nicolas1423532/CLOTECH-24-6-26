@@ -19,6 +19,7 @@ namespace BLL
         {
             if(patente != null)
             {
+                ValidarDatosDePatente(patente);
                 ormPatente.ModificarPatente(patente);
             }
         }
@@ -50,6 +51,13 @@ namespace BLL
         public List<object> ObtenerTodasLasPatentes()
         {
             return (from p in ormPatente.ObtenerTodasLasPatentes() select new { ID = p.Id_rol, TITULO = p.Titulo, ESTADO = p.Estado}).ToList<object>();
+        }
+        private void ValidarDatosDePatente(BE_Patente patente)
+        {
+            if (string.IsNullOrWhiteSpace(patente.Id_rol) && string.IsNullOrWhiteSpace(patente.Titulo))
+            {
+                throw new Exception("Los datos del son incorrectos");
+            }
         }
     }
 }

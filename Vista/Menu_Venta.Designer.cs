@@ -44,6 +44,13 @@
             poisonDataGridView3 = new ReaLTaiizor.Controls.PoisonDataGridView();
             bigLabel3 = new ReaLTaiizor.Controls.BigLabel();
             bigTextBox1 = new ReaLTaiizor.Controls.BigTextBox();
+            skyButton1 = new ReaLTaiizor.Controls.SkyButton();
+            skyButton2 = new ReaLTaiizor.Controls.SkyButton();
+            skyButton3 = new ReaLTaiizor.Controls.SkyButton();
+            bigLabel4 = new ReaLTaiizor.Controls.BigLabel();
+            bigLabel5 = new ReaLTaiizor.Controls.BigLabel();
+            bigTextBox2 = new ReaLTaiizor.Controls.BigTextBox();
+            skyButton4 = new ReaLTaiizor.Controls.SkyButton();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView3).BeginInit();
@@ -78,7 +85,7 @@
             poisonDataGridView1.EnableHeadersVisualStyles = false;
             poisonDataGridView1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView1.GridColor = Color.FromArgb(255, 255, 255);
-            poisonDataGridView1.Location = new Point(41, 64);
+            poisonDataGridView1.Location = new Point(41, 101);
             poisonDataGridView1.Name = "poisonDataGridView1";
             poisonDataGridView1.ReadOnly = true;
             poisonDataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -124,7 +131,7 @@
             poisonDataGridView2.EnableHeadersVisualStyles = false;
             poisonDataGridView2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView2.GridColor = Color.FromArgb(255, 255, 255);
-            poisonDataGridView2.Location = new Point(737, 64);
+            poisonDataGridView2.Location = new Point(742, 84);
             poisonDataGridView2.Name = "poisonDataGridView2";
             poisonDataGridView2.ReadOnly = true;
             poisonDataGridView2.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -138,7 +145,7 @@
             poisonDataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             poisonDataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             poisonDataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            poisonDataGridView2.Size = new Size(356, 180);
+            poisonDataGridView2.Size = new Size(390, 180);
             poisonDataGridView2.TabIndex = 1;
             // 
             // bigLabel1
@@ -147,7 +154,7 @@
             bigLabel1.BackColor = Color.Transparent;
             bigLabel1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bigLabel1.ForeColor = Color.Black;
-            bigLabel1.Location = new Point(41, 40);
+            bigLabel1.Location = new Point(41, 26);
             bigLabel1.Name = "bigLabel1";
             bigLabel1.Size = new Size(105, 21);
             bigLabel1.TabIndex = 8;
@@ -159,7 +166,7 @@
             bigLabel2.BackColor = Color.Transparent;
             bigLabel2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bigLabel2.ForeColor = Color.Black;
-            bigLabel2.Location = new Point(737, 38);
+            bigLabel2.Location = new Point(742, 58);
             bigLabel2.Name = "bigLabel2";
             bigLabel2.Size = new Size(76, 21);
             bigLabel2.TabIndex = 9;
@@ -217,7 +224,7 @@
             bigLabel3.BackColor = Color.Transparent;
             bigLabel3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             bigLabel3.ForeColor = Color.Black;
-            bigLabel3.Location = new Point(41, 297);
+            bigLabel3.Location = new Point(41, 304);
             bigLabel3.Name = "bigLabel3";
             bigLabel3.Size = new Size(82, 21);
             bigLabel3.TabIndex = 11;
@@ -240,12 +247,208 @@
             bigTextBox1.TextAlignment = HorizontalAlignment.Left;
             bigTextBox1.UseSystemPasswordChar = false;
             // 
+            // skyButton1
+            // 
+            skyButton1.BackColor = Color.WhiteSmoke;
+            skyButton1.DownBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton1.DownBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton1.DownBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton1.DownBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton1.DownBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton1.DownBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton1.DownForeColor = Color.White;
+            skyButton1.DownShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton1.Font = new Font("Segoe UI Black", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            skyButton1.ForeColor = Color.FromArgb(27, 94, 137);
+            skyButton1.HoverBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton1.HoverBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton1.HoverBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton1.HoverBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton1.HoverBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton1.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton1.HoverForeColor = Color.White;
+            skyButton1.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton1.Location = new Point(900, 26);
+            skyButton1.Name = "skyButton1";
+            skyButton1.NormalBGColorA = Color.FromArgb(245, 245, 245);
+            skyButton1.NormalBGColorB = Color.FromArgb(230, 230, 230);
+            skyButton1.NormalBorderColorA = Color.FromArgb(252, 252, 252);
+            skyButton1.NormalBorderColorB = Color.FromArgb(249, 249, 249);
+            skyButton1.NormalBorderColorC = Color.WhiteSmoke;
+            skyButton1.NormalBorderColorD = Color.Transparent;
+            skyButton1.NormalForeColor = Color.FromArgb(27, 94, 137);
+            skyButton1.NormalShadowForeColor = Color.FromArgb(200, 255, 255, 255);
+            skyButton1.Size = new Size(198, 55);
+            skyButton1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            skyButton1.TabIndex = 13;
+            skyButton1.Tag = "MODULO_ADMIN";
+            skyButton1.Text = "INICIAR VENTA";
+            // 
+            // skyButton2
+            // 
+            skyButton2.BackColor = Color.WhiteSmoke;
+            skyButton2.DownBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton2.DownBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton2.DownBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton2.DownBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton2.DownBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton2.DownBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton2.DownForeColor = Color.White;
+            skyButton2.DownShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton2.Font = new Font("Segoe UI Black", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            skyButton2.ForeColor = Color.FromArgb(27, 94, 137);
+            skyButton2.HoverBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton2.HoverBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton2.HoverBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton2.HoverBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton2.HoverBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton2.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton2.HoverForeColor = Color.White;
+            skyButton2.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton2.Location = new Point(742, 270);
+            skyButton2.Name = "skyButton2";
+            skyButton2.NormalBGColorA = Color.FromArgb(245, 245, 245);
+            skyButton2.NormalBGColorB = Color.FromArgb(230, 230, 230);
+            skyButton2.NormalBorderColorA = Color.FromArgb(252, 252, 252);
+            skyButton2.NormalBorderColorB = Color.FromArgb(249, 249, 249);
+            skyButton2.NormalBorderColorC = Color.WhiteSmoke;
+            skyButton2.NormalBorderColorD = Color.Transparent;
+            skyButton2.NormalForeColor = Color.FromArgb(27, 94, 137);
+            skyButton2.NormalShadowForeColor = Color.FromArgb(200, 255, 255, 255);
+            skyButton2.Size = new Size(187, 55);
+            skyButton2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            skyButton2.TabIndex = 14;
+            skyButton2.Tag = "MODULO_ADMIN";
+            skyButton2.Text = "AGREGAR AL CARRITO";
+            // 
+            // skyButton3
+            // 
+            skyButton3.BackColor = Color.WhiteSmoke;
+            skyButton3.DownBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton3.DownBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton3.DownBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton3.DownBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton3.DownBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton3.DownBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton3.DownForeColor = Color.White;
+            skyButton3.DownShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton3.Font = new Font("Segoe UI Black", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            skyButton3.ForeColor = Color.FromArgb(27, 94, 137);
+            skyButton3.HoverBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton3.HoverBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton3.HoverBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton3.HoverBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton3.HoverBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton3.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton3.HoverForeColor = Color.White;
+            skyButton3.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton3.Location = new Point(945, 270);
+            skyButton3.Name = "skyButton3";
+            skyButton3.NormalBGColorA = Color.FromArgb(245, 245, 245);
+            skyButton3.NormalBGColorB = Color.FromArgb(230, 230, 230);
+            skyButton3.NormalBorderColorA = Color.FromArgb(252, 252, 252);
+            skyButton3.NormalBorderColorB = Color.FromArgb(249, 249, 249);
+            skyButton3.NormalBorderColorC = Color.WhiteSmoke;
+            skyButton3.NormalBorderColorD = Color.Transparent;
+            skyButton3.NormalForeColor = Color.FromArgb(27, 94, 137);
+            skyButton3.NormalShadowForeColor = Color.FromArgb(200, 255, 255, 255);
+            skyButton3.Size = new Size(187, 55);
+            skyButton3.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            skyButton3.TabIndex = 15;
+            skyButton3.Tag = "MODULO_ADMIN";
+            skyButton3.Text = "QUITAR DEL CARRITO";
+            // 
+            // bigLabel4
+            // 
+            bigLabel4.AutoSize = true;
+            bigLabel4.BackColor = Color.Transparent;
+            bigLabel4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            bigLabel4.ForeColor = Color.Black;
+            bigLabel4.Location = new Point(742, 351);
+            bigLabel4.Name = "bigLabel4";
+            bigLabel4.Size = new Size(87, 21);
+            bigLabel4.TabIndex = 16;
+            bigLabel4.Text = "SUBTOTAL";
+            // 
+            // bigLabel5
+            // 
+            bigLabel5.AutoSize = true;
+            bigLabel5.BackColor = Color.Transparent;
+            bigLabel5.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            bigLabel5.ForeColor = Color.Black;
+            bigLabel5.Location = new Point(742, 390);
+            bigLabel5.Name = "bigLabel5";
+            bigLabel5.Size = new Size(56, 21);
+            bigLabel5.TabIndex = 17;
+            bigLabel5.Text = "TOTAL";
+            // 
+            // bigTextBox2
+            // 
+            bigTextBox2.BackColor = Color.Transparent;
+            bigTextBox2.Font = new Font("Tahoma", 11F);
+            bigTextBox2.ForeColor = Color.DimGray;
+            bigTextBox2.Image = null;
+            bigTextBox2.Location = new Point(41, 58);
+            bigTextBox2.MaxLength = 32767;
+            bigTextBox2.Multiline = false;
+            bigTextBox2.Name = "bigTextBox2";
+            bigTextBox2.PlaceholderText = "Buscar producto";
+            bigTextBox2.ReadOnly = false;
+            bigTextBox2.Size = new Size(234, 41);
+            bigTextBox2.TabIndex = 18;
+            bigTextBox2.TextAlignment = HorizontalAlignment.Left;
+            bigTextBox2.UseSystemPasswordChar = false;
+            // 
+            // skyButton4
+            // 
+            skyButton4.BackColor = Color.WhiteSmoke;
+            skyButton4.DownBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton4.DownBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton4.DownBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton4.DownBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton4.DownBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton4.DownBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton4.DownForeColor = Color.White;
+            skyButton4.DownShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton4.Font = new Font("Segoe UI Black", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            skyButton4.ForeColor = Color.FromArgb(27, 94, 137);
+            skyButton4.HoverBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton4.HoverBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton4.HoverBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton4.HoverBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton4.HoverBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton4.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton4.HoverForeColor = Color.White;
+            skyButton4.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton4.Location = new Point(742, 449);
+            skyButton4.Name = "skyButton4";
+            skyButton4.NormalBGColorA = Color.FromArgb(245, 245, 245);
+            skyButton4.NormalBGColorB = Color.FromArgb(230, 230, 230);
+            skyButton4.NormalBorderColorA = Color.FromArgb(252, 252, 252);
+            skyButton4.NormalBorderColorB = Color.FromArgb(249, 249, 249);
+            skyButton4.NormalBorderColorC = Color.WhiteSmoke;
+            skyButton4.NormalBorderColorD = Color.Transparent;
+            skyButton4.NormalForeColor = Color.FromArgb(27, 94, 137);
+            skyButton4.NormalShadowForeColor = Color.FromArgb(200, 255, 255, 255);
+            skyButton4.Size = new Size(198, 55);
+            skyButton4.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            skyButton4.TabIndex = 19;
+            skyButton4.Tag = "MODULO_ADMIN";
+            skyButton4.Text = "FINALIZAR VENTA";
+            // 
             // Menu_Venta
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1189, 635);
+            Controls.Add(skyButton4);
+            Controls.Add(bigTextBox2);
+            Controls.Add(bigLabel5);
+            Controls.Add(bigLabel4);
+            Controls.Add(skyButton3);
+            Controls.Add(skyButton2);
+            Controls.Add(skyButton1);
             Controls.Add(bigTextBox1);
             Controls.Add(bigLabel3);
             Controls.Add(poisonDataGridView3);
@@ -272,5 +475,12 @@
         private ReaLTaiizor.Controls.PoisonDataGridView poisonDataGridView3;
         private ReaLTaiizor.Controls.BigLabel bigLabel3;
         private ReaLTaiizor.Controls.BigTextBox bigTextBox1;
+        private ReaLTaiizor.Controls.SkyButton skyButton1;
+        private ReaLTaiizor.Controls.SkyButton skyButton2;
+        private ReaLTaiizor.Controls.SkyButton skyButton3;
+        private ReaLTaiizor.Controls.BigLabel bigLabel4;
+        private ReaLTaiizor.Controls.BigLabel bigLabel5;
+        private ReaLTaiizor.Controls.BigTextBox bigTextBox2;
+        private ReaLTaiizor.Controls.SkyButton skyButton4;
     }
 }

@@ -116,35 +116,39 @@ namespace ORM
             if (filaUsuario != null)
             {
                 DataRow[] asignaciones = filaUsuario.GetChildRows(dao.RelUsuario_A_Rol);
-                if(asignaciones.Length == 0) { throw new Exception("El usuario no tiene rol"); }
-                foreach (DataRow filaAsig in asignaciones)
+                if(asignaciones.Length > 0)
                 {
-                    string idRol = filaAsig.Field<string>("Id_Rol");
-                    DataRow filaRol = dao.DtRol.Rows.Find(idRol);
-                    rol.Id_rol = filaRol.Field<string>("Id_Rol");
-                    rol.Titulo = filaRol.Field<string>("Titulo");
-
-                    if (filaRol != null)
+                    foreach (DataRow filaAsig in asignaciones)
                     {
-                        DataRow[] filasRolXFamilia = filaRol.GetChildRows(dao.RelRolAFamilia);
-                        if (filasRolXFamilia.Length == 0) { throw new Exception("El usuario no tiene familias"); }
-                        foreach (DataRow filaRolXFamilia in filasRolXFamilia)
-                        {
-                            string idFamilia = filaRolXFamilia.Field<string>("Id_Familia");
-                            DataRow filaFamilia = dao.DtFamilia.Rows.Find(idFamilia);
-                            if (filaFamilia != null)
-                            {
-                                BE_Familia familia = new BE_Familia(filaFamilia.ItemArray);
-                                ArmarHijosRecursivamente(familia, filaFamilia);
+                        string idRol = filaAsig.Field<string>("Id_Rol");
+                        DataRow filaRol = dao.DtRol.Rows.Find(idRol);
+                        rol.Id_rol = filaRol.Field<string>("Id_Rol");
+                        rol.Titulo = filaRol.Field<string>("Titulo");
 
-                                if (familiaRaiz == null)
+                        if (filaRol != null)
+                        {
+                            DataRow[] filasRolXFamilia = filaRol.GetChildRows(dao.RelRolAFamilia);
+                            if (filasRolXFamilia.Length > 0)
+                            {
+                                foreach (DataRow filaRolXFamilia in filasRolXFamilia)
                                 {
-                                    familiaRaiz = familia;
-                                    (rol as BE_Familia).AgregarComponente(familiaRaiz);
-                                }
-                                else
-                                {
-                                    familiaRaiz.AgregarComponente(familia);
+                                    string idFamilia = filaRolXFamilia.Field<string>("Id_Familia");
+                                    DataRow filaFamilia = dao.DtFamilia.Rows.Find(idFamilia);
+                                    if (filaFamilia != null)
+                                    {
+                                        BE_Familia familia = new BE_Familia(filaFamilia.ItemArray);
+                                        ArmarHijosRecursivamente(familia, filaFamilia);
+
+                                        if (familiaRaiz == null)
+                                        {
+                                            familiaRaiz = familia;
+                                            (rol as BE_Familia).AgregarComponente(familiaRaiz);
+                                        }
+                                        else
+                                        {
+                                            familiaRaiz.AgregarComponente(familia);
+                                        }
+                                    }
                                 }
                             }
                         }

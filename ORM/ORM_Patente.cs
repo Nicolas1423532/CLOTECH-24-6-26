@@ -47,8 +47,6 @@ namespace ORM
         }
         public void AsignarPatente(BE_Patente patente, BE_Familia familia)
         {
-            //DataRow filaPatente = dao.DtPatente.Rows.Find(patente.Id_rol);
-            //DataRow filaFamilia = dao.DtPatente.Rows.Find(familia.Id_rol);
             DataRow relacionExistente = dao.DtPatenteXFamilia.Rows.Find(new object[] { patente.Id_rol, familia.Id_rol });
             if (relacionExistente != null)
             {

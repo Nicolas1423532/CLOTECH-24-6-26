@@ -1,10 +1,12 @@
-﻿using System;
+﻿using BE;
+using Microsoft.VisualBasic;
+using ORM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ORM;
-using BE;
 namespace BLL
 {
     public class BLL_Rol
@@ -16,6 +18,7 @@ namespace BLL
         }
         public void AgregarRol(BE_Rol rol)
         {
+            ValidarDatosDelRol(rol);
             if (ormRol.TotalAdministradoresActivos() <= 0)
             {
                 throw new Exception("Operación inválida: El sistema requiere al menos un rol de Administrador configurado.");
@@ -48,7 +51,8 @@ namespace BLL
         }
         public void Desasignar(BE_Usuario usuario, BE_Rol rol)
         {
-            if(ormRol.TotalAdministradoresActivos() > 0)
+            if(usuario == null && rol == null) { throw new Exception("Rol o Usuario no seleccionado"); }
+            if( ormRol.TotalAdministradoresActivos() > 0)
             {
                 ormRol.Desasignar(usuario, rol);
             }
@@ -67,6 +71,13 @@ namespace BLL
         public List<object> ObtenerTodosLosRoles()
         {
             return (from r in ormRol.ObtenerTodosLosRoles() select new { ID = r.Id_rol, TITULO = r.Titulo, ESTADO = r.Estado}).ToList<object>();
+        }
+        private void ValidarDatosDelRol(BE_Rol rol)
+        {
+            if (string.IsNullOrWhiteSpace(rol.Id_rol) && string.IsNullOrWhiteSpace(rol.Titulo))
+            {
+                throw new Exception("Los datos del son incorrectos");
+            }
         }
     }
 }
