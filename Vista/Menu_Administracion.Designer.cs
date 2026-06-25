@@ -35,6 +35,7 @@
             pictureBox1 = new PictureBox();
             bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             skyButton4 = new ReaLTaiizor.Controls.SkyButton();
+            skyButton5 = new ReaLTaiizor.Controls.SkyButton();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -59,7 +60,7 @@
             skyButton1.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton1.HoverForeColor = Color.White;
             skyButton1.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton1.Location = new Point(221, 309);
+            skyButton1.Location = new Point(116, 309);
             skyButton1.Name = "skyButton1";
             skyButton1.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton1.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -97,7 +98,7 @@
             skyButton2.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton2.HoverForeColor = Color.White;
             skyButton2.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton2.Location = new Point(474, 309);
+            skyButton2.Location = new Point(556, 309);
             skyButton2.Name = "skyButton2";
             skyButton2.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton2.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -135,7 +136,7 @@
             skyButton3.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton3.HoverForeColor = Color.White;
             skyButton3.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton3.Location = new Point(474, 394);
+            skyButton3.Location = new Point(488, 394);
             skyButton3.Name = "skyButton3";
             skyButton3.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton3.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -149,7 +150,8 @@
             skyButton3.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton3.TabIndex = 5;
             skyButton3.Tag = "MODULO_ADMIN";
-            skyButton3.Text = "GESTION FAMILIA";
+            skyButton3.Text = "GESTION DE FAMILIA";
+            skyButton3.Click += skyButton3_Click;
             // 
             // pictureBox1
             // 
@@ -193,7 +195,7 @@
             skyButton4.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton4.HoverForeColor = Color.White;
             skyButton4.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton4.Location = new Point(221, 394);
+            skyButton4.Location = new Point(210, 394);
             skyButton4.Name = "skyButton4";
             skyButton4.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton4.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -210,12 +212,51 @@
             skyButton4.Text = "AUDITAR BITACORA";
             skyButton4.Click += skyButton4_Click;
             // 
+            // skyButton5
+            // 
+            skyButton5.BackColor = Color.WhiteSmoke;
+            skyButton5.DownBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton5.DownBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton5.DownBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton5.DownBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton5.DownBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton5.DownBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton5.DownForeColor = Color.White;
+            skyButton5.DownShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton5.Font = new Font("Segoe UI Black", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            skyButton5.ForeColor = Color.FromArgb(27, 94, 137);
+            skyButton5.HoverBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton5.HoverBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton5.HoverBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton5.HoverBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton5.HoverBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton5.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton5.HoverForeColor = Color.White;
+            skyButton5.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton5.Location = new Point(336, 309);
+            skyButton5.Name = "skyButton5";
+            skyButton5.NormalBGColorA = Color.FromArgb(245, 245, 245);
+            skyButton5.NormalBGColorB = Color.FromArgb(230, 230, 230);
+            skyButton5.NormalBorderColorA = Color.FromArgb(252, 252, 252);
+            skyButton5.NormalBorderColorB = Color.FromArgb(249, 249, 249);
+            skyButton5.NormalBorderColorC = Color.WhiteSmoke;
+            skyButton5.NormalBorderColorD = Color.Transparent;
+            skyButton5.NormalForeColor = Color.FromArgb(27, 94, 137);
+            skyButton5.NormalShadowForeColor = Color.FromArgb(200, 255, 255, 255);
+            skyButton5.Size = new Size(198, 55);
+            skyButton5.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            skyButton5.TabIndex = 13;
+            skyButton5.Tag = "MODULO_ADMIN";
+            skyButton5.Text = "GESTION DE PATENTE";
+            skyButton5.Click += skyButton5_Click;
+            // 
             // Menu_Administracion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.CadetBlue;
             ClientSize = new Size(905, 520);
+            Controls.Add(skyButton5);
             Controls.Add(skyButton4);
             Controls.Add(skyButton1);
             Controls.Add(skyButton3);
@@ -237,5 +278,6 @@
         private PictureBox pictureBox1;
         private ReaLTaiizor.Controls.BigLabel bigLabel1;
         private ReaLTaiizor.Controls.SkyButton skyButton4;
+        private ReaLTaiizor.Controls.SkyButton skyButton5;
     }
 }

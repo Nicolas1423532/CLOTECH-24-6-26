@@ -17,15 +17,35 @@ namespace BLL
         }
         public void AgregarPatente(BE_Patente patente)
         {
-            ormPatente.AgregarPatente(patente);
+            if(patente != null)
+            {
+                ormPatente.ModificarPatente(patente);
+            }
         }
         public void BorrarPatente(BE_Patente patente)
         {
-            ormPatente.BorrarPatente(patente);
+            if(patente != null)
+            {
+                ormPatente.BorrarPatente(patente);
+            }
         }
         public void ModificarPatente(BE_Patente patente)
         {
             ormPatente.ModificarPatente(patente);
+        }
+        public void AsignarPatente(BE_Patente patente, BE_Familia familia)
+        {
+            if(patente != null && familia != null)
+            {
+                ormPatente.AsignarPatente(patente, familia);
+            }
+        }
+        public void DesasignarPatente(BE_Patente patente, BE_Familia familia)
+        {
+            if (patente != null && familia != null)
+            {
+                ormPatente.DesasignarPatente(patente, familia);
+            }
         }
         public List<object> ObtenerTodasLasPatentes()
         {

@@ -34,5 +34,17 @@ namespace Vista
             Menu_GestionRol menu_rol = new Menu_GestionRol();
             menu_rol.Show();
         }
+
+        private void skyButton3_Click(object sender, EventArgs e)
+        {
+            Menu_GestionFamilia menuFamilia = new Menu_GestionFamilia();
+            menuFamilia.Show();
+        }
+
+        private void skyButton5_Click(object sender, EventArgs e)
+        {
+            Menu_GestionPatente menuPatente = new Menu_GestionPatente();
+            menuPatente.Show();
+        }
     }
 }

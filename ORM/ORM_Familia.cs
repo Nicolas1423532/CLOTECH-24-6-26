@@ -17,10 +17,15 @@ namespace ORM
         }
         public void AgregarFamilia(BE_Familia familia)
         {
-            DataRow fila = dao.DtFamilia.NewRow();
-            fila.ItemArray = new object[] { familia.Id_rol, familia.Titulo, familia.Estado };
-            dao.DtFamilia.Rows.Add(fila);
-            dao.GuardarCambios();
+            DataRow filaExistente = dao.DtFamilia.Rows.Find(familia.Id_rol);
+            if(filaExistente == null)
+            {
+                DataRow fila = dao.DtFamilia.NewRow();
+                fila.ItemArray = new object[] { familia.Id_rol, familia.Titulo, familia.Estado };
+                dao.DtFamilia.Rows.Add(fila);
+                dao.GuardarCambios();
+            }
+            else { throw new Exception("La familia a crear ya existe en el sistema"); }
         }
         public void ModificarFamilia(BE_Familia familia)
         {
@@ -36,6 +41,110 @@ namespace ORM
             DataRow fila = dao.DtFamilia.Rows.Find(familia.Id_rol);
             fila.Delete();
             dao.GuardarCambios();
+        }
+        public void AsignarFamilia(BE_Usuario usuario, BE_Rol rol, BE_Familia familia)
+        {
+            // 1. Buscamos el título real de la familia en memoria usando su PK
+            DataRow filaFamilia = dao.DtFamilia.Rows.Find(familia.Id_rol); // En tu BE_Familia usás Id_rol como ID
+            if (filaFamilia == null)
+            {
+                throw new Exception("La Familia seleccionada no existe en la base de datos.");
+            }
+
+            string tituloFamilia = filaFamilia.Field<string>("Titulo").ToUpper();
+            string perfilUsuario = usuario.Rol.ToUpper(); // "ADMINISTRADOR", "CAJERO", "SUPERVISOR", etc.
+
+            // 2. REGLA DE NEGOCIO: Validación Cruzada de Jerarquías
+            if (tituloFamilia.Contains("ADMINISTRADOR"))
+            {
+                // Si la familia es de Administrador, el usuario DEBE ser Administrador
+                if (perfilUsuario != "ADMINISTRADOR")
+                {
+                    throw new Exception($"Restricción de seguridad: Un usuario con perfil '{usuario.Rol}' no puede recibir permisos de una familia de tipo 'Administrador'.");
+                }
+            }
+
+            // 3. Si pasa el control de jerarquía, verificamos si la relación ya existía en la intermedia
+            DataRow relacionExistente = dao.DtRolXFamilia.Rows.Find(new object[] { rol.Id_rol, familia.Id_rol });
+            if (relacionExistente != null)
+            {
+                throw new Exception("Esta Familia ya se encuentra asignada al Rol seleccionado.");
+            }
+
+            // 4. Insertamos la relación intermedia normalmente
+            DataRow nuevaFila = dao.DtRolXFamilia.NewRow();
+            nuevaFila.ItemArray = new object[] { rol.Id_rol, familia.Id_rol };
+
+            dao.DtRolXFamilia.Rows.Add(nuevaFila);
+            dao.GuardarCambios();
+            //DataRow relacionExistente = dao.DtRolXFamilia.Rows.Find(new object[] { rol.Id_rol, familia.Id_rol });
+
+            //if (relacionExistente != null)
+            //{
+            //    throw new Exception("Esta Familia ya se encuentra asignada al Rol seleccionado.");
+            //}
+
+            //DataRow nuevaFila = dao.DtRolXFamilia.NewRow();
+            //nuevaFila.ItemArray = new object[] { rol.Id_rol, familia.Id_rol};
+            //dao.DtRolXFamilia.Rows.Add(nuevaFila);
+            //dao.GuardarCambios();
+        }
+        public void DesasignarFamilia(BE_Rol rol, BE_Familia familia)
+        {
+            DataRow filaAEliminar = dao.DtRolXFamilia.Rows.Find(new object[] { rol.Id_rol, familia.Id_rol });
+
+            if (filaAEliminar == null)
+            {
+                throw new Exception("La relación entre el Rol y la Familia no existe.");
+            }
+
+            filaAEliminar.Delete();
+            dao.GuardarCambios();
+        }
+        public void AsignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
+        {
+            if (familiaPadre.Id_rol == subFamilia.Id_rol)
+            {
+                throw new Exception("No es posible asignar una Familia como subfamilia de sí misma.");
+            }
+
+            // 2. Buscamos los títulos reales en la tabla DtFamilia en memoria
+            DataRow filaPadre = dao.DtFamilia.Rows.Find(familiaPadre.Id_rol);
+            DataRow filaHija = dao.DtFamilia.Rows.Find(subFamilia.Id_rol);
+
+            if (filaPadre == null || filaHija == null)
+            {
+                throw new Exception("Una de las familias seleccionadas no existe en el sistema.");
+            }
+
+            string tituloPadre = filaPadre.Field<string>("Titulo").ToUpper();
+            string tituloHija = filaHija.Field<string>("Titulo").ToUpper();
+
+            // 3. Regla de Negocio: Un MENU no puede contener otro MENU
+            if (tituloPadre.Contains("MENU") && tituloHija.Contains("MENU"))
+            {
+                throw new Exception("Una familia de tipo 'MENU' no puede contener otra subfamilia de tipo 'MENU'.");
+            }
+
+            // 4. Verificamos si la relación ya existe en la tabla intermedia FamiliaXFamilia
+            DataRow relacionExistente = dao.DtFamiliaXFamilia.Rows.Find(new object[] { familiaPadre.Id_rol, subFamilia.Id_rol });
+
+            if (relacionExistente != null)
+            {
+                throw new Exception("La subfamilia seleccionada ya se encuentra asignada a esta Familia.");
+            }
+
+            
+            // 5. Si pasa todas las validaciones, guardamos en la tabla intermedia
+            DataRow nuevaFilaSubFamilia = dao.DtFamiliaXFamilia.NewRow();
+            nuevaFilaSubFamilia.ItemArray = new object[] { familiaPadre.Id_rol, subFamilia.Id_rol };
+
+            dao.DtFamiliaXFamilia.Rows.Add(nuevaFilaSubFamilia);
+            dao.GuardarCambios();
+        }
+        public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subfamilia)
+        {
+
         }
         public List<BE_Familia> ObtenerTodasLasFamilias()
         {

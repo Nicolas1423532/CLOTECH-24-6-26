@@ -40,7 +40,7 @@ namespace Vista
             }
             usuarioBll = new BLL_Usuario();
             rolBll = new BLL_Rol();
-            Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuarios());
+            Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             Mostrar(poisonDataGridView2, rolBll.ObtenerTodosLosRoles());
         }
         private void Mostrar(PoisonDataGridView pDv, object datos)

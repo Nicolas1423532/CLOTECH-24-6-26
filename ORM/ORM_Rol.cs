@@ -52,6 +52,12 @@ namespace ORM
                                                    on uxr.Field<string>("Id_Rol") equals r.Field<string>("Id_Rol")
                                                    where r.Field<string>("Titulo").ToUpper().Contains("ADMINISTRADOR")
                                                    select uxr).Count();
+                //int cantidadAdmins = 0;
+                //DataRow[] totalresumidoxd = filaRolABorrar.GetChildRows(dao.RelRol_A_Usuario);
+                //foreach (DataRow row in totalresumidoxd)
+                //{
+
+                //}
                 if (totalAdministradoresActivos <= 1)
                 {
                     throw new Exception("No se puede eliminar este Rol porque es el único Administrador con usuarios asignados que queda en el sistema. Debe existir al menos un Administrador activo.");
@@ -94,20 +100,28 @@ namespace ORM
             {
                 throw new Exception("El usuario no tiene asignado este rol actualmente.");
             }
-            if (rol.Titulo.ToUpper().Contains("ADMINISTRADOR"))
+            int cantidadAdmin = TotalAdministradoresActivos();
+            if(cantidadAdmin > 1)
             {
-                int totalAdministradoresActivos = (from uxr in dao.DtUsuarioXRol.AsEnumerable()
-                                                   join r in dao.DtRol.AsEnumerable()
-                                                   on uxr.Field<string>("Id_Rol") equals r.Field<string>("Id_Rol")
-                                                   where r.Field<string>("Titulo").ToUpper().Contains("ADMINISTRADOR")
-                                                   select uxr).Count();
-                if (totalAdministradoresActivos <= 1)
+                filaAEliminar.Delete();
+                dao.GuardarCambios();
+            }
+            else
+            {
+                throw new Exception("No puede desasignar un administrador existente si no hay mas de uno.");
+            }
+        }
+        private int TotalAdministradoresActivos()
+        {
+            int cantAdminEnUsuarios = 0;
+            foreach (DataRow fila in dao.DtRol.Rows)
+            {
+                if (fila.Field<string>("Titulo").ToUpper().Contains("ADMINISTRADOR"))
                 {
-                    throw new Exception("No se puede desasignar este rol porque es el único Administrador activo que queda en el sistema. Debe existir al menos un Administrador con permisos.");
+                    cantAdminEnUsuarios++;
                 }
             }
-            filaAEliminar.Delete();
-            dao.GuardarCambios();
+            return cantAdminEnUsuarios;
         }
         public List<BE_Rol> ObtenerTodosLosRoles()
         {
@@ -128,7 +142,7 @@ namespace ORM
             if (filaUsuario != null)
             {
                 DataRow[] asignaciones = filaUsuario.GetChildRows(dao.RelUsuario_A_Rol);
-
+                if(asignaciones.Length == 0) { throw new Exception("El usuario no tiene rol"); }
                 foreach (DataRow filaAsig in asignaciones)
                 {
                     string idRol = filaAsig.Field<string>("Id_Rol");
@@ -139,7 +153,7 @@ namespace ORM
                     if (filaRol != null)
                     {
                         DataRow[] filasRolXFamilia = filaRol.GetChildRows(dao.RelRolAFamilia);
-
+                        if (filasRolXFamilia.Length == 0) { throw new Exception("El usuario no tiene familias"); }
                         foreach (DataRow filaRolXFamilia in filasRolXFamilia)
                         {
                             string idFamilia = filaRolXFamilia.Field<string>("Id_Familia");

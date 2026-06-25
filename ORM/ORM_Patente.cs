@@ -17,10 +17,15 @@ namespace ORM
         }
         public void AgregarPatente(BE_Patente patente)
         {
-            DataRow fila = dao.DtPatente.NewRow();
-            fila.ItemArray = new object[] { patente.Id_rol, patente.Titulo, patente.Estado };
-            dao.DtPatente.Rows.Add(fila);
-            dao.GuardarCambios();
+            DataRow filaExistente = dao.DtRol.Rows.Find(patente.Id_rol);
+            if (filaExistente == null)
+            {
+                DataRow fila = dao.DtPatente.NewRow();
+                fila.ItemArray = new object[] { patente.Id_rol, patente.Titulo, patente.Estado };
+                dao.DtPatente.Rows.Add(fila);
+                dao.GuardarCambios();
+            }
+            else { throw new Exception("La patente a crear ya existe en el sistema"); }
         }
         public void ModificarPatente(BE_Patente patente)
         {
@@ -34,8 +39,34 @@ namespace ORM
         public void BorrarPatente(BE_Patente patente)
         {
             DataRow fila = dao.DtPatente.Rows.Find(patente.Id_rol);
-            fila.Delete();
+            if(fila != null)
+            {
+                fila.Delete();
+                dao.GuardarCambios();
+            }
+        }
+        public void AsignarPatente(BE_Patente patente, BE_Familia familia)
+        {
+            //DataRow filaPatente = dao.DtPatente.Rows.Find(patente.Id_rol);
+            //DataRow filaFamilia = dao.DtPatente.Rows.Find(familia.Id_rol);
+            DataRow relacionExistente = dao.DtPatenteXFamilia.Rows.Find(new object[] { patente.Id_rol, familia.Id_rol });
+            if (relacionExistente != null)
+            {
+                throw new Exception("La patente ya se encuentra asignada al Rol seleccionado.");
+            }
+            DataRow nuevaFila = dao.DtPatenteXFamilia.NewRow();
+            nuevaFila.ItemArray = new object[] { patente.Id_rol, familia.Id_rol };
+            dao.DtPatenteXFamilia.Rows.Add(nuevaFila);
             dao.GuardarCambios();
+        }
+        public void DesasignarPatente(BE_Patente patente, BE_Familia familia)
+        {
+            DataRow filaRolXFamilia = dao.DtPatenteXFamilia.Rows.Find(new object[] { patente.Id_rol, familia.Id_rol });
+            if (filaRolXFamilia != null)
+            {
+                filaRolXFamilia.Delete();
+                dao.GuardarCambios();             
+            }
         }
         public List<BE_Patente> ObtenerTodasLasPatentes()
         {

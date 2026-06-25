@@ -16,15 +16,74 @@ namespace BLL
         }
         public void AgregarFamilia(BE_Familia familia)
         {
-            ormFamilia.AgregarFamilia(familia);
+            if(familia != null)
+            {
+                ormFamilia.AgregarFamilia(familia);
+            }
         }
         public void BorrarFamilia(BE_Familia familia)
         {
-            ormFamilia.BorrarFamilia(familia);
+            if(familia != null)
+            {
+                ormFamilia.BorrarFamilia(familia);
+            }
         }
         public void ModificarFamilia(BE_Familia familia)
         {
-            ormFamilia.ModificarFamilia(familia);
+            if (familia != null)
+            {
+                ormFamilia.ModificarFamilia(familia);
+            }
+        }
+        public void Asignar(object nodoSeleccionado,BE_Usuario usuario, BE_Familia familia)
+        {
+            if (nodoSeleccionado.GetType() == typeof(BE_Rol))
+            {
+                AsignarFamilia(usuario, (BE_Rol)nodoSeleccionado, familia);
+            }
+            else if (nodoSeleccionado.GetType() == typeof(BE_Familia))
+            {
+                AsignarSubfamilia((BE_Familia)nodoSeleccionado, familia);
+            }
+        }
+        public void Desasignar(object nodoSeleccionado, BE_Familia familia)
+        {
+            if (nodoSeleccionado.GetType() == typeof(BE_Rol))
+            {
+                DesasignarFamilia(nodoSeleccionado as BE_Rol, familia);
+            }
+            else if (nodoSeleccionado.GetType() == typeof(BE_Familia))
+            {
+                DesasignarSubfamilia(nodoSeleccionado as BE_Familia, familia);
+            }
+        }
+        public void AsignarFamilia(BE_Usuario usuario,BE_Rol rol, BE_Familia familia)
+        {
+            if (usuario != null && rol != null && familia != null)
+            {
+                ormFamilia.AsignarFamilia(usuario, rol, familia);
+            }
+        }
+        public void DesasignarFamilia(BE_Rol rol, BE_Familia familia)
+        {
+            if (rol!=null && familia != null)
+            {
+                ormFamilia.DesasignarFamilia(rol, familia);
+            }
+        }
+        public void AsignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
+        {
+            if (familiaPadre != null && subFamilia != null)
+            {
+                ormFamilia.AsignarSubfamilia(familiaPadre,subFamilia);
+            }
+        }
+        public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
+        {
+            if(familiaPadre!=null && subFamilia != null)
+            {
+                ormFamilia.DesasignarSubfamilia(familiaPadre, subFamilia);
+            }
         }
         public List<object> ObtenerTodasLasFamilias()
         {

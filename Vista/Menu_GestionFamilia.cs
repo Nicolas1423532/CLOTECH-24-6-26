@@ -1,7 +1,7 @@
 ﻿using BE;
-using BE;
 using BLL;
 using Microsoft.VisualBasic;
+using ORM;
 using ReaLTaiizor.Controls;
 using System;
 using System.Collections.Generic;
@@ -123,8 +123,49 @@ namespace Vista
             usuarioBll = new BLL_Usuario();
             rolBll = new BLL_Rol();
             familiaBll = new BLL_Familia();
-            Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuarios());
+            Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             Mostrar(poisonDataGridView2, familiaBll.ObtenerTodasLasFamilias());
+        }
+
+        private void skyButton10_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool resultado = false;
+                BE_Usuario usuario = new BE_Usuario();
+                usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
+                var nodoSeleccionado = foreverTreeView1.SelectedNode.Tag;
+                BE_Familia familia = new BE_Familia();
+                familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                familiaBll.Asignar(nodoSeleccionado,usuario, familia);
+                LlenarTreeViewPermisos(usuario.Id_usuario);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void skyButton11_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                bool resultado = false;
+                BE_Usuario usuario = new BE_Usuario();
+                usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
+                var nodoSeleccionado = foreverTreeView1.SelectedNode.Tag;
+                BE_Rol rol = new BE_Familia();
+                BE_Familia familia = new BE_Familia();
+                familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                familiaBll.Desasignar(nodoSeleccionado, familia);
+                LlenarTreeViewPermisos(usuario.Id_usuario);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

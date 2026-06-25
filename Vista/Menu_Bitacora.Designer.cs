@@ -398,6 +398,7 @@
             Controls.Add(poisonDataGridView1);
             Name = "Menu_Bitacora";
             Text = "Menu_Bitacora";
+            Load += Menu_Bitacora_Load;
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();

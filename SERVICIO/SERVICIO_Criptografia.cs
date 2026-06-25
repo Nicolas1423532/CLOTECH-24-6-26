@@ -23,5 +23,11 @@ namespace SERVICIO
                 return sb.ToString();
             }
         }
+        public static string GenerarIDBitacora()
+        {
+            var generacionIdAuto = Guid.NewGuid().ToString();
+            string idBitacora = generacionIdAuto.Substring(0, 10);
+            return idBitacora;
+        }
     }
 }

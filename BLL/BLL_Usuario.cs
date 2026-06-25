@@ -1,33 +1,71 @@
-﻿using System;
+﻿using BE;
+using Microsoft.VisualBasic;
+using ORM;
+using SERVICIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using BE;
-using ORM;
-using SERVICIO;
 namespace BLL
 {
     public class BLL_Usuario
     {
         ORM_Usuario ormUsuario;
         ORM_Rol ormRol;
+        ORM_Bitacora ormBitacora;
+        string evento;
+        string modulo;
+        int criticidad;
         public BLL_Usuario()
         {
             ormUsuario = new ORM_Usuario();
             ormRol = new ORM_Rol();
+            ormBitacora = new ORM_Bitacora();
         }
         public void AgregarUsuario(BE_Usuario usuario)
         {
-            ormUsuario.AgregarUsuario(usuario);
+            evento = "Registrar Usuario";
+            modulo = "Administracion";
+            criticidad = 1;
+            if (usuario != null)
+            {
+                ValidarDatosDelUsuario(usuario);
+                EstablecerFormatoCorreoContra(usuario);
+                var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, evento, modulo, criticidad ,DateTime.Now);
+                ormUsuario.AgregarUsuario(usuario);
+            }
+        }
+        public void EstablecerFormatoCorreoContra(BE_Usuario usuario)
+        {
+            string patronEmail = @"^[a-z]+clotech@gmail\.com$";
+            string patronPassword = @"^[a-z]+[0-9]{7,8}$";
+            string nombreUsuarioMinuscula = usuario.Nombre.ToLower();
+            string apellidoUsuarioMinuscula = usuario.Apellido.ToLower();
+            string emailBase = $"{nombreUsuarioMinuscula}{apellidoUsuarioMinuscula}clotech@gmail.com";
+            string contraseñaBase = $"{apellidoUsuarioMinuscula}{usuario.Dni}";
+            bool emailValido = Regex.IsMatch(emailBase, patronEmail);
+            bool contraValida = Regex.IsMatch(contraseñaBase, patronPassword);
+            if(emailValido && contraValida)
+            {
+                usuario.Email = emailBase;
+                usuario.Contraseña = SERVICIO_Criptografia.Encriptar(contraseñaBase);
+            }
+            else { throw new Exception("Error en formato email y contraseña "); }
         }
         public void ModificarUsuario(BE_Usuario usuario)
         {
-            ormUsuario.ModificarUsuario(usuario);
+            if(usuario != null)
+            {
+                ValidarDatosDelUsuario(usuario);
+                ormUsuario.ModificarUsuario(usuario);
+            }
         }
-        public List<object> ObtenerTodosLosUsuarios()
+        public List<object> ObtenerTodosLosUsuariosActivos()
         {
-            return (from u in ormUsuario.ObtenerTodosLosUsuarios()
+            return (from u in ormUsuario.ObtenerTodosLosUsuariosActivos()
                     select new
                     {
                         Id_usuario = u.Id_usuario,
@@ -36,14 +74,46 @@ namespace BLL
                         Dni = u.Dni,
                         Edad = u.Edad,
                         Email = u.Email,
-                        //Contraseña = u.Contraseña,
                         Rol = u.Rol,
                         Activo = u.Activo
                     }).ToList<object>();
         }
+        public List<object> ObtenerTodosLosUsuariosDesactivos()
+        {
+            return (from u in ormUsuario.ObtenerTodosLosUsuariosDesactivos()
+                    select new
+                    {
+                        Id_usuario = u.Id_usuario,
+                        Nombre = u.Nombre,
+                        Apellido = u.Apellido,
+                        Dni = u.Dni,
+                        Edad = u.Edad,
+                        Email = u.Email,
+                        Rol = u.Rol,
+                        Activo = u.Activo
+                    }).ToList<object>();
+        }
+        public void ActivarUsuario(BE_Usuario usuario)
+        {
+            if (usuario != null)
+            {
+                ormUsuario.ActivarUsuario(usuario);
+            }
+        }
+        public void DesactivarUsuario(BE_Usuario usuario)
+        {
+            if (usuario != null)
+            {
+                ormUsuario.DesactivarUsuario(usuario);
+            }
+        }
         public bool Log_In(string email, string contraseña)
         {
             bool resultado = false;
+            evento = "Log In";
+            modulo = "Usuario";
+            criticidad = 1;
+            string idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
             if (string.IsNullOrEmpty(contraseña)) { throw new Exception("El texto a cifrar no puede ser nulo o vacío."); }
             BE_Usuario usuario = ormUsuario.ObtenerUsuarioPorEmail(email);
             if (usuario == null) { resultado = false; }
@@ -52,11 +122,22 @@ namespace BLL
             {
                 SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = usuario;
                 resultado = true;
+                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, evento, modulo, criticidad,DateTime.Now);
                 BE_Rol permisosUsuario = ormRol.ObtenerFamiliaDelUsuario(usuario.Id_usuario);
                 if (permisosUsuario != null) { SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = permisosUsuario; } else { throw new Exception("Usuario sin rol"); }
             }
             else { resultado = false; }
             return resultado;
+        }
+        private void ValidarDatosDelUsuario(BE_Usuario usuario)
+        {
+            string patronDni = @"^\d{7,8}$";
+            string dniUsuario = usuario.Dni.ToString();
+            if (Information.IsNumeric(usuario.Nombre) || Information.IsNumeric(usuario.Apellido) || !Regex.IsMatch(dniUsuario,patronDni) || !Information.IsNumeric(usuario.Edad))
+            {
+                throw new Exception("Los datos de usuario son incorrectos");
+            }
+
         }
         public void Log_Out(bool opcion)
         {
