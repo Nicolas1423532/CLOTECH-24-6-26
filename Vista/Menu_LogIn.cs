@@ -37,7 +37,7 @@ namespace Vista
             {
                 MessageBox.Show(ex.Message);
             }
-            
+
         }
         private void DesactivarControles(bool resultado)
         {
@@ -52,6 +52,22 @@ namespace Vista
         private void Form1_Load(object sender, EventArgs e)
         {
             bllUsuario = new BLL_Usuario();
+        }
+
+        private void foxLinkLabel1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string correoTextbox1 = textBox1.Text;
+                if (string.IsNullOrEmpty(correoTextbox1)) { throw new Exception("El correo esta vacío, por favor ingrese su correo para cambiar contra"); }
+                Menu_CambiarContrase_a menuCambiarContra = new Menu_CambiarContrase_a(correoTextbox1);
+                menuCambiarContra.ShowDialog();
+                textBox2.Text = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -20,31 +20,31 @@ namespace Vista
         private void skyButton1_Click(object sender, EventArgs e)
         {
             Menu_GestionUsuario menuGUsuario = new Menu_GestionUsuario();
-            menuGUsuario.Show();
+            menuGUsuario.ShowDialog();
         }
 
         private void skyButton4_Click(object sender, EventArgs e)
         {
             Menu_Bitacora menu_Bitacora = new Menu_Bitacora();
-            menu_Bitacora.Show();
+            menu_Bitacora.ShowDialog();
         }
 
         private void skyButton2_Click(object sender, EventArgs e)
         {
             Menu_GestionRol menu_rol = new Menu_GestionRol();
-            menu_rol.Show();
+            menu_rol.ShowDialog();
         }
 
         private void skyButton3_Click(object sender, EventArgs e)
         {
             Menu_GestionFamilia menuFamilia = new Menu_GestionFamilia();
-            menuFamilia.Show();
+            menuFamilia.ShowDialog();
         }
 
         private void skyButton5_Click(object sender, EventArgs e)
         {
             Menu_GestionPatente menuPatente = new Menu_GestionPatente();
-            menuPatente.Show();
+            menuPatente.ShowDialog();
         }
     }
 }

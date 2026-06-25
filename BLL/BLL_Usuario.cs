@@ -15,9 +15,6 @@ namespace BLL
         ORM_Usuario ormUsuario;
         ORM_Rol ormRol;
         ORM_Bitacora ormBitacora;
-        string evento;
-        string modulo;
-        int criticidad;
         public BLL_Usuario()
         {
             ormUsuario = new ORM_Usuario();
@@ -26,19 +23,16 @@ namespace BLL
         }
         public void AgregarUsuario(BE_Usuario usuario)
         {
-            evento = "Registrar Usuario";
-            modulo = "Administracion";
-            criticidad = 1;
             if (usuario != null)
             {
                 ValidarDatosDelUsuario(usuario);
-                EstablecerFormatoCorreoContra(usuario);
+                EstablecerFormatoCorreoContraBase(usuario);
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
-                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, evento, modulo, criticidad ,DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Registrar Usuario", "Administracion", 1 ,DateTime.Now);
                 ormUsuario.AgregarUsuario(usuario);
             }
         }
-        public void EstablecerFormatoCorreoContra(BE_Usuario usuario)
+        public void EstablecerFormatoCorreoContraBase(BE_Usuario usuario)
         {
             string patronEmail = @"^[a-z]+clotech@gmail\.com$";
             string patronPassword = @"^[a-z]+[0-9]{7,8}$";
@@ -68,7 +62,7 @@ namespace BLL
                         throw new Exception("No se puede modificar un administrador si solo existe uno. Agregue otro administrador");
                     }
                 }
-                EstablecerFormatoCorreoContra(usuario);
+                EstablecerFormatoCorreoContraBase(usuario);
                 ValidarDatosDelUsuario(usuario);
                 ormUsuario.ModificarUsuario(usuario);
             }
@@ -127,9 +121,6 @@ namespace BLL
         public bool Log_In(string email, string contraseña)
         {
             bool resultado = false;
-            evento = "Log In";
-            modulo = "Usuario";
-            criticidad = 1;
             string idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
             if (string.IsNullOrEmpty(contraseña)) { throw new Exception("El texto a cifrar no puede ser nulo o vacío."); }
             BE_Usuario usuario = ormUsuario.ObtenerUsuarioPorEmail(email);
@@ -139,7 +130,7 @@ namespace BLL
             {
                 SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = usuario;
                 resultado = true;
-                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, evento, modulo, criticidad,DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Log In", "Usuario", 1,DateTime.Now);
                 BE_Rol permisosUsuario = ormRol.ObtenerFamiliaDelUsuario(usuario.Id_usuario);
                 if (permisosUsuario != null) { SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = permisosUsuario; } else { throw new Exception("Usuario sin rol"); }
             }
@@ -160,8 +151,12 @@ namespace BLL
         {
             if (opcion)
             {
+                var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+                string emailUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Email;
+                ormBitacora.AgregarBitacora(idBitacora, emailUsuario, "Log Out", "Usuario", 2, DateTime.Now);
                 SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = null;
                 SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = null;
+
             }
         }
         public bool LimiteIntentosLogIn(int cantidad)
@@ -172,6 +167,27 @@ namespace BLL
                 resultado = true;
             }
             return resultado;
+        }
+        public void CambiarContraseña(string email, string contraActual, string contraNueva)
+        {
+            if (string.IsNullOrWhiteSpace(contraActual) || string.IsNullOrWhiteSpace(contraNueva))
+            {
+                throw new Exception("Los campos de contraseña no pueden estar vacíos.");
+            }
+            BE_Usuario usuario = ormUsuario.ObtenerUsuarioPorEmail(email);
+            if (usuario == null)
+            {
+                throw new Exception("El usuario no existe o se encuentra desactivado.");
+            }
+            string contraActualEncriptada = SERVICIO_Criptografia.Encriptar(contraActual);
+            if (usuario.Contraseña != contraActualEncriptada)
+            {
+                throw new Exception("La contraseña actual ingresada es incorrecta.");
+            }
+            usuario.Contraseña = SERVICIO_Criptografia.Encriptar(contraNueva);
+            ormUsuario.ModificarUsuario(usuario);
+            var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+            ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Cambio de Contraseña", "Usuario", 2, DateTime.Now);
         }
     }
 }

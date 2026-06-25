@@ -33,6 +33,7 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             button1 = new Button();
+            foxLinkLabel1 = new ReaLTaiizor.Controls.FoxLinkLabel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -69,7 +70,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.Transparent;
-            button1.Location = new Point(343, 399);
+            button1.Location = new Point(342, 415);
             button1.Name = "button1";
             button1.Size = new Size(136, 51);
             button1.TabIndex = 7;
@@ -77,12 +78,28 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // foxLinkLabel1
+            // 
+            foxLinkLabel1.BackColor = Color.Transparent;
+            foxLinkLabel1.DownColor = Color.FromArgb(255, 149, 0);
+            foxLinkLabel1.EnabledCalc = true;
+            foxLinkLabel1.Font = new Font("Segoe UI", 10F);
+            foxLinkLabel1.ForeColor = Color.FromArgb(0, 149, 221);
+            foxLinkLabel1.Location = new Point(250, 367);
+            foxLinkLabel1.Name = "foxLinkLabel1";
+            foxLinkLabel1.OverColor = Color.FromArgb(23, 140, 229);
+            foxLinkLabel1.Size = new Size(146, 18);
+            foxLinkLabel1.TabIndex = 8;
+            foxLinkLabel1.Text = "Cambiar contraseña";
+            foxLinkLabel1.Click += foxLinkLabel1_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(886, 515);
+            Controls.Add(foxLinkLabel1);
             Controls.Add(button1);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
@@ -101,5 +118,6 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private Button button1;
+        private ReaLTaiizor.Controls.FoxLinkLabel foxLinkLabel1;
     }
 }
