@@ -59,6 +59,16 @@ namespace BLL
         {
             if(usuario != null)
             {
+                List<BE_Usuario> todos = ormUsuario.ObtenerTodosLosUsuariosActivos();
+                BE_Usuario actual = todos.Find(u => u.Id_usuario == usuario.Id_usuario);
+                if (actual != null && actual.Rol.ToUpper().Contains("ADMINISTRADOR"))
+                {
+                    if (ormUsuario.TotalAdministradoresActivos() <= 1)
+                    {
+                        throw new Exception("No se puede modificar un administrador si solo existe uno. Agregue otro administrador");
+                    }
+                }
+                EstablecerFormatoCorreoContra(usuario);
                 ValidarDatosDelUsuario(usuario);
                 ormUsuario.ModificarUsuario(usuario);
             }
@@ -102,10 +112,17 @@ namespace BLL
         }
         public void DesactivarUsuario(BE_Usuario usuario)
         {
-            if (usuario != null)
+            List<BE_Usuario> todos = ormUsuario.ObtenerTodosLosUsuariosActivos();
+            BE_Usuario actual = todos.Find(u => u.Id_usuario == usuario.Id_usuario);
+
+            if (actual != null && actual.Rol.ToUpper().Contains("ADMINISTRADOR"))
             {
-                ormUsuario.DesactivarUsuario(usuario);
+                if (ormUsuario.TotalAdministradoresActivos() <= 1)
+                {
+                    throw new Exception("No se puede desactivar un administrador si solo existe uno. Agregue otro administrador");
+                }
             }
+            ormUsuario.DesactivarUsuario(usuario);
         }
         public bool Log_In(string email, string contraseña)
         {

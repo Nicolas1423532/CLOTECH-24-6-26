@@ -16,11 +16,27 @@ namespace BLL
         }
         public void AgregarRol(BE_Rol rol)
         {
+            if (ormRol.TotalAdministradoresActivos() <= 0)
+            {
+                throw new Exception("Operación inválida: El sistema requiere al menos un rol de Administrador configurado.");
+            }
             ormRol.AgregarRol(rol);
         }
         public void BorrarRol(BE_Rol rol)
         {
-            ormRol.BorrarRol(rol);
+            if (rol != null)
+            {
+                if (rol.Titulo.ToUpper() == "ADMINISTRADOR" || rol.Titulo.ToUpper() == "ADMIN")
+                {
+                    throw new Exception("Operación denegada: El rol 'Administrador' es un componente crítico del sistema y no puede ser eliminado.");
+                }
+
+                if (ormRol.PoseeUsuariosAsignados(rol.Id_rol))
+                {
+                    throw new Exception("No se puede borrar el rol porque existen usuarios activos asignados a él. Reasigne a los usuarios antes de continuar.");
+                }
+                ormRol.BorrarRol(rol);
+            }
         }
         public void ModificarRol(BE_Rol rol)
         {
@@ -32,7 +48,14 @@ namespace BLL
         }
         public void Desasignar(BE_Usuario usuario, BE_Rol rol)
         {
-            ormRol.Desasignar(usuario, rol);
+            if(ormRol.TotalAdministradoresActivos() > 0)
+            {
+                ormRol.Desasignar(usuario, rol);
+            }
+            else
+            {
+                throw new Exception("No puede desasignar un administrador existente si no hay mas de uno.");
+            }
         }
         public List<BE_Rol> ObtenerFamiliaDelUsuario(string idUsuario)
         {

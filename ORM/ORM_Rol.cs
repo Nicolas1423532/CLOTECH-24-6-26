@@ -17,16 +17,11 @@ namespace ORM
         }
         public void AgregarRol(BE_Rol rol)
         {
-            //DataRow filaRolExistente = dao.DtRol.AsEnumerable().FirstOrDefault(f => f.Field<string>("Id_Rol") == rol.Id_rol|| f.Field<string>("Titulo") == rol.Titulo);
-            int cantidadAdministradores = dao.DtRol.AsEnumerable().Count(f => f.Field<string>("Titulo") == "Administrador" || f.Field<string>("Titulo") == "ADMINISTRADOR");
-            if (cantidadAdministradores > 0)
-            {
-                DataRow filaRolNueva = dao.DtRol.NewRow();
-                filaRolNueva.ItemArray = new object[] { rol.Id_rol,rol.Titulo, rol.Estado };
-                dao.DtRol.Rows.Add(filaRolNueva);
-                dao.GuardarCambios();
-            }
-            
+            DataRow filaRolNueva = dao.DtRol.NewRow();
+            filaRolNueva.ItemArray = new object[] { rol.Id_rol, rol.Titulo, rol.Estado };
+            dao.DtRol.Rows.Add(filaRolNueva);
+            dao.GuardarCambios();
+
         }
         public void ModificarRol(BE_Rol rol)
         {
@@ -39,40 +34,28 @@ namespace ORM
         }
         public void BorrarRol(BE_Rol rol)
         {
-            DataRow filaRolABorrar = dao.DtRol.Rows.Find(rol.Id_rol);
-            if (filaRolABorrar == null)
+            DataRow fila = dao.DtRol.Rows.Find(rol.Id_rol);
+            if (fila != null)
+            {
+                fila.Delete();
+                dao.GuardarCambios();
+            }
+            else
             {
                 throw new Exception("El rol que intenta eliminar no existe en la base de datos.");
             }
-            string tituloRol = filaRolABorrar.Field<string>("Titulo").ToUpper();
-            if (tituloRol.Contains("ADMINISTRADOR"))
+        }
+        public bool PoseeUsuariosAsignados(string idRol)
+        {
+            bool resultado = false;
+            foreach (DataRow filaUser in dao.DtUsuario.Rows)
             {
-                int totalAdministradoresActivos = (from uxr in dao.DtUsuarioXRol.AsEnumerable()
-                                                   join r in dao.DtRol.AsEnumerable()
-                                                   on uxr.Field<string>("Id_Rol") equals r.Field<string>("Id_Rol")
-                                                   where r.Field<string>("Titulo").ToUpper().Contains("ADMINISTRADOR")
-                                                   select uxr).Count();
-                //int cantidadAdmins = 0;
-                //DataRow[] totalresumidoxd = filaRolABorrar.GetChildRows(dao.RelRol_A_Usuario);
-                //foreach (DataRow row in totalresumidoxd)
-                //{
-
-                //}
-                if (totalAdministradoresActivos <= 1)
+                if (filaUser.Field<bool>("Activo"))
                 {
-                    throw new Exception("No se puede eliminar este Rol porque es el único Administrador con usuarios asignados que queda en el sistema. Debe existir al menos un Administrador activo.");
+                    resultado = true;
                 }
             }
-            DataRow[] filasRelacionadas = dao.DtUsuarioXRol.AsEnumerable()
-                .Where(f => f.Field<string>("Id_Rol") == rol.Id_rol).ToArray();
-
-            foreach (DataRow rel in filasRelacionadas)
-            {
-                rel.Delete();
-            }
-
-            filaRolABorrar.Delete();
-            dao.GuardarCambios();
+            return resultado;
         }
         public void Asignar(BE_Usuario usuario, BE_Rol rol)
         {
@@ -100,18 +83,10 @@ namespace ORM
             {
                 throw new Exception("El usuario no tiene asignado este rol actualmente.");
             }
-            int cantidadAdmin = TotalAdministradoresActivos();
-            if(cantidadAdmin > 1)
-            {
-                filaAEliminar.Delete();
-                dao.GuardarCambios();
-            }
-            else
-            {
-                throw new Exception("No puede desasignar un administrador existente si no hay mas de uno.");
-            }
+            filaAEliminar.Delete();
+            dao.GuardarCambios();
         }
-        private int TotalAdministradoresActivos()
+        public int TotalAdministradoresActivos()
         {
             int cantAdminEnUsuarios = 0;
             foreach (DataRow fila in dao.DtRol.Rows)
@@ -134,7 +109,6 @@ namespace ORM
         }
         public BE_Rol ObtenerFamiliaDelUsuario(string idUsuario)
         {
-            //List<BE_Rol> rolesDelUsuario = new List<BE_Rol>();
             BE_Rol rol = new BE_Familia();
             BE_Familia familiaRaiz = null;
             DataRow filaUsuario = dao.DtUsuario.Rows.Find(idUsuario);

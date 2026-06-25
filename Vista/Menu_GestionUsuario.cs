@@ -64,7 +64,26 @@ namespace Vista
 
         private void skyButton2_Click(object sender, EventArgs e)
         {
-
+            try
+            {
+                BE_Usuario usuario = new BE_Usuario();
+                usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Nombre = Interaction.InputBox("Ingrese el nombre del usuario: ");
+                usuario.Apellido = Interaction.InputBox("Ingrese el apellido del usuario: ");
+                usuario.Dni = Convert.ToInt32(Interaction.InputBox("Ingrese el DNI del usuario: "));
+                usuario.Edad = Convert.ToInt16(Interaction.InputBox("Ingrese la edad del usuario: "));
+                usuario.Rol = Interaction.InputBox("Ingrese el rol del usuario: ");
+                bool activo = MessageBox.Show("¿Usuario activo?", "", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
+                usuario.Activo = activo;
+                usuarioBll.ModificarUsuario(usuario);
+                if (activo) { Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos()); }
+                else { Mostrar(poisonDataGridView2, usuarioBll.ObtenerTodosLosUsuariosDesactivos()); }
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void skyButton3_Click(object sender, EventArgs e)
@@ -72,9 +91,10 @@ namespace Vista
             try
             {
                 BE_Usuario usuario = new BE_Usuario();
-                usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Id_usuario = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
                 usuarioBll.ActivarUsuario(usuario);
                 Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
+                Mostrar(poisonDataGridView2, usuarioBll.ObtenerTodosLosUsuariosDesactivos());
             }
             catch (Exception ex)
             {
@@ -90,7 +110,8 @@ namespace Vista
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 usuarioBll.DesactivarUsuario(usuario);
-                Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosDesactivos());
+                Mostrar(poisonDataGridView2, usuarioBll.ObtenerTodosLosUsuariosDesactivos());
+                Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             }
             catch (Exception ex)
             {

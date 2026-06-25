@@ -33,7 +33,7 @@ namespace ORM
             DataRow fila = dao.DtUsuario.Rows.Find(usuario.Id_usuario);
             if (fila != null)
             {
-                fila.ItemArray = new object[] { fila.Field<string>(0), usuario.Nombre, usuario.Apellido, usuario.Dni, usuario.Edad, usuario.Email, usuario.Contraseña, usuario.Rol, usuario.Activo };
+                fila.ItemArray = new object[] { fila.Field<string>(0), usuario.Nombre,usuario.Apellido, usuario.Dni,usuario.Edad, usuario.Email,usuario.Contraseña,usuario.Rol, usuario.Activo };
                 dao.GuardarCambios();
             }
         }
@@ -68,35 +68,31 @@ namespace ORM
             {
                 filaDetectar.SetField<bool>("Activo", true);
             }
-            else { throw new Exception("El usuario ya esta activo"); }
-                dao.GuardarCambios();
+            else { throw new Exception("El usuario que quiere activar se encuentra activo"); }
+            dao.GuardarCambios();
         }
         public void DesactivarUsuario(BE_Usuario usuario)
         {
             DataRow filaDetectar = dao.DtUsuario.Rows.Find(usuario.Id_usuario);
-            int cantAdmins = TotalAdministradoresActivos();
-            if(cantAdmins > 1)
+            if (filaDetectar != null && filaDetectar.Field<bool>("Activo"))
             {
-                if (filaDetectar != null && filaDetectar.Field<bool>("Activo"))
-                {
-                    filaDetectar.SetField<bool>("Activo", false);
-                }
-                else { throw new Exception("El usuario ya esta desactivo"); }
-                dao.GuardarCambios();
+                 filaDetectar.SetField<bool>("Activo", false);
+                 dao.GuardarCambios();
             }
-            else { throw new Exception("No se puede desactivar un administrador si solo existe uno. Agregue otro administrador"); }
+            else { throw new Exception("El usuario que quiere desactivar se encueesta inactivo."); }
         }
-        private int TotalAdministradoresActivos()
+        public int TotalAdministradoresActivos()
         {
             int cantAdminEnUsuarios = 0;
-            foreach (DataRow fila in dao.DtRol.Rows)
+            foreach (DataRow fila in dao.DtUsuario.Rows)
             {
-                if (fila.Field<string>("Titulo").ToUpper().Contains("ADMINISTRADOR"))
+                if (fila.Field<string>("Rol").ToUpper().Contains("ADMINISTRADOR") && fila.Field<bool>("Activo"))
                 {
                     cantAdminEnUsuarios++;
                 }
             }
             return cantAdminEnUsuarios;
+
         }
         public BE_Usuario? ObtenerUsuarioPorEmail(string email)
         {

@@ -103,30 +103,6 @@ namespace ORM
         }
         public void AsignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
         {
-            if (familiaPadre.Id_rol == subFamilia.Id_rol)
-            {
-                throw new Exception("No es posible asignar una Familia como subfamilia de sí misma.");
-            }
-
-            // 2. Buscamos los títulos reales en la tabla DtFamilia en memoria
-            DataRow filaPadre = dao.DtFamilia.Rows.Find(familiaPadre.Id_rol);
-            DataRow filaHija = dao.DtFamilia.Rows.Find(subFamilia.Id_rol);
-
-            if (filaPadre == null || filaHija == null)
-            {
-                throw new Exception("Una de las familias seleccionadas no existe en el sistema.");
-            }
-
-            string tituloPadre = filaPadre.Field<string>("Titulo").ToUpper();
-            string tituloHija = filaHija.Field<string>("Titulo").ToUpper();
-
-            // 3. Regla de Negocio: Un MENU no puede contener otro MENU
-            if (tituloPadre.Contains("MENU") && tituloHija.Contains("MENU"))
-            {
-                throw new Exception("Una familia de tipo 'MENU' no puede contener otra subfamilia de tipo 'MENU'.");
-            }
-
-            // 4. Verificamos si la relación ya existe en la tabla intermedia FamiliaXFamilia
             DataRow relacionExistente = dao.DtFamiliaXFamilia.Rows.Find(new object[] { familiaPadre.Id_rol, subFamilia.Id_rol });
 
             if (relacionExistente != null)
@@ -134,8 +110,6 @@ namespace ORM
                 throw new Exception("La subfamilia seleccionada ya se encuentra asignada a esta Familia.");
             }
 
-            
-            // 5. Si pasa todas las validaciones, guardamos en la tabla intermedia
             DataRow nuevaFilaSubFamilia = dao.DtFamiliaXFamilia.NewRow();
             nuevaFilaSubFamilia.ItemArray = new object[] { familiaPadre.Id_rol, subFamilia.Id_rol };
 

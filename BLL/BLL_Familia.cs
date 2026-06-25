@@ -75,7 +75,18 @@ namespace BLL
         {
             if (familiaPadre != null && subFamilia != null)
             {
-                ormFamilia.AsignarSubfamilia(familiaPadre,subFamilia);
+                string tituloPadre = familiaPadre.Titulo.ToUpper();
+                string tituloHija = subFamilia.Titulo.ToUpper();
+
+                if (tituloPadre.Contains("MENU") && tituloHija.Contains("MENU"))
+                {
+                    throw new Exception("Una familia de tipo 'MENU' no puede contener otra subfamilia de tipo 'MENU'.");
+                }
+                if (familiaPadre.Id_rol == subFamilia.Id_rol)
+                {
+                    throw new Exception("No es posible asignar una Familia como subfamilia de sí misma.");
+                }
+                ormFamilia.AsignarSubfamilia(familiaPadre, subFamilia);
             }
         }
         public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
