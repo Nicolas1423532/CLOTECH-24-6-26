@@ -103,7 +103,10 @@ namespace ORM
             List<BE_Rol> listaRoles = new List<BE_Rol>();
             foreach(DataRow dataRow in dao.DtRol.Rows)
             {
-                listaRoles.Add(new BE_Familia(dataRow.ItemArray));
+                if (dataRow.Field<bool>("Estado"))
+                {
+                    listaRoles.Add(new BE_Familia(dataRow.ItemArray));
+                }
             }
             return listaRoles;
         }

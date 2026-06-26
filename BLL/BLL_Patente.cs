@@ -32,7 +32,11 @@ namespace BLL
         }
         public void ModificarPatente(BE_Patente patente)
         {
-            ormPatente.ModificarPatente(patente);
+            if(patente != null)
+            {
+                ValidarDatosDePatente(patente);
+                ormPatente.ModificarPatente(patente);
+            }
         }
         public void AsignarPatente(BE_Patente patente, BE_Familia familia)
         {

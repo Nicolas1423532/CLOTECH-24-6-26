@@ -12,17 +12,22 @@ namespace BLL
     {
         ORM_Familia ormFamilia;
         ORM_Usuario ormUsuario;
+        ORM_Bitacora ormBitacora;
+        BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
         public BLL_Familia()
         {
             ormFamilia = new ORM_Familia();
             ormUsuario = new ORM_Usuario();
+            ormBitacora = new ORM_Bitacora();
         }
         public void AgregarFamilia(BE_Familia familia)
         {
             ValidarDatosDeFamilia(familia);
             if(familia != null)
             {
+                var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 ormFamilia.AgregarFamilia(familia);
+                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Familia", "Gestion de Familia", 2, DateTime.Now);
             }
         }
         public void BorrarFamilia(BE_Familia familia)
@@ -36,29 +41,24 @@ namespace BLL
         {
             if (familia != null)
             {
+                List<BE_Familia> todasLasFamilias = ormFamilia.ObtenerTodasLasFamilias();
+                BE_Familia familiaExistente = todasLasFamilias.Find(f => f.Id_rol == familia.Id_rol);
+
+                if (familiaExistente == null)
+                {
+                    throw new Exception("La familia que intenta modificar no existe en el sistema.");
+                }
+                string tituloNuevo = familia.Titulo.ToUpper();
+                string tituloViejo = familiaExistente.Titulo.ToUpper();
+
+                if (tituloViejo.Contains("MENU") && !tituloNuevo.Contains("MENU"))
+                {
+                    throw new Exception("No se puede remover la palabra 'MENU' de una familia configurada como contenedor de interfaz.");
+                }
+                ValidarDatosDeFamilia(familia);
                 ormFamilia.ModificarFamilia(familia);
-            }
-        }
-        public void Asignar(object nodoSeleccionado,BE_Usuario usuario, BE_Familia familia)
-        {
-            if (nodoSeleccionado.GetType() == typeof(BE_Rol))
-            {
-                AsignarFamilia(usuario, (BE_Rol)nodoSeleccionado, familia);
-            }
-            else if (nodoSeleccionado.GetType() == typeof(BE_Familia))
-            {
-                AsignarSubfamilia((BE_Familia)nodoSeleccionado, familia);
-            }
-        }
-        public void Desasignar(object nodoSeleccionado, BE_Familia familia)
-        {
-            if (nodoSeleccionado.GetType() == typeof(BE_Rol))
-            {
-                DesasignarFamilia(nodoSeleccionado as BE_Rol, familia);
-            }
-            else if (nodoSeleccionado.GetType() == typeof(BE_Familia))
-            {
-                DesasignarSubfamilia(nodoSeleccionado as BE_Familia, familia);
+                var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Familia", "Gestion de Familia", 2, DateTime.Now);
             }
         }
         public void AsignarFamilia(BE_Usuario usuario,BE_Rol rol, BE_Familia familia)
@@ -84,19 +84,19 @@ namespace BLL
             {
                 ormFamilia.DesasignarFamilia(rol, familia);
             }
-            if (familia.Titulo.ToUpper().Contains("MENU"))
-            {
-                BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
+            //if (familia.Titulo.ToUpper().Contains("MENU"))
+            //{
+            //    BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
 
-                if (usuarioActual != null && usuarioActual.Rol.ToUpper() == "ADMINISTRADOR")
-                {
-                    int adminsActivos = ormUsuario.ObtenerTodosLosUsuariosActivos().Count(u => u.Rol.ToUpper() == "ADMINISTRADOR");
-                    if (adminsActivos <= 1)
-                    {
-                        throw new Exception("Operación denegada por seguridad: No se puede desasignar un menú al único Administrador activo del sistema.");
-                    }
-                }
-            }
+            //    if (usuarioActual != null && usuarioActual.Rol.ToUpper() == "ADMINISTRADOR")
+            //    {
+            //        int adminsActivos = ormUsuario.ObtenerTodosLosUsuariosActivos().Count(u => u.Rol.ToUpper() == "ADMINISTRADOR");
+            //        if (adminsActivos <= 1)
+            //        {
+            //            throw new Exception("Operación denegada por seguridad: No se puede desasignar un menú al único Administrador activo del sistema.");
+            //        }
+            //    }
+            //}
 
         }
         public void AsignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
@@ -119,21 +119,24 @@ namespace BLL
         }
         public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
         {
-            if (subFamilia.Titulo.ToUpper().Contains("MENU"))
+            //if (subFamilia.Titulo.ToUpper().Contains("MENU"))
+            //{
+            //    BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
+
+            //    if (usuarioActual != null && usuarioActual.Rol.ToUpper() == "ADMINISTRADOR")
+            //    {
+            //        int adminsActivos = ormUsuario.ObtenerTodosLosUsuariosActivos().Count(u => u.Rol.ToUpper() == "ADMINISTRADOR");
+
+            //        if (adminsActivos <= 1)
+            //        {
+            //            throw new Exception("Operación denegada por seguridad: No se puede desasignar una subfamilia de menú al único Administrador activo del sistema.");
+            //        }
+            //    }
+            //}
+            if(familiaPadre !=null && subFamilia != null)
             {
-                BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
-
-                if (usuarioActual != null && usuarioActual.Rol.ToUpper() == "ADMINISTRADOR")
-                {
-                    int adminsActivos = ormUsuario.ObtenerTodosLosUsuariosActivos().Count(u => u.Rol.ToUpper() == "ADMINISTRADOR");
-
-                    if (adminsActivos <= 1)
-                    {
-                        throw new Exception("Operación denegada por seguridad: No se puede desasignar una subfamilia de menú al único Administrador activo del sistema.");
-                    }
-                }
+                ormFamilia.DesasignarSubfamilia(familiaPadre, subFamilia);
             }
-            ormFamilia.DesasignarSubfamilia(familiaPadre, subFamilia);
         }
         public List<object> ObtenerTodasLasFamilias()
         {

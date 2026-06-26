@@ -26,7 +26,7 @@ namespace SERVICIO
         public static string GenerarIDBitacora()
         {
             var generacionIdAuto = Guid.NewGuid().ToString();
-            string idBitacora = generacionIdAuto.Substring(0, 10);
+            string idBitacora = generacionIdAuto;
             return idBitacora;
         }
     }

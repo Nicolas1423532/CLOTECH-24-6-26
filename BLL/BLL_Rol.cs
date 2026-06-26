@@ -1,6 +1,7 @@
 ﻿using BE;
 using Microsoft.VisualBasic;
 using ORM;
+using SERVICIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,12 @@ namespace BLL
     public class BLL_Rol
     {
         ORM_Rol ormRol;
+        ORM_Bitacora ormBitacora;
+        BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
         public BLL_Rol()
         {
             ormRol = new ORM_Rol();
+            ormBitacora = new ORM_Bitacora();
         }
         public void AgregarRol(BE_Rol rol)
         {
@@ -24,6 +28,8 @@ namespace BLL
                 throw new Exception("Operación inválida: El sistema requiere al menos un rol de Administrador configurado.");
             }
             ormRol.AgregarRol(rol);
+            var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+            ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Rol", "Gestion de Rol", 1, DateTime.Now);
         }
         public void BorrarRol(BE_Rol rol)
         {
@@ -43,11 +49,33 @@ namespace BLL
         }
         public void ModificarRol(BE_Rol rol)
         {
-            ormRol.ModificarRol(rol);
+            if(rol != null)
+            {
+                List<BE_Rol> todosLosRoles = ormRol.ObtenerTodosLosRoles();
+                BE_Rol rolExistente = todosLosRoles.Find(r => r.Id_rol == rol.Id_rol);
+                if (rolExistente.Titulo.ToUpper().Contains("ADMINISTRADOR"))
+                {
+                    if (rolExistente.Estado == true && rol.Estado == false)
+                    {
+                        int adminsActivos = todosLosRoles.Count(r => r.Titulo.ToUpper().Contains("ADMINISTRADOR"));
+                        if (adminsActivos <= 1)
+                        {
+                            throw new Exception("No se puede desactivar el rol Administrador porque es el único rol de gestión activo en el sistema.");
+                        }
+                    }
+                }
+                ValidarDatosDelRol(rol);
+                ormRol.ModificarRol(rol);
+                var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Rol", "Gestion de Rol", 1, DateTime.Now);
+            }
         }
         public void Asignar(BE_Usuario usuario, BE_Rol rol)
         {
-            ormRol.Asignar(usuario,rol);
+            if(usuario != null && rol != null)
+            {
+                ormRol.Asignar(usuario, rol);
+            }
         }
         public void Desasignar(BE_Usuario usuario, BE_Rol rol)
         {

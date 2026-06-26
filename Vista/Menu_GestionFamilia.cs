@@ -131,16 +131,23 @@ namespace Vista
         {
             try
             {
-                bool resultado = false;
                 BE_Usuario usuario = new BE_Usuario();
-                if (foreverTreeView1.SelectedNode == null) { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
-                var nodoSeleccionado = foreverTreeView1.SelectedNode.Tag;
-                BE_Familia familia = new BE_Familia();
-                familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
-                familia.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
-                familiaBll.Asignar(nodoSeleccionado,usuario, familia);
+                BE_Familia familiaAAgregar = new BE_Familia();
+                familiaAAgregar.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                familiaAAgregar.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+                var objetoNodo = foreverTreeView1.SelectedNode.Tag;
+                if (foreverTreeView1.SelectedNode.Parent == null)
+                {
+                    BE_Rol rolRaiz = objetoNodo as BE_Rol;
+                    familiaBll.AsignarFamilia(usuario,rolRaiz,familiaAAgregar);
+                }
+                else
+                {
+                    BE_Familia familiaPadre = objetoNodo as BE_Familia;
+                    familiaBll.AsignarSubfamilia(familiaPadre, familiaAAgregar);
+                }
                 LlenarTreeViewPermisos(usuario.Id_usuario);
             }
             catch (Exception ex)
@@ -153,17 +160,39 @@ namespace Vista
         {
             try
             {
-                if (foreverTreeView1.SelectedNode == null) { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
-                var nodoSeleccionado = foreverTreeView1.SelectedNode.Tag;
-                BE_Rol rol = new BE_Familia();
+                BE_Familia familiaAAgregar = new BE_Familia();
+                familiaAAgregar.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                familiaAAgregar.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+                var objetoNodo = foreverTreeView1.SelectedNode.Tag;
+                if (foreverTreeView1.SelectedNode.Parent == null)
+                {
+                    BE_Rol rolRaiz = objetoNodo as BE_Rol;
+                    familiaBll.DesasignarFamilia(rolRaiz, familiaAAgregar);
+                }
+                else
+                {
+                    BE_Familia familiaPadre = objetoNodo as BE_Familia;
+                    familiaBll.DesasignarSubfamilia(familiaPadre, familiaAAgregar);
+                }
+                LlenarTreeViewPermisos(usuario.Id_usuario);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void skyButton6_Click(object sender, EventArgs e)
+        {
+            try
+            {
                 BE_Familia familia = new BE_Familia();
                 familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
-                familia.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
-                familiaBll.Desasignar(nodoSeleccionado, familia);
-                LlenarTreeViewPermisos(usuario.Id_usuario);
+                familia.Titulo = Interaction.InputBox("Titulo familia: ");
+                familia.Estado = MessageBox.Show("Estado del rol", "", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
+                familiaBll.ModificarFamilia(familia);
             }
             catch (Exception ex)
             {
