@@ -123,6 +123,7 @@ namespace BLL
             bool resultado = false;
             string idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
             if (string.IsNullOrEmpty(contraseña)) { throw new Exception("El texto a cifrar no puede ser nulo o vacío."); }
+            if (string.IsNullOrEmpty(email)) { throw new Exception("El correo no puede estar vacío"); }
             BE_Usuario usuario = ormUsuario.ObtenerUsuarioPorEmail(email);
             if (usuario == null) { resultado = false; }
             string contraseñaEncriptada = SERVICIO_Criptografia.Encriptar(contraseña);
