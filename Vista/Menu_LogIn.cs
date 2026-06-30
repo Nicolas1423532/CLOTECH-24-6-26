@@ -4,10 +4,12 @@ using SERVICIO;
 
 namespace Vista
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, IObservadorIdioma
     {
         byte intentos = 0;
         BLL_Usuario bllUsuario;
+        SERVICIO_Idioma servicioIdioma = SERVICIO_Idioma.ObtenerInstancia();
+        BLL_Idioma bllIdioma;
         public Form1()
         {
             InitializeComponent();
@@ -19,6 +21,9 @@ namespace Vista
             {
                 if (bllUsuario.Log_In(textBox1.Text, textBox2.Text))
                 {
+                    string idUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Id_usuario;
+                    string idiomaGuardado = bllIdioma.ObtenerIdiomaDelUsuario(idUsuario);
+                    servicioIdioma.CambiarIdioma(idiomaGuardado);
                     MessageBox.Show("Inicio de sesión exitoso");
                     Menu_Principal menuP = new Menu_Principal();
                     menuP.Show();
@@ -52,9 +57,18 @@ namespace Vista
         private void Form1_Load(object sender, EventArgs e)
         {
             bllUsuario = new BLL_Usuario();
+            bllIdioma = new BLL_Idioma();
+            servicioIdioma.CargarDesdeJson();
+            servicioIdioma.Suscribir(this);
+            ActualizarIdioma();
         }
 
-        private void foxLinkLabel1_Click(object sender, EventArgs e)
+        private void aloneComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
@@ -68,6 +82,14 @@ namespace Vista
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void ActualizarIdioma()
+        {
+            textBox1.PlaceholderText = servicioIdioma.ObtenerTraduccion("lbl_email");
+            textBox2.PlaceholderText = servicioIdioma.ObtenerTraduccion("lbl_password");
+            button1.Text = servicioIdioma.ObtenerTraduccion("btn_login");
+            linkLabel1.Text = servicioIdioma.ObtenerTraduccion("lnk_cambiar_contra");
         }
     }
 }

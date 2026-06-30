@@ -39,6 +39,7 @@ namespace Vista
             skyButton1 = new ReaLTaiizor.Controls.SkyButton();
             pictureBox1 = new PictureBox();
             dungeonHeaderLabel1 = new ReaLTaiizor.Controls.DungeonHeaderLabel();
+            aloneComboBox1 = new ReaLTaiizor.Controls.AloneComboBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -292,7 +293,7 @@ namespace Vista
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(453, -92);
+            pictureBox1.Location = new Point(376, -86);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(378, 290);
             pictureBox1.TabIndex = 1;
@@ -310,12 +311,26 @@ namespace Vista
             dungeonHeaderLabel1.TabIndex = 3;
             dungeonHeaderLabel1.Text = "dungeonHeaderLabel1";
             // 
+            // aloneComboBox1
+            // 
+            aloneComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
+            aloneComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            aloneComboBox1.EnabledCalc = true;
+            aloneComboBox1.FormattingEnabled = true;
+            aloneComboBox1.ItemHeight = 20;
+            aloneComboBox1.Location = new Point(806, 21);
+            aloneComboBox1.Name = "aloneComboBox1";
+            aloneComboBox1.Size = new Size(121, 26);
+            aloneComboBox1.TabIndex = 4;
+            aloneComboBox1.SelectedIndexChanged += aloneComboBox1_SelectedIndexChanged;
+            // 
             // Menu_Principal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(951, 575);
+            Controls.Add(aloneComboBox1);
             Controls.Add(dungeonHeaderLabel1);
             Controls.Add(pictureBox1);
             Controls.Add(panel1);
@@ -345,5 +360,6 @@ namespace Vista
         private ReaLTaiizor.Controls.SkyButton skyButton5;
         private ReaLTaiizor.Controls.SkyButton skyButton6;
         private ReaLTaiizor.Controls.DungeonHeaderLabel dungeonHeaderLabel1;
+        private ReaLTaiizor.Controls.AloneComboBox aloneComboBox1;
     }
 }

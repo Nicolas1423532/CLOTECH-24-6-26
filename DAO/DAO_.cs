@@ -13,7 +13,7 @@ namespace DAO
     {
         SqlConnection conexion;
         DataSet ds;
-        DataTable dtUsuario, dtProducto, dtCliente, dtProveedor, dtFactura, dtDetalle, dtBitacora,dtDevolucion, dtDevolucionDetalle, dtOrdenCompra, dtOrdenCompraDetalle, dtRol, dtFamilia, dtPatente, dtRolXFamilia,dtFamiliaXFamilia,dtRolXPatente,dtPatenteXFamilia, dtUsuarioXRol;
+        DataTable dtUsuario, dtProducto, dtCliente, dtProveedor, dtFactura, dtDetalle, dtBitacora,dtDevolucion, dtDevolucionDetalle, dtOrdenCompra, dtOrdenCompraDetalle, dtIdioma,dtUsuarioXIdioma, dtRol, dtFamilia, dtPatente, dtRolXFamilia,dtFamiliaXFamilia,dtRolXPatente,dtPatenteXFamilia, dtUsuarioXRol;
         public DataTable DtUsuario { get => dtUsuario; set => dtUsuario = value; }
         public DataTable DtBitacora { get => dtBitacora; set=> dtBitacora = value; }
         public DataTable DtProducto { get => dtProducto; set => dtProducto = value; }
@@ -28,9 +28,11 @@ namespace DAO
         public DataTable DtRolXFamilia { get => dtRolXFamilia; set => dtRolXFamilia = value; }
         public DataTable DtFamiliaXFamilia { get => dtFamiliaXFamilia; set => dtFamiliaXFamilia = value; }
         public DataTable DtRolXPatente { get => dtRolXPatente; set => dtRolXPatente = value; }
+        public DataTable DtIdioma { get => dtIdioma; set => dtIdioma = value; }
+        public DataTable DtUsuarioXIdioma_ { get => dtUsuarioXIdioma; set=> dtUsuarioXIdioma = value; }
         public DataTable DtPatenteXFamilia { get => dtPatenteXFamilia; set => dtPatenteXFamilia = value; }
-        SqlDataAdapter adapUsuario, adapBitacora,adapProducto, adapCliente, adapProveedor, adapFactura, adapDetalle, adapDevolucion, adapDevolucionDetalle, adapOrdenCompra, adapOrdenCompraDetalle, adapUsuarioXRol,adapRol, adapFamilia, adapPatente, adapRolXFamilia, adapFamiliaXFamilia,adapRolXPatente,adapPatenteXFamilia;
-        SqlCommandBuilder? cmbUsuario, cmbBitacora,cmbProducto, cmbCliente, cmbProveedor, cmbFactura, cmbDetalle, cmbDevolucion, cmbDevolucionDetalle, cmbOrdenCompra, cmbOrdenCompraDetalle,cmbUsuarioXRol ,cmbRol, cmbFamilia, cmbPatente, cmbRolXFamilia, cmbRolXPatente, cmbFamiliaXFamilia, cmbPatenteXFamilia;
+        SqlDataAdapter adapUsuario, adapBitacora,adapProducto, adapCliente, adapProveedor, adapFactura, adapDetalle, adapDevolucion, adapDevolucionDetalle, adapOrdenCompra, adapOrdenCompraDetalle, adapIdioma, adapUsuarioXIdioma,adapUsuarioXRol,adapRol, adapFamilia, adapPatente, adapRolXFamilia, adapFamiliaXFamilia,adapRolXPatente,adapPatenteXFamilia;
+        SqlCommandBuilder? cmbUsuario, cmbBitacora,cmbProducto, cmbCliente, cmbProveedor, cmbFactura, cmbDetalle, cmbDevolucion, cmbDevolucionDetalle, cmbOrdenCompra, cmbOrdenCompraDetalle,cmbIdioma,cmbUsuarioXIdioma,cmbUsuarioXRol ,cmbRol, cmbFamilia, cmbPatente, cmbRolXFamilia, cmbRolXPatente, cmbFamiliaXFamilia, cmbPatenteXFamilia;
         DataRelation relUsuario_A_Rol,relRol_A_Usuario,relRolAFamilia, relFamiliaAlRol, relFamiliaAPatente,relPatenteAFamilia, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre;
         public DataRelation RelRolAFamilia { get => relRolAFamilia; set => relRolAFamilia = value; }
         public DataRelation RelFamiliaAlRol { get => relFamiliaAlRol; set => relFamiliaAlRol = value; }
@@ -50,6 +52,8 @@ namespace DAO
             dtProducto = new DataTable("Producto");
             dtFactura = new DataTable("Factura");
             dtDetalle = new DataTable("Detalle");
+            dtIdioma = new DataTable("Idioma");
+            dtUsuarioXIdioma = new DataTable("UsuarioXIdioma");
             dtUsuarioXRol = new DataTable("UsuarioXRol");
             dtBitacora = new DataTable("Bitacora");
             dtRol = new DataTable("Rol");
@@ -68,6 +72,8 @@ namespace DAO
             adapProducto = new SqlDataAdapter("SELECT * FROM Producto", conexion);
             adapFactura = new SqlDataAdapter("SELECT * FROM Factura", conexion);
             adapDetalle = new SqlDataAdapter("SELECT * FROM Detalle", conexion);
+            adapIdioma = new SqlDataAdapter("SELECT * FROM Idioma", conexion);
+            adapUsuarioXIdioma = new SqlDataAdapter("SELECT * FROM UsuarioXIdioma", conexion);
             adapUsuarioXRol = new SqlDataAdapter("SELECT * FROM UsuarioXRol", conexion);
             adapRol = new SqlDataAdapter("SELECT * FROM Rol", conexion);
             adapFamilia = new SqlDataAdapter("SELECT * FROM Familia", conexion);
@@ -83,6 +89,8 @@ namespace DAO
             cmbProducto = new SqlCommandBuilder(adapProducto);
             cmbFactura = new SqlCommandBuilder(adapFactura);
             cmbDetalle = new SqlCommandBuilder(adapDetalle);
+            cmbIdioma = new SqlCommandBuilder(adapIdioma);
+            cmbUsuarioXIdioma = new SqlCommandBuilder(adapUsuarioXIdioma);
             cmbUsuarioXRol = new SqlCommandBuilder(adapUsuarioXRol);
             cmbRol = new SqlCommandBuilder(adapRol);
             cmbFamilia = new SqlCommandBuilder(adapFamilia);
@@ -94,6 +102,8 @@ namespace DAO
             ActualizarTablas();
             dtCliente.PrimaryKey = new DataColumn[] { dtCliente.Columns["Id_Cliente"] };
             dtBitacora.PrimaryKey = new DataColumn[] { dtBitacora.Columns["Id_Bitacora"] };
+            dtIdioma.PrimaryKey = new DataColumn[] { dtIdioma.Columns["Id_Idioma"] };
+            dtUsuarioXIdioma.PrimaryKey = new DataColumn[] { dtUsuarioXIdioma.Columns["Id_Usuario"] };
             dtUsuario.PrimaryKey = new DataColumn[] { dtUsuario.Columns["Id_Usuario"] };
             dtProveedor.PrimaryKey = new DataColumn[] { dtProveedor.Columns["Id_Proveedor"] };
             dtProducto.PrimaryKey = new DataColumn[] { dtProducto.Columns["Id_Producto"] };
@@ -128,6 +138,8 @@ namespace DAO
             adapProducto.Fill(dtProducto);
             adapFactura.Fill(dtFactura);
             adapDetalle.Fill(dtDetalle);
+            adapIdioma.Fill(dtIdioma);
+            adapUsuarioXIdioma.Fill(dtUsuarioXIdioma);
             adapUsuarioXRol.Fill(dtUsuarioXRol);
             adapRol.Fill(dtRol);
             adapFamilia.Fill(dtFamilia);
@@ -146,6 +158,8 @@ namespace DAO
             adapProducto.Update(dtProducto);
             adapFactura.Update(dtFactura);
             adapDetalle.Update(dtDetalle);
+            adapIdioma.Update(dtIdioma);
+            adapUsuarioXIdioma.Update(dtUsuarioXIdioma);
             adapUsuarioXRol.Update(dtUsuarioXRol);
             adapRol.Update(dtRol);
             adapFamilia.Update(dtFamilia);

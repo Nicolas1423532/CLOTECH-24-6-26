@@ -33,7 +33,8 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             button1 = new Button();
-            foxLinkLabel1 = new ReaLTaiizor.Controls.FoxLinkLabel();
+            aloneComboBox1 = new ReaLTaiizor.Controls.AloneComboBox();
+            linkLabel1 = new LinkLabel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -78,20 +79,32 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
-            // foxLinkLabel1
+            // aloneComboBox1
             // 
-            foxLinkLabel1.BackColor = Color.Transparent;
-            foxLinkLabel1.DownColor = Color.FromArgb(255, 149, 0);
-            foxLinkLabel1.EnabledCalc = true;
-            foxLinkLabel1.Font = new Font("Segoe UI", 10F);
-            foxLinkLabel1.ForeColor = Color.FromArgb(0, 149, 221);
-            foxLinkLabel1.Location = new Point(250, 367);
-            foxLinkLabel1.Name = "foxLinkLabel1";
-            foxLinkLabel1.OverColor = Color.FromArgb(23, 140, 229);
-            foxLinkLabel1.Size = new Size(146, 18);
-            foxLinkLabel1.TabIndex = 8;
-            foxLinkLabel1.Text = "Cambiar contraseña";
-            foxLinkLabel1.Click += foxLinkLabel1_Click;
+            aloneComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
+            aloneComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            aloneComboBox1.EnabledCalc = true;
+            aloneComboBox1.FormattingEnabled = true;
+            aloneComboBox1.ItemHeight = 20;
+            aloneComboBox1.Items.AddRange(new object[] { "Español", "English" });
+            aloneComboBox1.Location = new Point(694, 12);
+            aloneComboBox1.Name = "aloneComboBox1";
+            aloneComboBox1.Size = new Size(146, 26);
+            aloneComboBox1.TabIndex = 9;
+            aloneComboBox1.Visible = false;
+            aloneComboBox1.SelectedIndexChanged += aloneComboBox1_SelectedIndexChanged;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.LinkColor = Color.FromArgb(0, 149, 221);
+            linkLabel1.Location = new Point(250, 370);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(115, 15);
+            linkLabel1.TabIndex = 10;
+            linkLabel1.TabStop = true;
+            linkLabel1.Text = "Cambiar Contraseña";
+            linkLabel1.LinkClicked += linkLabel1_LinkClicked_1;
             // 
             // Form1
             // 
@@ -99,7 +112,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ButtonHighlight;
             ClientSize = new Size(886, 515);
-            Controls.Add(foxLinkLabel1);
+            Controls.Add(linkLabel1);
+            Controls.Add(aloneComboBox1);
             Controls.Add(button1);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
@@ -118,6 +132,7 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private Button button1;
-        private ReaLTaiizor.Controls.FoxLinkLabel foxLinkLabel1;
+        private ReaLTaiizor.Controls.AloneComboBox aloneComboBox1;
+        private LinkLabel linkLabel1;
     }
 }

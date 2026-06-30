@@ -15,11 +15,13 @@ namespace BLL
         ORM_Usuario ormUsuario;
         ORM_Rol ormRol;
         ORM_Bitacora ormBitacora;
+        BLL_Idioma idiomaBll;
         public BLL_Usuario()
         {
             ormUsuario = new ORM_Usuario();
             ormRol = new ORM_Rol();
             ormBitacora = new ORM_Bitacora();
+            idiomaBll = new BLL_Idioma();
         }
         public void AgregarUsuario(BE_Usuario usuario)
         {
@@ -152,9 +154,12 @@ namespace BLL
         {
             if (opcion)
             {
-                var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
+                var idBitacoraLogOut = SERVICIO_Criptografia.GenerarIDBitacora();
                 string emailUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Email;
-                ormBitacora.AgregarBitacora(idBitacora, emailUsuario, "Log Out", "Usuario", 2, DateTime.Now);
+                string idUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Id_usuario;
+                ormBitacora.AgregarBitacora(idBitacoraLogOut, emailUsuario, "Log Out", "Usuario", 2, DateTime.Now);
+                idiomaBll.GuardarIdiomaUsuario(idUsuario);
+                SERVICIO_Idioma.ObtenerInstancia().GuardarEnJson();
                 SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = null;
                 SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = null;
 
