@@ -125,7 +125,8 @@ namespace Vista
             {
                 if (foreverTreeView1.Nodes.Count == 0) { throw new Exception("No hay rol para eliminar"); }
                 string idRol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
-                BE_Rol rol = new BE_Familia() { Id_rol = idRol };
+                string tituloRol = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+                BE_Rol rol = new BE_Familia() { Id_rol = idRol, Titulo = tituloRol };
                 rolBll.BorrarRol(rol);
                 Mostrar(poisonDataGridView2, rolBll.ObtenerTodosLosRoles());
             }

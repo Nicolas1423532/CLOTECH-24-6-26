@@ -39,10 +39,19 @@ namespace ORM
         public void BorrarFamilia(BE_Familia familia)
         {
             DataRow fila = dao.DtFamilia.Rows.Find(familia.Id_rol);
-            fila.Delete();
-            dao.GuardarCambios();
+            //int filasRelacionadas = dao.DtRolXFamilia.Select($"Id_rol = {familia.Id_rol}").Length;
+            int filasRelacionadas = fila.GetChildRows(dao.RelFamiliaAlRol).Length;
+            if (fila!= null && filasRelacionadas < 1)
+            {
+                fila.Delete();
+                dao.GuardarCambios();
+            }
+            else
+            {
+                throw new Exception("No se puede eliminar la familia porque tiene roles asignados o no existe en la BD");
+            }
         }
-        public void AsignarFamilia(BE_Usuario usuario, BE_Rol rol, BE_Familia familia)
+        public void AsignarFamilia(BE_Rol rol, BE_Familia familia)
         {
             DataRow filaFamilia = dao.DtFamilia.Rows.Find(familia.Id_rol);
             if (filaFamilia == null)

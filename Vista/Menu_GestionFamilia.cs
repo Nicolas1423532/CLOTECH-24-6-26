@@ -141,7 +141,7 @@ namespace Vista
                 if (foreverTreeView1.SelectedNode.Parent == null)
                 {
                     BE_Rol rolRaiz = objetoNodo as BE_Rol;
-                    familiaBll.AsignarFamilia(usuario,rolRaiz,familiaAAgregar);
+                    familiaBll.AsignarFamilia(rolRaiz,familiaAAgregar);
                 }
                 else
                 {

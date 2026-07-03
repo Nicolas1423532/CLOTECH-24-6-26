@@ -30,7 +30,7 @@ namespace BLL
                 ValidarDatosDelUsuario(usuario);
                 EstablecerFormatoCorreoContraBase(usuario);
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
-                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Registrar Usuario", "Administracion", 1 ,DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Registrar Usuario", "Administracion", 1 ,DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
                 ormUsuario.AgregarUsuario(usuario);
             }
         }
@@ -125,17 +125,21 @@ namespace BLL
             bool resultado = false;
             string idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
             if (string.IsNullOrEmpty(contraseña)) { throw new Exception("El texto a cifrar no puede ser nulo o vacío."); }
-            if (string.IsNullOrEmpty(email)) { throw new Exception("El correo no puede estar vacío"); }
+            if (string.IsNullOrEmpty(email)) { throw new Exception("El correo no puede estar vacío"); }           
             BE_Usuario usuario = ormUsuario.ObtenerUsuarioPorEmail(email);
             if (usuario == null) { resultado = false; }
             string contraseñaEncriptada = SERVICIO_Criptografia.Encriptar(contraseña);
             if(usuario!= null && usuario.Contraseña == contraseñaEncriptada)
             {
                 SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = usuario;
+                if(ormRol.ObtenerCantidadRolesFamiliasAsignadas(usuario.Id_usuario) < 1)
+                {
+                    throw new Exception("El usuario no tiene roles y/o familias asignadas. Contacte con un administrador.");
+                }
                 resultado = true;
-                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Log In", "Usuario", 1,DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Log In", "Usuario", 1,DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
                 BE_Rol permisosUsuario = ormRol.ObtenerFamiliaDelUsuario(usuario.Id_usuario);
-                if (permisosUsuario != null) { SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = permisosUsuario; } else { throw new Exception("Usuario sin rol"); }
+                if (permisosUsuario != null) { SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = permisosUsuario; }
             }
             else { resultado = false; }
             return resultado;
@@ -157,7 +161,7 @@ namespace BLL
                 var idBitacoraLogOut = SERVICIO_Criptografia.GenerarIDBitacora();
                 string emailUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Email;
                 string idUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Id_usuario;
-                ormBitacora.AgregarBitacora(idBitacoraLogOut, emailUsuario, "Log Out", "Usuario", 2, DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacoraLogOut, emailUsuario, "Log Out", "Usuario", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
                 idiomaBll.GuardarIdiomaUsuario(idUsuario);
                 SERVICIO_Idioma.ObtenerInstancia().GuardarEnJson();
                 SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = null;
@@ -193,7 +197,7 @@ namespace BLL
             usuario.Contraseña = SERVICIO_Criptografia.Encriptar(contraNueva);
             ormUsuario.ModificarUsuario(usuario);
             var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
-            ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Cambio de Contraseña", "Usuario", 2, DateTime.Now);
+            ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Cambio de Contraseña", "Usuario", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
         }
     }
 }

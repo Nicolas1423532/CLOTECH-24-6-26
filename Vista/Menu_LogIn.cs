@@ -90,6 +90,7 @@ namespace Vista
             textBox2.PlaceholderText = servicioIdioma.ObtenerTraduccion("lbl_password");
             button1.Text = servicioIdioma.ObtenerTraduccion("btn_login");
             linkLabel1.Text = servicioIdioma.ObtenerTraduccion("lnk_cambiar_contra");
+            //MessageBox.Show(servicioIdioma.ObtenerTraduccion("msg_bienvenida"));
         }
     }
 }

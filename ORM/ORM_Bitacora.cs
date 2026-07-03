@@ -15,13 +15,13 @@ namespace ORM
         {
             dao = DAO_.ObtenerInstancia();
         }
-        public void AgregarBitacora(string idBitacora, string logIn,string evento, string modulo, int criticidad, DateTime fecha)
+        public void AgregarBitacora(string idBitacora, string logIn,string evento, string modulo, int criticidad, DateTime fecha, TimeSpan horario)
         {
             DataRow filaExistente = dao.DtBitacora.Rows.Find(idBitacora);
             if (filaExistente == null)
             {
                 DataRow filaBitacora = dao.DtBitacora.NewRow();
-                filaBitacora.ItemArray = new object[] {idBitacora,logIn,evento,modulo,criticidad,fecha};
+                filaBitacora.ItemArray = new object[] {idBitacora,logIn,evento,modulo,criticidad,fecha, horario};
                 dao.DtBitacora.Rows.Add(filaBitacora);
                 dao.GuardarCambios();
             }
@@ -35,5 +35,14 @@ namespace ORM
             }
             return lstBitacoras;
         }
+        //public List<BE_Bitacora> ObtenerBitacorasPorFiltrado()
+        //{
+        //    List<BE_Bitacora> lstBitacoras = new List<BE_Bitacora>();
+        //    foreach (DataRow filaB in dao.DtBitacora.Rows)
+        //    {
+        //        lstBitacoras.Add(new BE_Bitacora(filaB.ItemArray));
+        //    }
+        //    return lstBitacoras;
+        //}
     }
 }

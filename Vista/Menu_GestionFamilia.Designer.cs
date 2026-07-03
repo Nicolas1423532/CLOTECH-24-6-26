@@ -126,6 +126,7 @@
             skyButton5.TabIndex = 13;
             skyButton5.Tag = "MODULO_ADMIN";
             skyButton5.Text = "ELIMINAR FAMILIA";
+            skyButton5.UseWaitCursor = true;
             skyButton5.Visible = false;
             skyButton5.Click += skyButton5_Click;
             // 
@@ -267,7 +268,7 @@
             skyButton11.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton11.TabIndex = 22;
             skyButton11.Tag = "MODULO_ADMIN";
-            skyButton11.Text = "DESASIGNAR";
+            skyButton11.Text = "DESASIGNAR FAMILIA";
             skyButton11.Click += skyButton11_Click;
             // 
             // skyButton10
@@ -305,7 +306,7 @@
             skyButton10.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton10.TabIndex = 21;
             skyButton10.Tag = "MODULO_ADMIN";
-            skyButton10.Text = "ASIGNAR";
+            skyButton10.Text = "ASIGNAR FAMILIA";
             skyButton10.Click += skyButton10_Click;
             // 
             // poisonDataGridView2

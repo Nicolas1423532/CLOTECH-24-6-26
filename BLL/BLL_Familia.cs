@@ -27,7 +27,7 @@ namespace BLL
             {
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 ormFamilia.AgregarFamilia(familia);
-                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Familia", "Gestion de Familia", 2, DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Familia", "Gestion de Familia", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
             }
         }
         public void BorrarFamilia(BE_Familia familia)
@@ -58,24 +58,23 @@ namespace BLL
                 ValidarDatosDeFamilia(familia);
                 ormFamilia.ModificarFamilia(familia);
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
-                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Familia", "Gestion de Familia", 2, DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Familia", "Gestion de Familia", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
             }
         }
-        public void AsignarFamilia(BE_Usuario usuario,BE_Rol rol, BE_Familia familia)
+        public void AsignarFamilia(BE_Rol rol, BE_Familia familia)
         {
-            if (usuario != null && rol != null && familia != null)
+            if (rol != null && familia != null)
             {
                 string tituloFamilia = familia.Titulo.ToUpper();
-                string perfilUsuario = usuario.Rol.ToUpper();
 
                 if (tituloFamilia.Contains("ADMINISTRADOR"))
                 {
-                    if (perfilUsuario != "ADMINISTRADOR")
-                    {
-                        throw new Exception($"Restricción de seguridad: Un usuario con perfil '{usuario.Rol}' no puede recibir permisos de una familia de tipo 'Administrador'.");
-                    }
+                    //if (perfilUsuario != "ADMINISTRADOR")
+                    //{
+                         throw new Exception("Reestriccion de seguridad: no se puede eliminar una familia raiz");
+                    //}
                 }
-                ormFamilia.AsignarFamilia(usuario,rol, familia);
+                ormFamilia.AsignarFamilia(rol, familia);
             }
         }
         public void DesasignarFamilia(BE_Rol rol, BE_Familia familia)

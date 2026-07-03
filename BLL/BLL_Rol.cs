@@ -29,7 +29,7 @@ namespace BLL
             }
             ormRol.AgregarRol(rol);
             var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
-            ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Rol", "Gestion de Rol", 1, DateTime.Now);
+            ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Rol", "Gestion de Rol", 1, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
         }
         public void BorrarRol(BE_Rol rol)
         {
@@ -40,10 +40,10 @@ namespace BLL
                     throw new Exception("Operación denegada: El rol 'Administrador' es un componente crítico del sistema y no puede ser eliminado.");
                 }
 
-                if (ormRol.PoseeUsuariosAsignados(rol.Id_rol))
-                {
-                    throw new Exception("No se puede borrar el rol porque existen usuarios activos asignados a él. Reasigne a los usuarios antes de continuar.");
-                }
+                //if (ormRol.PoseeUsuariosAsignados(rol.Id_rol))
+                //{
+                //    throw new Exception("No se puede borrar el rol porque existen usuarios activos asignados a él. Reasigne a los usuarios antes de continuar.");
+                //}
                 ormRol.BorrarRol(rol);
             }
         }
@@ -67,7 +67,7 @@ namespace BLL
                 ValidarDatosDelRol(rol);
                 ormRol.ModificarRol(rol);
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
-                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Rol", "Gestion de Rol", 1, DateTime.Now);
+                ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Rol", "Gestion de Rol", 1, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
             }
         }
         public void Asignar(BE_Usuario usuario, BE_Rol rol)
@@ -88,6 +88,10 @@ namespace BLL
             {
                 throw new Exception("No puede desasignar un administrador existente si no hay mas de uno.");
             }
+        }
+        public int ObtenerCantidadRolFamilias(string idUsuario)
+        {
+            return ormRol.ObtenerCantidadRolesFamiliasAsignadas(idUsuario);
         }
         public List<BE_Rol> ObtenerFamiliaDelUsuario(string idUsuario)
         {

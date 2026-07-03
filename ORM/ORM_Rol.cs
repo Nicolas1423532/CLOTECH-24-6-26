@@ -35,14 +35,15 @@ namespace ORM
         public void BorrarRol(BE_Rol rol)
         {
             DataRow fila = dao.DtRol.Rows.Find(rol.Id_rol);
-            if (fila != null)
+            int filasUsuarioXRol = fila.GetChildRows(dao.RelRol_A_Usuario).Length;
+            if (fila != null && filasUsuarioXRol < 1)
             {
                 fila.Delete();
                 dao.GuardarCambios();
             }
             else
             {
-                throw new Exception("El rol que intenta eliminar no existe en la base de datos.");
+                throw new Exception("El rol que intenta eliminar no existe en la base de datos o el rol esta asignado a un usuario");
             }
         }
         public bool PoseeUsuariosAsignados(string idRol)
@@ -77,11 +78,13 @@ namespace ORM
         }
         public void Desasignar(BE_Usuario usuario, BE_Rol rol)
         {
+            DataRow filaRol = dao.DtRol.Rows.Find(rol.Id_rol);
+            int cantFamilias= filaRol.GetChildRows(dao.RelRolAFamilia).Length;
             DataRow filaAEliminar = dao.DtUsuarioXRol.Rows.Find(new object[] { usuario.Id_usuario, rol.Id_rol });
 
-            if (filaAEliminar == null)
+            if (filaAEliminar == null || cantFamilias > 0)
             {
-                throw new Exception("El usuario no tiene asignado este rol actualmente.");
+                throw new Exception("No se puede desasignar el rol del usuario si tiene familias relacionadas");
             }
             filaAEliminar.Delete();
             dao.GuardarCambios();
@@ -109,6 +112,24 @@ namespace ORM
                 }
             }
             return listaRoles;
+        }
+        public int ObtenerCantidadRolesFamiliasAsignadas(string idUsuario)
+        {
+            int cantidadRolesFamilias = 0;
+            DataRow filaUsuario = dao.DtUsuario.Rows.Find(idUsuario);
+            DataRow[] asignacionRol = filaUsuario.GetChildRows(dao.RelUsuario_A_Rol);
+            if(asignacionRol.Length > 0)
+            {
+                cantidadRolesFamilias = asignacionRol.Length;
+                DataRow filaUsuarioXRol = asignacionRol[0];
+                DataRow filaRol = dao.DtRol.Rows.Find(filaUsuarioXRol.Field<string>("Id_Rol"));
+                DataRow[] filaRolXFamilia = filaRol.GetChildRows(dao.RelRolAFamilia);
+                if (filaRolXFamilia.Length > 0)
+                {
+                    cantidadRolesFamilias += filaRolXFamilia.Length;
+                }
+            }
+            return cantidadRolesFamilias;
         }
         public BE_Rol ObtenerFamiliaDelUsuario(string idUsuario)
         {

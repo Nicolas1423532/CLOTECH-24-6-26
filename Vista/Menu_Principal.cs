@@ -48,7 +48,7 @@ namespace Vista
                 List<BE_Rol> patentes = (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual as BE_Familia).RetornarComponentesPlanos();
                 ValidarPermisosUI(this.Controls, patentes);
             }
-            dungeonHeaderLabel1.Text = $"Bienvenido: {usuarioActual.Nombre} {usuarioActual.Apellido}";
+            //dungeonHeaderLabel1.Text = $"Bienvenido: {usuarioActual.Nombre} {usuarioActual.Apellido}";
             //else
             //{
             //    // Bloqueo total por seguridad si no hay nadie logueado
@@ -66,7 +66,6 @@ namespace Vista
                     c.Visible = tieneAcceso;
                 }
 
-                //RECURSIVIDAD DE GUI: Si el control es un contenedor(un Panel, GroupBox o TabControl),
                 if (c.Controls.Count > 0)
                 {
                     ValidarPermisosUI(c.Controls, patentesUsuario);
@@ -106,6 +105,8 @@ namespace Vista
             skyButton4.Text = servicioIdioma.ObtenerTraduccion("menu_deposito");
             skyButton5.Text = servicioIdioma.ObtenerTraduccion("menu_ayuda");
             skyButton6.Text = servicioIdioma.ObtenerTraduccion("menu_cerrar_sesion");
+            string formatoBienvenida = servicioIdioma.ObtenerTraduccion("lbl_bienvenida");
+            dungeonHeaderLabel1.Text = string.Format(formatoBienvenida, SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Nombre, SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Apellido);
         }
         private void CargarComboBoxIdioma()
         {
@@ -133,7 +134,6 @@ namespace Vista
                 servicioIdioma.CambiarIdioma(seleccionado.Id_Idioma);
                 string idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 string emailUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Email;
-                bitacoraBll.AgregarBitacora(idBitacora, emailUsuario, "Cambio de idioma", "Idioma",3, DateTime.Now);
             }
         }
     }

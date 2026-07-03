@@ -38,11 +38,8 @@ namespace BLL
             if(Information.IsNumeric(idUsuario)) { throw new Exception("El ID no puede ser numerico"); }
             string emailUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Email;
             string idBitacoraIdioma = SERVICIO_Criptografia.GenerarIDBitacora();
-            ormBitacora.AgregarBitacora(idBitacoraIdioma, emailUsuario, "Guardado de idioma", "Idioma", 3, DateTime.Now);
-            // Leer el idioma actual desde memoria (no de BD)
+            ormBitacora.AgregarBitacora(idBitacoraIdioma, emailUsuario, "Cambio de idioma", "Idioma", 3, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
             string codigoIdioma = SERVICIO_Idioma.ObtenerInstancia().ObtenerIdiomaActual();
-
-            // Persistir en BD
             ormIdioma.GuardarIdiomaUsuario(idUsuario, codigoIdioma);
         }
         public string ObtenerIdiomaDelUsuario(string idUsuario)

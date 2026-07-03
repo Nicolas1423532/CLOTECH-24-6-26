@@ -156,6 +156,7 @@
             dungeonComboBox2.HoverSelectionColor = Color.Empty;
             dungeonComboBox2.IntegralHeight = false;
             dungeonComboBox2.ItemHeight = 20;
+            dungeonComboBox2.Items.AddRange(new object[] { "Gestion de Familia", "Gestion de Rol", "Usuario", "Idioma" });
             dungeonComboBox2.Location = new Point(132, 408);
             dungeonComboBox2.Name = "dungeonComboBox2";
             dungeonComboBox2.Size = new Size(168, 26);
@@ -183,6 +184,7 @@
             dungeonComboBox3.HoverSelectionColor = Color.Empty;
             dungeonComboBox3.IntegralHeight = false;
             dungeonComboBox3.ItemHeight = 20;
+            dungeonComboBox3.Items.AddRange(new object[] { "Agregar Familia", "Agregar Rol", "Asignar Familia", "Asignar Rol", "Desasignar Familia", "Desasignar Rol", "Modificar Usuario", "Registrar Usuario", "Activar Usuario", "Desactivar Usuario" });
             dungeonComboBox3.Location = new Point(410, 408);
             dungeonComboBox3.Name = "dungeonComboBox3";
             dungeonComboBox3.Size = new Size(203, 26);
@@ -210,6 +212,7 @@
             dungeonComboBox4.HoverSelectionColor = Color.Empty;
             dungeonComboBox4.IntegralHeight = false;
             dungeonComboBox4.ItemHeight = 20;
+            dungeonComboBox4.Items.AddRange(new object[] { "1", "2", "3" });
             dungeonComboBox4.Location = new Point(738, 408);
             dungeonComboBox4.Name = "dungeonComboBox4";
             dungeonComboBox4.Size = new Size(213, 26);
@@ -336,6 +339,7 @@
             skyButton1.TabIndex = 27;
             skyButton1.Tag = "MODULO_ADMIN";
             skyButton1.Text = "LIMPIAR";
+            skyButton1.Click += skyButton1_Click;
             // 
             // skyButton2
             // 
@@ -373,6 +377,7 @@
             skyButton2.TabIndex = 28;
             skyButton2.Tag = "MODULO_ADMIN";
             skyButton2.Text = "APLICAR";
+            skyButton2.Click += skyButton2_Click;
             // 
             // Menu_Bitacora
             // 
