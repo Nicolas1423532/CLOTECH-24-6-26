@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using Microsoft.VisualBasic;
 using ReaLTaiizor.Controls;
 using System;
 using System.Collections.Generic;
@@ -27,10 +28,14 @@ namespace Vista
             try
             {
                 if(foreverTreeView1.SelectedNode == null) { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
+                BE_Usuario usuario = new BE_Usuario();
+                usuario.Id_usuario = poisonDataGridView1.CurrentRow.Cells[0].Value.ToString();
                 BE_Familia familia = foreverTreeView1.SelectedNode.Tag as BE_Familia;
                 BE_Patente patente = new BE_Patente();
                 patente.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                patente.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
                 patenteBll.AsignarPatente(patente, familia);
+                LlenarTreeViewPermisos(usuario.Id_usuario);
 
             }
             catch (Exception ex)
@@ -130,7 +135,11 @@ namespace Vista
         {
             try
             {
-                
+                BE_Patente patente = new BE_Patente();
+                patente.Id_rol = Interaction.InputBox("Ingrese el id de la patente");
+                patente.Titulo = Interaction.InputBox("Ingrese el titulo de la patente");
+                patente.Estado = MessageBox.Show("Desea que la patente este activa?", "Estado de la patente", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
+                patenteBll.AgregarPatente(patente);
             }
             catch (Exception ex)
             {
@@ -142,7 +151,10 @@ namespace Vista
         {
             try
             {
-
+                BE_Patente patente = new BE_Patente(); 
+                patente.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                patente.Titulo = Interaction.InputBox("Ingrese el nuevo titulo de la patente");
+                patenteBll.ModificarPatente(patente);
             }
             catch (Exception ex)
             {
@@ -154,7 +166,9 @@ namespace Vista
         {
             try
             {
-
+                BE_Patente patente = new BE_Patente();
+                patente.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                patenteBll.BorrarPatente(patente);
             }
             catch (Exception ex)
             {

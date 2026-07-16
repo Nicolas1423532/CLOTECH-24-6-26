@@ -36,6 +36,7 @@
             bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
             skyButton4 = new ReaLTaiizor.Controls.SkyButton();
             skyButton5 = new ReaLTaiizor.Controls.SkyButton();
+            skyButton6 = new ReaLTaiizor.Controls.SkyButton();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -136,7 +137,7 @@
             skyButton3.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton3.HoverForeColor = Color.White;
             skyButton3.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton3.Location = new Point(488, 394);
+            skyButton3.Location = new Point(336, 394);
             skyButton3.Name = "skyButton3";
             skyButton3.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton3.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -195,7 +196,7 @@
             skyButton4.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton4.HoverForeColor = Color.White;
             skyButton4.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton4.Location = new Point(210, 394);
+            skyButton4.Location = new Point(116, 394);
             skyButton4.Name = "skyButton4";
             skyButton4.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton4.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -250,12 +251,51 @@
             skyButton5.Text = "GESTION DE PATENTE";
             skyButton5.Click += skyButton5_Click;
             // 
+            // skyButton6
+            // 
+            skyButton6.BackColor = Color.WhiteSmoke;
+            skyButton6.DownBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton6.DownBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton6.DownBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton6.DownBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton6.DownBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton6.DownBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton6.DownForeColor = Color.White;
+            skyButton6.DownShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton6.Font = new Font("Segoe UI Black", 11F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            skyButton6.ForeColor = Color.FromArgb(27, 94, 137);
+            skyButton6.HoverBGColorA = Color.FromArgb(70, 153, 205);
+            skyButton6.HoverBGColorB = Color.FromArgb(53, 124, 170);
+            skyButton6.HoverBorderColorA = Color.FromArgb(88, 168, 221);
+            skyButton6.HoverBorderColorB = Color.FromArgb(76, 149, 194);
+            skyButton6.HoverBorderColorC = Color.FromArgb(38, 93, 131);
+            skyButton6.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
+            skyButton6.HoverForeColor = Color.White;
+            skyButton6.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
+            skyButton6.Location = new Point(556, 394);
+            skyButton6.Name = "skyButton6";
+            skyButton6.NormalBGColorA = Color.FromArgb(245, 245, 245);
+            skyButton6.NormalBGColorB = Color.FromArgb(230, 230, 230);
+            skyButton6.NormalBorderColorA = Color.FromArgb(252, 252, 252);
+            skyButton6.NormalBorderColorB = Color.FromArgb(249, 249, 249);
+            skyButton6.NormalBorderColorC = Color.WhiteSmoke;
+            skyButton6.NormalBorderColorD = Color.Transparent;
+            skyButton6.NormalForeColor = Color.FromArgb(27, 94, 137);
+            skyButton6.NormalShadowForeColor = Color.FromArgb(200, 255, 255, 255);
+            skyButton6.Size = new Size(198, 55);
+            skyButton6.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            skyButton6.TabIndex = 14;
+            skyButton6.Tag = "MODULO_ADMIN";
+            skyButton6.Text = "GESTION DE RESPALDO";
+            skyButton6.Click += skyButton6_Click;
+            // 
             // Menu_Administracion
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.CadetBlue;
             ClientSize = new Size(905, 520);
+            Controls.Add(skyButton6);
             Controls.Add(skyButton5);
             Controls.Add(skyButton4);
             Controls.Add(skyButton1);
@@ -265,6 +305,7 @@
             Controls.Add(pictureBox1);
             Name = "Menu_Administracion";
             Text = "Menu_Administracion";
+            Load += Menu_Administracion_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -279,5 +320,6 @@
         private ReaLTaiizor.Controls.BigLabel bigLabel1;
         private ReaLTaiizor.Controls.SkyButton skyButton4;
         private ReaLTaiizor.Controls.SkyButton skyButton5;
+        private ReaLTaiizor.Controls.SkyButton skyButton6;
     }
 }

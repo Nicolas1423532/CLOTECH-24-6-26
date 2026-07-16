@@ -12,9 +12,11 @@ namespace Vista
 {
     public partial class Menu_Administracion : Form
     {
-        public Menu_Administracion()
+        bool _inconsistencia;
+        public Menu_Administracion(bool hayInconsistencia = false)
         {
             InitializeComponent();
+            _inconsistencia = hayInconsistencia;
         }
 
         private void skyButton1_Click(object sender, EventArgs e)
@@ -45,6 +47,17 @@ namespace Vista
         {
             Menu_GestionPatente menuPatente = new Menu_GestionPatente();
             menuPatente.ShowDialog();
+        }
+
+        private void skyButton6_Click(object sender, EventArgs e)
+        {
+            Menu_Reparacion menuReparacion = new Menu_Reparacion(_inconsistencia);
+            menuReparacion.ShowDialog();
+        }
+
+        private void Menu_Administracion_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

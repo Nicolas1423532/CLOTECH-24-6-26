@@ -71,7 +71,7 @@ namespace BLL
                 {
                     //if (perfilUsuario != "ADMINISTRADOR")
                     //{
-                         throw new Exception("Reestriccion de seguridad: no se puede eliminar una familia raiz");
+                         throw new Exception("Reestriccion de seguridad: no se puede asignar una familia raiz a otra");
                     //}
                 }
                 ormFamilia.AsignarFamilia(rol, familia);
@@ -118,21 +118,7 @@ namespace BLL
         }
         public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
         {
-            //if (subFamilia.Titulo.ToUpper().Contains("MENU"))
-            //{
-            //    BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
-
-            //    if (usuarioActual != null && usuarioActual.Rol.ToUpper() == "ADMINISTRADOR")
-            //    {
-            //        int adminsActivos = ormUsuario.ObtenerTodosLosUsuariosActivos().Count(u => u.Rol.ToUpper() == "ADMINISTRADOR");
-
-            //        if (adminsActivos <= 1)
-            //        {
-            //            throw new Exception("Operación denegada por seguridad: No se puede desasignar una subfamilia de menú al único Administrador activo del sistema.");
-            //        }
-            //    }
-            //}
-            if(familiaPadre !=null && subFamilia != null)
+            if (familiaPadre !=null && subFamilia != null)
             {
                 ormFamilia.DesasignarSubfamilia(familiaPadre, subFamilia);
             }

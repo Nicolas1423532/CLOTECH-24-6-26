@@ -1,5 +1,6 @@
 ﻿using BE;
 using ORM;
+using SERVICIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,10 @@ namespace BLL
         {
             if(patente != null && familia != null)
             {
+                if(patente.Titulo.Contains("Admin".ToUpper()) && !familia.Titulo.Contains("Administrador".ToUpper()))
+                {
+                    throw new Exception("No se puede asignar los permisos superiores a un usuario que no sea administrador");
+                }
                 ormPatente.AsignarPatente(patente, familia);
             }
         }

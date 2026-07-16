@@ -1,4 +1,4 @@
-using BE;
+﻿using BE;
 using BLL;
 using SERVICIO;
 
@@ -10,9 +10,11 @@ namespace Vista
         BLL_Usuario bllUsuario;
         SERVICIO_Idioma servicioIdioma = SERVICIO_Idioma.ObtenerInstancia();
         BLL_Idioma bllIdioma;
-        public Form1()
+        bool _inconsistencia;
+        public Form1(bool hayInconsistencia = false)
         {
             InitializeComponent();
+            _inconsistencia = hayInconsistencia;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -22,10 +24,24 @@ namespace Vista
                 if (bllUsuario.Log_In(textBox1.Text, textBox2.Text))
                 {
                     string idUsuario = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Id_usuario;
+                    string rol = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual.Rol.ToUpper();
                     string idiomaGuardado = bllIdioma.ObtenerIdiomaDelUsuario(idUsuario);
                     servicioIdioma.CambiarIdioma(idiomaGuardado);
-                    MessageBox.Show("Inicio de sesi�n exitoso");
-                    Menu_Principal menuP = new Menu_Principal();
+                    if (_inconsistencia && rol != "ADMINISTRADOR")
+                    {
+                        // Limpiar sesión — no puede entrar
+                        SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual = null;
+                        SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = null;
+                        throw new Exception("Se detectaron errores o inconsistencias en la base de datos. Contacte con un Administrador. El usuario base no puede ingresar al sistema");
+                        //MessageBox.Show(
+                        //    "Se detectaron errores o inconsistencias en la base de datos." +
+                        //    "\nContacte con un Administrador.",
+                        //    "Integridad comprometida",
+                        //    MessageBoxButtons.OK,
+                        //    MessageBoxIcon.Warning);
+                        //return; // ← corta el flujo, no abre Menu_Principal
+                    }
+                    Menu_Principal menuP = new Menu_Principal(_inconsistencia);
                     menuP.Show();
                     this.Hide();
                 }
@@ -51,7 +67,7 @@ namespace Vista
                 textBox1.Enabled = false;
                 textBox2.Enabled = false;
                 button1.Enabled = false;
-                throw new Exception("Ha alcanzado el numero maximo de intentos. Su cuenta est� temporalmente bloqueada");
+                throw new Exception("Ha alcanzado el numero maximo de intentos. Su cuenta está temporalmente bloqueada");
             }
         }
         private void Form1_Load(object sender, EventArgs e)
@@ -73,7 +89,7 @@ namespace Vista
             try
             {
                 string correoTextbox1 = textBox1.Text;
-                if (string.IsNullOrEmpty(correoTextbox1)) { throw new Exception("El correo esta vac�o, por favor ingrese su correo para cambiar contra"); }
+                if (string.IsNullOrEmpty(correoTextbox1)) { throw new Exception("El correo esta vacío, por favor ingrese su correo para cambiar contra"); }
                 Menu_CambiarContrase_a menuCambiarContra = new Menu_CambiarContrase_a(correoTextbox1);
                 menuCambiarContra.ShowDialog();
                 textBox2.Text = null;

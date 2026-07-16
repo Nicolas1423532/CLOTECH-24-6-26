@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using DAO;
 using BE;
+using ORM;
 using System.Data;
 namespace ORM
 {
     public class ORM_Familia
     {
         DAO_ dao;
+        ORM_DV ormDV;
         public ORM_Familia()
         {
             dao = DAO_.ObtenerInstancia();
+            ormDV = new ORM_DV();
         }
         public void AgregarFamilia(BE_Familia familia)
         {
@@ -23,6 +26,8 @@ namespace ORM
                 DataRow fila = dao.DtFamilia.NewRow();
                 fila.ItemArray = new object[] { familia.Id_rol, familia.Titulo, familia.Estado };
                 dao.DtFamilia.Rows.Add(fila);
+                ormDV.ActualizarDVH(dao.DtFamilia);
+                ormDV.ActualizarDVV(dao.DtFamilia, "Familia","Id_Familia");
                 dao.GuardarCambios();
             }
             else { throw new Exception("La familia a crear ya existe en el sistema"); }
@@ -30,20 +35,33 @@ namespace ORM
         public void ModificarFamilia(BE_Familia familia)
         {
             DataRow fila = dao.DtFamilia.Rows.Find(familia.Id_rol);
-            if (fila != null)
+            int filasConectadasARol = fila.GetChildRows(dao.RelFamiliaAlRol).Length;
+            int filasConectadasASubfamilia = fila.GetChildRows(dao.RelFamiliaPadre_A_SubFamilia).Length;
+            int filasConectadasAPatente = fila.GetChildRows(dao.RelFamiliaAPatente).Length;
+            int combinacion = filasConectadasARol + filasConectadasASubfamilia + filasConectadasAPatente;
+            if (fila != null && combinacion < 1)
             {
                 fila.ItemArray = new object[] { fila.Field<string>(0), familia.Titulo, familia.Estado};
+                ormDV.ActualizarDVH(dao.DtFamilia);
+                ormDV.ActualizarDVV(dao.DtFamilia, "Familia", "Id_Familia");
                 dao.GuardarCambios();
             }
+            else { throw new Exception("No se puede modificar la familia si esta asociada a usuarios/familias/patentes"); }
         }
         public void BorrarFamilia(BE_Familia familia)
         {
             DataRow fila = dao.DtFamilia.Rows.Find(familia.Id_rol);
             //int filasRelacionadas = dao.DtRolXFamilia.Select($"Id_rol = {familia.Id_rol}").Length;
-            int filasRelacionadas = fila.GetChildRows(dao.RelFamiliaAlRol).Length;
-            if (fila!= null && filasRelacionadas < 1)
+            //int filasRelacionadas = fila.GetChildRows(dao.RelFamiliaAlRol).Length;
+            int filasConectadasARol = fila.GetChildRows(dao.RelFamiliaAlRol).Length;
+            int filasConectadasASubfamilia = fila.GetChildRows(dao.RelFamiliaPadre_A_SubFamilia).Length;
+            int filasConectadasAPatente = fila.GetChildRows(dao.RelFamiliaAPatente).Length;
+            int combinacion = filasConectadasARol + filasConectadasASubfamilia + filasConectadasAPatente;
+            if (fila!= null && combinacion < 1)
             {
                 fila.Delete();
+                ormDV.ActualizarDVH(dao.DtFamilia);
+                ormDV.ActualizarDVV(dao.DtFamilia, "Familia", "Id_Familia");
                 dao.GuardarCambios();
             }
             else
@@ -67,18 +85,23 @@ namespace ORM
             nuevaFila.ItemArray = new object[] { rol.Id_rol, familia.Id_rol };
 
             dao.DtRolXFamilia.Rows.Add(nuevaFila);
+            ormDV.ActualizarDVH(dao.DtRolXFamilia);
+            ormDV.ActualizarDVV(dao.DtRolXFamilia,"RolXFamilia",new string[] {"Id_Rol","Id_Familia"});
             dao.GuardarCambios();
         }
         public void DesasignarFamilia(BE_Rol rol, BE_Familia familia)
         {
+            DataRow filaFamilia = dao.DtFamilia.Rows.Find(familia.Id_rol);
             DataRow filaAEliminar = dao.DtRolXFamilia.Rows.Find(new object[] { rol.Id_rol, familia.Id_rol });
-
-            if (filaAEliminar == null)
+            DataRow[] filasPatentes = filaFamilia.GetChildRows(dao.RelFamiliaAPatente);
+            if (filaAEliminar == null || filasPatentes.Length > 0)
             {
-                throw new Exception("La relación entre el Rol y la Familia no existe.");
+                throw new Exception("No se puede borrar la familia del usuario si tiene patentes incluidas.");
             }
 
             filaAEliminar.Delete();
+            ormDV.ActualizarDVH(dao.DtRolXFamilia);
+            ormDV.ActualizarDVV(dao.DtRolXFamilia, "RolXFamilia", new string[] { "Id_Rol", "Id_Familia" });
             dao.GuardarCambios();
         }
         public void AsignarSubfamilia(BE_Familia familiaPadre, BE_Familia subFamilia)
@@ -94,19 +117,26 @@ namespace ORM
             nuevaFilaSubFamilia.ItemArray = new object[] { familiaPadre.Id_rol, subFamilia.Id_rol };
 
             dao.DtFamiliaXFamilia.Rows.Add(nuevaFilaSubFamilia);
+            ormDV.ActualizarDVH(dao.DtFamiliaXFamilia);
+            ormDV.ActualizarDVV(dao.DtFamiliaXFamilia, "FamiliaXFamilia", new string[] { "Id_FamiliaPadre", "Id_SubFamilia" });
             dao.GuardarCambios();
         }
         public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subfamilia)
         {
+            DataRow familia2 = dao.DtFamilia.Rows.Find(subfamilia.Id_rol);
             DataRow filaEliminar = dao.DtFamiliaXFamilia.Rows.Find(new object[] { familiaPadre.Id_rol, subfamilia.Id_rol });
-
-            if (filaEliminar == null)
+            int filasConectadasApatentes = familia2.GetChildRows(dao.RelFamiliaAPatente).Length;
+            int filasConectadasAotrasFamilias = familia2.GetChildRows(dao.RelFamiliaPadre_A_SubFamilia).Length;
+            int combinacion = filasConectadasApatentes + filasConectadasAotrasFamilias;
+            if (combinacion < 1)
             {
-                throw new Exception("La relación entre el Familia padre y la Subfamilia no existe.");
+                filaEliminar.Delete();
+                ormDV.ActualizarDVH(dao.DtFamiliaXFamilia);
+                ormDV.ActualizarDVV(dao.DtFamiliaXFamilia, "FamiliaXFamilia", new string[] { "Id_FamiliaPadre", "Id_SubFamilia" });
+                dao.GuardarCambios();
             }
+            else { throw new Exception("La subfamilia a desasignar esta asociada a otras familias/patentes. Primero desasigne todas las relaciones que tenga la subfamilia"); }
 
-            filaEliminar.Delete();
-            dao.GuardarCambios();
 
         }
         public List<BE_Familia> ObtenerTodasLasFamilias()

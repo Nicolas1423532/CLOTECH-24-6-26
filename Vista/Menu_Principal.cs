@@ -18,9 +18,11 @@ namespace Vista
         BLL_Usuario usuarioBll;
         BLL_Bitacora bitacoraBll;
         SERVICIO_Idioma servicioIdioma = SERVICIO_Idioma.ObtenerInstancia();
-        public Menu_Principal()
+        bool _inconsistencia;
+        public Menu_Principal(bool hayInconsistencia = false)
         {
             InitializeComponent();
+            _inconsistencia = hayInconsistencia;
         }
 
         private void panel1_Click(object sender, EventArgs e)
@@ -30,7 +32,7 @@ namespace Vista
 
         private void skyButton1_Click(object sender, EventArgs e)
         {
-            Menu_Administracion menuAdmin = new Menu_Administracion();
+            Menu_Administracion menuAdmin = new Menu_Administracion(_inconsistencia);
             menuAdmin.Show();
         }
 
@@ -94,7 +96,8 @@ namespace Vista
 
         private void skyButton5_Click(object sender, EventArgs e)
         {
-
+            Menu_Ayuda menuAyuda = new Menu_Ayuda();
+            menuAyuda.ShowDialog();
         }
 
         public void ActualizarIdioma()

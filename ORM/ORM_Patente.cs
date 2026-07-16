@@ -30,7 +30,8 @@ namespace ORM
         public void ModificarPatente(BE_Patente patente)
         {
             DataRow fila = dao.DtPatente.Rows.Find(patente.Id_rol);
-            if (fila != null)
+            int filaRelacionada = fila.GetChildRows(dao.RelPatenteAFamilia).Length;
+            if (fila != null && filaRelacionada < 1)
             {
                 fila.ItemArray = new object[] { fila.Field<string>(0), patente.Titulo, patente.Estado };
                 dao.GuardarCambios();
@@ -39,7 +40,8 @@ namespace ORM
         public void BorrarPatente(BE_Patente patente)
         {
             DataRow fila = dao.DtPatente.Rows.Find(patente.Id_rol);
-            if(fila != null)
+            int filaRelacionada = fila.GetChildRows(dao.RelPatenteAFamilia).Length;
+            if (fila != null && filaRelacionada < 1)
             {
                 fila.Delete();
                 dao.GuardarCambios();

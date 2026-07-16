@@ -11,53 +11,70 @@ namespace ORM
     public class ORM_Rol
     {
         DAO_ dao;
+        ORM_DV ormDV;
         public ORM_Rol()
         {
             dao = DAO_.ObtenerInstancia();
+            ormDV = new ORM_DV();
         }
         public void AgregarRol(BE_Rol rol)
         {
             DataRow filaRolNueva = dao.DtRol.NewRow();
             filaRolNueva.ItemArray = new object[] { rol.Id_rol, rol.Titulo, rol.Estado };
             dao.DtRol.Rows.Add(filaRolNueva);
+            ormDV.ActualizarDVH(dao.DtRol);
+            ormDV.ActualizarDVV(dao.DtRol,"Rol","Id_Rol");
             dao.GuardarCambios();
+
 
         }
         public void ModificarRol(BE_Rol rol)
         {
             DataRow fila = dao.DtRol.Rows.Find(rol.Id_rol);
-            if (fila != null)
+            int filasUsuarioXRol = fila.GetChildRows(dao.RelRol_A_Usuario).Length;
+            int filasRolXFamilia = fila.GetChildRows(dao.RelRolAFamilia).Length;
+            int combinacion = filasUsuarioXRol + filasRolXFamilia;
+            if (fila != null && combinacion < 1)
             {
                 fila.ItemArray = new object[] { fila.Field<string>(0), rol.Titulo, rol.Estado };
+                ormDV.ActualizarDVH(dao.DtRol);
+                ormDV.ActualizarDVV(dao.DtRol, "Rol", "Id_Rol");
                 dao.GuardarCambios();
+            }
+            else
+            {
+                throw new Exception("El rol que intenta modificar no existe en la base de datos o el rol esta asignado a un usuario");
             }
         }
         public void BorrarRol(BE_Rol rol)
         {
             DataRow fila = dao.DtRol.Rows.Find(rol.Id_rol);
-            int filasUsuarioXRol = fila.GetChildRows(dao.RelRol_A_Usuario).Length;
-            if (fila != null && filasUsuarioXRol < 1)
+            int filasRolXFamilia = fila.GetChildRows(dao.RelRolAFamilia).Length;
+            int combinacion = filasRolXFamilia;
+            if (fila != null && combinacion < 1)
             {
                 fila.Delete();
+                ormDV.ActualizarDVH(dao.DtRol);
+                ormDV.ActualizarDVV(dao.DtRol, "Rol", "Id_Rol");
                 dao.GuardarCambios();
             }
             else
             {
-                throw new Exception("El rol que intenta eliminar no existe en la base de datos o el rol esta asignado a un usuario");
+                throw new Exception("El rol que intenta eliminar no existe en la base de datos o el rol contiene familias");
             }
         }
-        public bool PoseeUsuariosAsignados(string idRol)
-        {
-            bool resultado = false;
-            foreach (DataRow filaUser in dao.DtUsuario.Rows)
-            {
-                if (filaUser.Field<bool>("Activo"))
-                {
-                    resultado = true;
-                }
-            }
-            return resultado;
-        }
+        //public bool PoseeUsuariosAsignados(string idRol)
+        //{
+        //    bool resultado = false;
+        //    foreach (DataRow filaUser in dao.DtUsuario.Rows)
+        //    {
+        //        if (filaUser.Field<bool>("Activo"))
+        //        {
+        //            resultado = true;
+        //        }
+        //    }
+        //    return resultado;
+        //}
         public void Asignar(BE_Usuario usuario, BE_Rol rol)
         {
             DataRow filaRol = dao.DtRol.Rows.Find(rol.Id_rol);
@@ -68,6 +85,8 @@ namespace ORM
                 DataRow fila = dao.DtUsuarioXRol.NewRow();
                 fila.ItemArray = new object[] {usuario.Id_usuario, rol.Id_rol};
                 dao.DtUsuarioXRol.Rows.Add(fila);
+                ormDV.ActualizarDVH(dao.DtUsuarioXRol);
+                ormDV.ActualizarDVV(dao.DtUsuarioXRol, "UsuarioXRol", new string[] {"Id_Usuario", "Id_Rol" });
                 dao.GuardarCambios();
             }
             else
@@ -87,6 +106,8 @@ namespace ORM
                 throw new Exception("No se puede desasignar el rol del usuario si tiene familias relacionadas");
             }
             filaAEliminar.Delete();
+            ormDV.ActualizarDVH(dao.DtUsuarioXRol);
+            ormDV.ActualizarDVV(dao.DtUsuarioXRol, "UsuarioXRol", new string[] { "Id_Usuario", "Id_Rol" });
             dao.GuardarCambios();
         }
         public int TotalAdministradoresActivos()

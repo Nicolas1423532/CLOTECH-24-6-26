@@ -127,7 +127,6 @@
             skyButton5.Tag = "MODULO_ADMIN";
             skyButton5.Text = "ELIMINAR FAMILIA";
             skyButton5.UseWaitCursor = true;
-            skyButton5.Visible = false;
             skyButton5.Click += skyButton5_Click;
             // 
             // skyButton6

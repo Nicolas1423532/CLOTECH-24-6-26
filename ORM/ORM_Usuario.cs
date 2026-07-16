@@ -5,15 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using BE;
 using DAO;
+using ORM;
 using System.Data;
 namespace ORM
 {
     public class ORM_Usuario
     {
         DAO_ dao;
+        ORM_DV ormDV;
         public ORM_Usuario()
         {
             dao = DAO_.ObtenerInstancia();
+            ormDV = new ORM_DV();
         }
 
         public void AgregarUsuario(BE_Usuario usuario)
@@ -24,6 +27,8 @@ namespace ORM
                 DataRow fila = dao.DtUsuario.NewRow();
                 fila.ItemArray = new object[] { usuario.Id_usuario, usuario.Nombre, usuario.Apellido, usuario.Dni, usuario.Edad, usuario.Email, usuario.Contraseña, usuario.Rol, usuario.Activo };
                 dao.DtUsuario.Rows.Add(fila);
+                ormDV.ActualizarDVH(dao.DtUsuario);
+                ormDV.ActualizarDVV(dao.DtUsuario,"Usuario","Id_Usuario");
                 dao.GuardarCambios();
 
             }
@@ -34,6 +39,8 @@ namespace ORM
             if (fila != null)
             {
                 fila.ItemArray = new object[] { fila.Field<string>(0), usuario.Nombre,usuario.Apellido, usuario.Dni,usuario.Edad, usuario.Email,usuario.Contraseña,usuario.Rol, usuario.Activo };
+                ormDV.ActualizarDVH(dao.DtUsuario);
+                ormDV.ActualizarDVV(dao.DtUsuario, "Usuario", "Id_Usuario");
                 dao.GuardarCambios();
             }
         }
@@ -67,6 +74,8 @@ namespace ORM
             if (filaDetectar != null && !filaDetectar.Field<bool>("Activo"))
             {
                 filaDetectar.SetField<bool>("Activo", true);
+                ormDV.ActualizarDVH(dao.DtUsuario);
+                ormDV.ActualizarDVV(dao.DtUsuario, "Usuario", "Id_Usuario");
             }
             else { throw new Exception("El usuario que quiere activar se encuentra activo"); }
             dao.GuardarCambios();
@@ -77,7 +86,9 @@ namespace ORM
             if (filaDetectar != null && filaDetectar.Field<bool>("Activo"))
             {
                  filaDetectar.SetField<bool>("Activo", false);
-                 dao.GuardarCambios();
+                ormDV.ActualizarDVH(dao.DtUsuario);
+                ormDV.ActualizarDVV(dao.DtUsuario, "Usuario", "Id_Usuario");
+                dao.GuardarCambios();
             }
             else { throw new Exception("El usuario que quiere desactivar se encueesta inactivo."); }
         }
@@ -99,14 +110,8 @@ namespace ORM
             BE_Usuario usuario = ObtenerTodosLosUsuariosActivos().Find(u=> u.Email == email);
             if(usuario == null)
             {
-                throw new Exception("El usuario esta desactivado");
+                throw new Exception("El usuario esta desactivado o no existe en el sistema");
             }
-            //DataRow fila = dao.DtUsuario.AsEnumerable().FirstOrDefault(u => u.Field<string>("Email") == email);
-            //DataRow fila = dao.DtUsuario.Rows.Find(email);
-            //if (fila != null)
-            //{
-            //    usuario = new BE_Usuario(fila.ItemArray);
-            //}
             return usuario;
         }
     }

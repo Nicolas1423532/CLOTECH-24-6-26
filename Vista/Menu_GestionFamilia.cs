@@ -191,7 +191,6 @@ namespace Vista
                 BE_Familia familia = new BE_Familia();
                 familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
                 familia.Titulo = Interaction.InputBox("Titulo familia: ");
-                familia.Estado = MessageBox.Show("Estado del rol", "", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
                 familiaBll.ModificarFamilia(familia);
             }
             catch (Exception ex)
