@@ -33,11 +33,6 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             poisonDataGridView1 = new ReaLTaiizor.Controls.PoisonDataGridView();
             bigLabel1 = new ReaLTaiizor.Controls.BigLabel();
-            dungeonComboBox1 = new ReaLTaiizor.Controls.DungeonComboBox();
-            dungeonComboBox2 = new ReaLTaiizor.Controls.DungeonComboBox();
-            dungeonComboBox3 = new ReaLTaiizor.Controls.DungeonComboBox();
-            dungeonComboBox4 = new ReaLTaiizor.Controls.DungeonComboBox();
-            poisonDateTime1 = new ReaLTaiizor.Controls.PoisonDateTime();
             poisonDateTime2 = new ReaLTaiizor.Controls.PoisonDateTime();
             thunderLabel1 = new ReaLTaiizor.Controls.ThunderLabel();
             thunderLabel2 = new ReaLTaiizor.Controls.ThunderLabel();
@@ -47,6 +42,11 @@
             thunderLabel6 = new ReaLTaiizor.Controls.ThunderLabel();
             skyButton1 = new ReaLTaiizor.Controls.SkyButton();
             skyButton2 = new ReaLTaiizor.Controls.SkyButton();
+            textBox1 = new TextBox();
+            textBox2 = new TextBox();
+            textBox3 = new TextBox();
+            poisonDateTime1 = new ReaLTaiizor.Controls.PoisonDateTime();
+            textBox4 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -107,126 +107,6 @@
             bigLabel1.Size = new Size(388, 45);
             bigLabel1.TabIndex = 12;
             bigLabel1.Text = "BITACORA DE EVENTOS";
-            // 
-            // dungeonComboBox1
-            // 
-            dungeonComboBox1.BackColor = Color.FromArgb(246, 246, 246);
-            dungeonComboBox1.ColorA = Color.FromArgb(246, 132, 85);
-            dungeonComboBox1.ColorB = Color.FromArgb(231, 108, 57);
-            dungeonComboBox1.ColorC = Color.FromArgb(242, 241, 240);
-            dungeonComboBox1.ColorD = Color.FromArgb(253, 252, 252);
-            dungeonComboBox1.ColorE = Color.FromArgb(239, 237, 236);
-            dungeonComboBox1.ColorF = Color.FromArgb(180, 180, 180);
-            dungeonComboBox1.ColorG = Color.FromArgb(119, 119, 118);
-            dungeonComboBox1.ColorH = Color.FromArgb(224, 222, 220);
-            dungeonComboBox1.ColorI = Color.FromArgb(250, 249, 249);
-            dungeonComboBox1.DrawMode = DrawMode.OwnerDrawFixed;
-            dungeonComboBox1.DropDownHeight = 100;
-            dungeonComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            dungeonComboBox1.Font = new Font("Segoe UI", 10F);
-            dungeonComboBox1.ForeColor = Color.FromArgb(76, 76, 97);
-            dungeonComboBox1.FormattingEnabled = true;
-            dungeonComboBox1.HoverSelectionColor = Color.Empty;
-            dungeonComboBox1.IntegralHeight = false;
-            dungeonComboBox1.ItemHeight = 20;
-            dungeonComboBox1.Location = new Point(132, 354);
-            dungeonComboBox1.Name = "dungeonComboBox1";
-            dungeonComboBox1.Size = new Size(168, 26);
-            dungeonComboBox1.StartIndex = 0;
-            dungeonComboBox1.TabIndex = 13;
-            // 
-            // dungeonComboBox2
-            // 
-            dungeonComboBox2.BackColor = Color.FromArgb(246, 246, 246);
-            dungeonComboBox2.ColorA = Color.FromArgb(246, 132, 85);
-            dungeonComboBox2.ColorB = Color.FromArgb(231, 108, 57);
-            dungeonComboBox2.ColorC = Color.FromArgb(242, 241, 240);
-            dungeonComboBox2.ColorD = Color.FromArgb(253, 252, 252);
-            dungeonComboBox2.ColorE = Color.FromArgb(239, 237, 236);
-            dungeonComboBox2.ColorF = Color.FromArgb(180, 180, 180);
-            dungeonComboBox2.ColorG = Color.FromArgb(119, 119, 118);
-            dungeonComboBox2.ColorH = Color.FromArgb(224, 222, 220);
-            dungeonComboBox2.ColorI = Color.FromArgb(250, 249, 249);
-            dungeonComboBox2.DrawMode = DrawMode.OwnerDrawFixed;
-            dungeonComboBox2.DropDownHeight = 100;
-            dungeonComboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            dungeonComboBox2.Font = new Font("Segoe UI", 10F);
-            dungeonComboBox2.ForeColor = Color.FromArgb(76, 76, 97);
-            dungeonComboBox2.FormattingEnabled = true;
-            dungeonComboBox2.HoverSelectionColor = Color.Empty;
-            dungeonComboBox2.IntegralHeight = false;
-            dungeonComboBox2.ItemHeight = 20;
-            dungeonComboBox2.Items.AddRange(new object[] { "Gestion de Familia", "Gestion de Rol", "Usuario", "Idioma" });
-            dungeonComboBox2.Location = new Point(132, 408);
-            dungeonComboBox2.Name = "dungeonComboBox2";
-            dungeonComboBox2.Size = new Size(168, 26);
-            dungeonComboBox2.StartIndex = 0;
-            dungeonComboBox2.TabIndex = 14;
-            // 
-            // dungeonComboBox3
-            // 
-            dungeonComboBox3.BackColor = Color.FromArgb(246, 246, 246);
-            dungeonComboBox3.ColorA = Color.FromArgb(246, 132, 85);
-            dungeonComboBox3.ColorB = Color.FromArgb(231, 108, 57);
-            dungeonComboBox3.ColorC = Color.FromArgb(242, 241, 240);
-            dungeonComboBox3.ColorD = Color.FromArgb(253, 252, 252);
-            dungeonComboBox3.ColorE = Color.FromArgb(239, 237, 236);
-            dungeonComboBox3.ColorF = Color.FromArgb(180, 180, 180);
-            dungeonComboBox3.ColorG = Color.FromArgb(119, 119, 118);
-            dungeonComboBox3.ColorH = Color.FromArgb(224, 222, 220);
-            dungeonComboBox3.ColorI = Color.FromArgb(250, 249, 249);
-            dungeonComboBox3.DrawMode = DrawMode.OwnerDrawFixed;
-            dungeonComboBox3.DropDownHeight = 100;
-            dungeonComboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
-            dungeonComboBox3.Font = new Font("Segoe UI", 10F);
-            dungeonComboBox3.ForeColor = Color.FromArgb(76, 76, 97);
-            dungeonComboBox3.FormattingEnabled = true;
-            dungeonComboBox3.HoverSelectionColor = Color.Empty;
-            dungeonComboBox3.IntegralHeight = false;
-            dungeonComboBox3.ItemHeight = 20;
-            dungeonComboBox3.Items.AddRange(new object[] { "Agregar Familia", "Agregar Rol", "Asignar Familia", "Asignar Rol", "Desasignar Familia", "Desasignar Rol", "Modificar Usuario", "Registrar Usuario", "Activar Usuario", "Desactivar Usuario" });
-            dungeonComboBox3.Location = new Point(410, 408);
-            dungeonComboBox3.Name = "dungeonComboBox3";
-            dungeonComboBox3.Size = new Size(203, 26);
-            dungeonComboBox3.StartIndex = 0;
-            dungeonComboBox3.TabIndex = 15;
-            // 
-            // dungeonComboBox4
-            // 
-            dungeonComboBox4.BackColor = Color.FromArgb(246, 246, 246);
-            dungeonComboBox4.ColorA = Color.FromArgb(246, 132, 85);
-            dungeonComboBox4.ColorB = Color.FromArgb(231, 108, 57);
-            dungeonComboBox4.ColorC = Color.FromArgb(242, 241, 240);
-            dungeonComboBox4.ColorD = Color.FromArgb(253, 252, 252);
-            dungeonComboBox4.ColorE = Color.FromArgb(239, 237, 236);
-            dungeonComboBox4.ColorF = Color.FromArgb(180, 180, 180);
-            dungeonComboBox4.ColorG = Color.FromArgb(119, 119, 118);
-            dungeonComboBox4.ColorH = Color.FromArgb(224, 222, 220);
-            dungeonComboBox4.ColorI = Color.FromArgb(250, 249, 249);
-            dungeonComboBox4.DrawMode = DrawMode.OwnerDrawFixed;
-            dungeonComboBox4.DropDownHeight = 100;
-            dungeonComboBox4.DropDownStyle = ComboBoxStyle.DropDownList;
-            dungeonComboBox4.Font = new Font("Segoe UI", 10F);
-            dungeonComboBox4.ForeColor = Color.FromArgb(76, 76, 97);
-            dungeonComboBox4.FormattingEnabled = true;
-            dungeonComboBox4.HoverSelectionColor = Color.Empty;
-            dungeonComboBox4.IntegralHeight = false;
-            dungeonComboBox4.ItemHeight = 20;
-            dungeonComboBox4.Items.AddRange(new object[] { "1", "2", "3" });
-            dungeonComboBox4.Location = new Point(738, 408);
-            dungeonComboBox4.Name = "dungeonComboBox4";
-            dungeonComboBox4.Size = new Size(213, 26);
-            dungeonComboBox4.StartIndex = 0;
-            dungeonComboBox4.TabIndex = 16;
-            // 
-            // poisonDateTime1
-            // 
-            poisonDateTime1.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Medium;
-            poisonDateTime1.Location = new Point(400, 354);
-            poisonDateTime1.MinimumSize = new Size(0, 29);
-            poisonDateTime1.Name = "poisonDateTime1";
-            poisonDateTime1.Size = new Size(213, 29);
-            poisonDateTime1.TabIndex = 17;
             // 
             // poisonDateTime2
             // 
@@ -379,12 +259,53 @@
             skyButton2.Text = "APLICAR";
             skyButton2.Click += skyButton2_Click;
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(132, 354);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(168, 23);
+            textBox1.TabIndex = 29;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(132, 408);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(168, 23);
+            textBox2.TabIndex = 30;
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(410, 408);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(168, 23);
+            textBox3.TabIndex = 31;
+            // 
+            // poisonDateTime1
+            // 
+            poisonDateTime1.FontSize = ReaLTaiizor.Extension.Poison.PoisonDateTimeSize.Medium;
+            poisonDateTime1.Location = new Point(400, 354);
+            poisonDateTime1.MinimumSize = new Size(0, 29);
+            poisonDateTime1.Name = "poisonDateTime1";
+            poisonDateTime1.Size = new Size(213, 29);
+            poisonDateTime1.TabIndex = 17;
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(738, 408);
+            textBox4.Name = "textBox4";
+            textBox4.Size = new Size(168, 23);
+            textBox4.TabIndex = 32;
+            // 
             // Menu_Bitacora
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.CadetBlue;
             ClientSize = new Size(1022, 587);
+            Controls.Add(textBox4);
+            Controls.Add(textBox3);
+            Controls.Add(textBox2);
+            Controls.Add(textBox1);
             Controls.Add(skyButton2);
             Controls.Add(skyButton1);
             Controls.Add(thunderLabel6);
@@ -395,10 +316,6 @@
             Controls.Add(thunderLabel1);
             Controls.Add(poisonDateTime2);
             Controls.Add(poisonDateTime1);
-            Controls.Add(dungeonComboBox4);
-            Controls.Add(dungeonComboBox3);
-            Controls.Add(dungeonComboBox2);
-            Controls.Add(dungeonComboBox1);
             Controls.Add(bigLabel1);
             Controls.Add(poisonDataGridView1);
             Name = "Menu_Bitacora";
@@ -413,11 +330,6 @@
 
         private ReaLTaiizor.Controls.PoisonDataGridView poisonDataGridView1;
         private ReaLTaiizor.Controls.BigLabel bigLabel1;
-        private ReaLTaiizor.Controls.DungeonComboBox dungeonComboBox1;
-        private ReaLTaiizor.Controls.DungeonComboBox dungeonComboBox2;
-        private ReaLTaiizor.Controls.DungeonComboBox dungeonComboBox3;
-        private ReaLTaiizor.Controls.DungeonComboBox dungeonComboBox4;
-        private ReaLTaiizor.Controls.PoisonDateTime poisonDateTime1;
         private ReaLTaiizor.Controls.PoisonDateTime poisonDateTime2;
         private ReaLTaiizor.Controls.ThunderLabel thunderLabel1;
         private ReaLTaiizor.Controls.ThunderLabel thunderLabel2;
@@ -427,5 +339,10 @@
         private ReaLTaiizor.Controls.ThunderLabel thunderLabel6;
         private ReaLTaiizor.Controls.SkyButton skyButton1;
         private ReaLTaiizor.Controls.SkyButton skyButton2;
+        private TextBox textBox1;
+        private TextBox textBox2;
+        private TextBox textBox3;
+        private ReaLTaiizor.Controls.PoisonDateTime poisonDateTime1;
+        private TextBox textBox4;
     }
 }

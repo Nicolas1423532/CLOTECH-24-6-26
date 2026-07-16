@@ -118,7 +118,7 @@ namespace ORM
 
             dao.DtFamiliaXFamilia.Rows.Add(nuevaFilaSubFamilia);
             ormDV.ActualizarDVH(dao.DtFamiliaXFamilia);
-            ormDV.ActualizarDVV(dao.DtFamiliaXFamilia, "FamiliaXFamilia", new string[] { "Id_FamiliaPadre", "Id_SubFamilia" });
+            ormDV.ActualizarDVV(dao.DtFamiliaXFamilia, "FamiliaXFamilia", new string[] { "Id_Familia", "Id_SubFamilia" });
             dao.GuardarCambios();
         }
         public void DesasignarSubfamilia(BE_Familia familiaPadre, BE_Familia subfamilia)
@@ -132,7 +132,7 @@ namespace ORM
             {
                 filaEliminar.Delete();
                 ormDV.ActualizarDVH(dao.DtFamiliaXFamilia);
-                ormDV.ActualizarDVV(dao.DtFamiliaXFamilia, "FamiliaXFamilia", new string[] { "Id_FamiliaPadre", "Id_SubFamilia" });
+                ormDV.ActualizarDVV(dao.DtFamiliaXFamilia, "FamiliaXFamilia", new string[] { "Id_Familia", "Id_SubFamilia" });
                 dao.GuardarCambios();
             }
             else { throw new Exception("La subfamilia a desasignar esta asociada a otras familias/patentes. Primero desasigne todas las relaciones que tenga la subfamilia"); }

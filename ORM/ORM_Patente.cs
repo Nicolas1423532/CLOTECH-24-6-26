@@ -11,9 +11,11 @@ namespace ORM
     public class ORM_Patente
     {
         DAO_ dao;
+        ORM_DV ormDV;
         public ORM_Patente()
         {
             dao = DAO_.ObtenerInstancia();
+            ormDV = new ORM_DV();
         }
         public void AgregarPatente(BE_Patente patente)
         {
@@ -23,6 +25,8 @@ namespace ORM
                 DataRow fila = dao.DtPatente.NewRow();
                 fila.ItemArray = new object[] { patente.Id_rol, patente.Titulo, patente.Estado };
                 dao.DtPatente.Rows.Add(fila);
+                ormDV.ActualizarDVH(dao.DtPatente);
+                ormDV.ActualizarDVV(dao.DtPatente,"Patente","Id_Patente");
                 dao.GuardarCambios();
             }
             else { throw new Exception("La patente a crear ya existe en el sistema"); }
@@ -34,6 +38,8 @@ namespace ORM
             if (fila != null && filaRelacionada < 1)
             {
                 fila.ItemArray = new object[] { fila.Field<string>(0), patente.Titulo, patente.Estado };
+                ormDV.ActualizarDVH(dao.DtPatente);
+                ormDV.ActualizarDVV(dao.DtPatente, "Patente", "Id_Patente");
                 dao.GuardarCambios();
             }
         }
@@ -44,6 +50,8 @@ namespace ORM
             if (fila != null && filaRelacionada < 1)
             {
                 fila.Delete();
+                ormDV.ActualizarDVH(dao.DtPatente);
+                ormDV.ActualizarDVV(dao.DtPatente, "Patente", "Id_Patente");
                 dao.GuardarCambios();
             }
         }
@@ -57,6 +65,8 @@ namespace ORM
             DataRow nuevaFila = dao.DtPatenteXFamilia.NewRow();
             nuevaFila.ItemArray = new object[] { patente.Id_rol, familia.Id_rol };
             dao.DtPatenteXFamilia.Rows.Add(nuevaFila);
+            ormDV.ActualizarDVH(dao.DtPatenteXFamilia);
+            ormDV.ActualizarDVV(dao.DtPatenteXFamilia, "PatenteXFamilia", new string[] {"Id_Patente","Id_Familia"});
             dao.GuardarCambios();
         }
         public void DesasignarPatente(BE_Patente patente, BE_Familia familia)
@@ -65,6 +75,8 @@ namespace ORM
             if (filaRolXFamilia != null)
             {
                 filaRolXFamilia.Delete();
+                ormDV.ActualizarDVH(dao.DtPatenteXFamilia);
+                ormDV.ActualizarDVV(dao.DtPatenteXFamilia, "PatenteXFamilia", new string[] { "Id_Patente", "Id_Familia" });
                 dao.GuardarCambios();             
             }
         }

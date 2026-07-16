@@ -11,10 +11,11 @@ namespace ORM
     public class ORM_Idioma
     {
         private DAO_ dao;
-
+        ORM_DV ormDV;
         public ORM_Idioma()
         {
             dao = DAO_.ObtenerInstancia();
+            ormDV = new ORM_DV();
         }
 
         
@@ -25,6 +26,8 @@ namespace ORM
             if (filaExistente != null)
             {
                 filaExistente["Id_Idioma"] = codigoIdioma;
+                ormDV.ActualizarDVH(dao.DtUsuarioXIdioma_);
+                ormDV.ActualizarDVV(dao.DtUsuarioXIdioma_, "UsuarioXIdioma", "Id_Usuario");
             }
             else
             {
@@ -32,6 +35,8 @@ namespace ORM
                 nuevaFila["Id_Usuario"] = idUsuario;
                 nuevaFila["Id_Idioma"] = codigoIdioma;
                 dao.DtUsuarioXIdioma_.Rows.Add(nuevaFila);
+                ormDV.ActualizarDVH(dao.DtUsuarioXIdioma_);
+                ormDV.ActualizarDVV(dao.DtUsuarioXIdioma_, "UsuarioXIdioma", "Id_Usuario");
             }
 
             dao.GuardarCambios();

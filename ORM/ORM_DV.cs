@@ -21,13 +21,6 @@ namespace ORM
             servicioDV = SERVICIO_DV.ObtenerInstancia();
         }
 
-        // ════════════════════════════════════════════════════════════════════
-        // ActualizarDVH
-        // Recalcula el DVH de cada fila de la tabla recibida
-        // y lo escribe en la columna DVH de ese DataTable.
-        // Se llama desde cada ORM después de modificar datos,
-        // antes de GuardarCambios().
-        // ════════════════════════════════════════════════════════════════════
         public void ActualizarDVH(DataTable tabla)
         {
             foreach (DataRow fila in tabla.Rows)
@@ -37,13 +30,6 @@ namespace ORM
                 fila["DVH"] = servicioDV.CalcularDVH(valores);
             }
         }
-
-        // ════════════════════════════════════════════════════════════════════
-        // ActualizarDVV
-        // Recalcula el DVV de UNA tabla y lo guarda en la fila
-        // correspondiente de DtDVV.
-        // nombreColumnaPK: el nombre de la PK de esa tabla para ordenar.
-        // ════════════════════════════════════════════════════════════════════
         public void ActualizarDVV(DataTable tabla, string nombreTabla, string nombreColumnaPK)
         {
             string dvvNuevo = servicioDV.CalcularDVV(tabla, nombreColumnaPK);
@@ -60,15 +46,8 @@ namespace ORM
             if (filaDVV != null)
                 filaDVV["ValorHash"] = dvvNuevo;
         }
-
-        // ════════════════════════════════════════════════════════════════════
-        // VerificarDVV
-        // Recalcula el DVV de una tabla y lo compara con el guardado.
-        // Devuelve true si coinciden.
-        // ════════════════════════════════════════════════════════════════════
         public bool VerificarDVV(DataTable tabla, string nombreTabla, string nombreColumnaPK)
         {
-            // Paso 1: verificar DVH fila por fila
             foreach (DataRow fila in tabla.Rows)
             {
                 if (fila.RowState == DataRowState.Deleted) continue;
@@ -80,8 +59,6 @@ namespace ORM
                 if (dvhGuardado != dvhRecalculado)
                     return false;
             }
-
-            // Paso 2: verificar DVV
             string dvvCalculado = servicioDV.CalcularDVV(tabla, nombreColumnaPK);
 
             DataRow? filaDVV = dao.DtDVV.Rows.Find(nombreTabla);
@@ -94,8 +71,6 @@ namespace ORM
         }
         public bool VerificarDVV(DataTable tabla, string nombreTabla, string[] columnasPK)
         {
-            // ── Paso 1: verificar DVH de cada fila ──────────────────────────
-            // Si algún DVH no coincide con los datos reales → inconsistencia
             foreach (DataRow fila in tabla.Rows)
             {
                 if (fila.RowState == DataRowState.Deleted) continue;
@@ -105,11 +80,8 @@ namespace ORM
                 string dvhRecalculado = servicioDV.CalcularDVH(valores);
 
                 if (dvhGuardado != dvhRecalculado)
-                    return false; // ← dato real no coincide con DVH guardado
+                    return false;
             }
-
-            // ── Paso 2: verificar DVV de la tabla ───────────────────────────
-            // Recalcula el DVV usando los DVH guardados (ya validados en paso 1)
             string dvvCalculado = servicioDV.CalcularDVV(tabla, columnasPK);
 
             DataRow? filaDVV = dao.DtDVV.Rows.Find(nombreTabla);
@@ -120,13 +92,6 @@ namespace ORM
 
             return dvvCalculado == dvvGuardado;
         }
-
-        // ════════════════════════════════════════════════════════════════════
-        // VerificarIntegridadCompleta
-        // Verifica DVV de todas las tablas.
-        // Devuelve lista de nombres de tablas con inconsistencia.
-        // Lista vacía = todo íntegro.
-        // ════════════════════════════════════════════════════════════════════
         public List<string> VerificarIntegridadCompleta()
         {
             var tablasCorruptas = new List<string>();
@@ -136,7 +101,7 @@ namespace ORM
                 (dao.DtRol,             "Rol",             new[] { "Id_Rol" }),
                 (dao.DtFamilia,         "Familia",         new[] { "Id_Familia" }),
                 (dao.DtPatente,         "Patente",         new[] { "Id_Patente" }),
-                (dao.DtBitacora,        "Bitacora",        new[] { "Id_Bitacora" }),
+                //(dao.DtBitacora,        "Bitacora",        new[] { "Id_Bitacora" }),
                 (dao.DtIdioma,          "Idioma",          new[] { "Id_Idioma" }),
                 (dao.DtUsuarioXIdioma_,  "UsuarioXIdioma",  new[] { "Id_Usuario"}),
                 (dao.DtUsuarioXRol,     "UsuarioXRol",     new[] { "Id_Usuario", "Id_Rol" }),
@@ -161,10 +126,10 @@ namespace ORM
                 (dao.DtRol,             "Rol",             new[] { "Id_Rol" }),
                 (dao.DtFamilia,         "Familia",         new[] { "Id_Familia" }),
                 (dao.DtPatente,         "Patente",         new[] { "Id_Patente" }),
-                (dao.DtBitacora,        "Bitacora",        new[] { "Id_Bitacora" }),
+                //(dao.DtBitacora,        "Bitacora",        new[] { "Id_Bitacora" }),
                 (dao.DtIdioma,          "Idioma",          new[] { "Id_Idioma" }),
                 (dao.DtUsuarioXRol,      "UsuarioXRol",     new[] { "Id_Usuario", "Id_Rol" }),
-                (dao.DtUsuarioXIdioma_,   "UsuarioXIdioma",  new[] { "Id_Usuario", "Id_Idioma" }),
+                (dao.DtUsuarioXIdioma_,   "UsuarioXIdioma",  new[] { "Id_Usuario"}),
                 (dao.DtRolXFamilia,      "RolXFamilia",     new[] { "Id_Rol",     "Id_Familia" }),
                 (dao.DtFamiliaXFamilia,  "FamiliaXFamilia", new[] { "Id_Familia", "Id_SubFamilia" }),
                 (dao.DtPatenteXFamilia,  "PatenteXFamilia", new[] { "Id_Patente", "Id_Familia" }),

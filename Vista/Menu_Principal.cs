@@ -81,7 +81,8 @@ namespace Vista
         }
         private void skyButton4_Click(object sender, EventArgs e)
         {
-
+            Menu_Deposito menuDeposito = new Menu_Deposito();
+            menuDeposito.ShowDialog();
         }
         private void skyButton6_Click(object sender, EventArgs e)
         {

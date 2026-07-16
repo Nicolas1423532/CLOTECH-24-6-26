@@ -11,9 +11,11 @@ namespace ORM
     public class ORM_Bitacora
     {
         DAO_ dao;
+        ORM_DV ormDV;
         public ORM_Bitacora()
         {
             dao = DAO_.ObtenerInstancia();
+            ormDV = new ORM_DV();
         }
         public void AgregarBitacora(string idBitacora, string logIn,string evento, string modulo, int criticidad, DateTime fecha, TimeSpan horario)
         {
@@ -23,6 +25,8 @@ namespace ORM
                 DataRow filaBitacora = dao.DtBitacora.NewRow();
                 filaBitacora.ItemArray = new object[] {idBitacora,logIn,evento,modulo,criticidad,fecha, horario};
                 dao.DtBitacora.Rows.Add(filaBitacora);
+                //ormDV.ActualizarDVH(dao.DtBitacora);
+                //ormDV.ActualizarDVV(dao.DtBitacora, "Bitacora", "Id_Bitacora");
                 dao.GuardarCambios();
             }
         }

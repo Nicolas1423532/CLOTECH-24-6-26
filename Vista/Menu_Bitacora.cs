@@ -33,26 +33,6 @@ namespace Vista
                     (pD as ReaLTaiizor.Controls.PoisonDataGridView).SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 }
             }
-            CargarLogInUsuarios();
-        }
-        private void CargarLogInUsuarios()
-        {
-            var usuariosActivos = bllUsuario.ObtenerTodosLosUsuariosActivos();
-            dungeonComboBox1.Items.Clear();
-            foreach (object usuario in usuariosActivos)
-            {
-                Type tipo = usuario.GetType();
-                var propiedadEmail = tipo.GetProperty("Email");
-                if (propiedadEmail != null)
-                {
-                    object valor = propiedadEmail.GetValue(usuario, null);
-                    if (valor != null)
-                    {
-                        dungeonComboBox1.Items.Add(valor.ToString());
-                    }
-                }
-            }
-            Mostrar(poisonDataGridView1, bllBitacora.ObtenerTodasLasBitacoras());
         }
 
         private void Mostrar(PoisonDataGridView pDv, object datos)
@@ -62,10 +42,10 @@ namespace Vista
 
         private void skyButton2_Click(object sender, EventArgs e)
         {
-            string emailSeleccionado = dungeonComboBox1.SelectedItem?.ToString();
-            string moduloSeleccionado = dungeonComboBox2.SelectedItem?.ToString();
-            string eventoSeleccionado = dungeonComboBox3.SelectedItem?.ToString();
-            string criticidadSeleccionada = dungeonComboBox4.SelectedItem?.ToString();
+            string emailSeleccionado = textBox1.Text;
+            string moduloSeleccionado = textBox2.Text;
+            string eventoSeleccionado = textBox3.Text;
+            string criticidadSeleccionada = textBox4.Text;
             DateTime fechaIni = poisonDateTime1.Value;
             DateTime fechaFin = poisonDateTime2.Value;
 

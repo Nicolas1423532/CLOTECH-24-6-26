@@ -29,7 +29,23 @@ namespace SERVICIO
         {
             StringBuilder sb = new StringBuilder();
             foreach (object valor in valoresFila)
-                sb.Append(valor?.ToString() ?? "");
+            {
+                if (valor == null || valor == DBNull.Value)
+                {
+                    sb.Append("");
+                }
+                // FORZAR FORMATO DE FECHA FIJO
+                else if (valor is DateTime fecha)
+                {
+                    // Este formato es universal y no depende del idioma de Windows
+                    sb.Append(fecha.ToString("yyyy-MM-dd HH:mm:ss"));
+                }
+                else
+                {
+                    sb.Append(valor.ToString().Trim());
+                }
+            }
+                
 
             return CalcularSHA256(sb.ToString());
         }
