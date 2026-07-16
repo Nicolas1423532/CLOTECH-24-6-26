@@ -16,12 +16,6 @@ namespace Vista
             BLL_DV bllDV = new BLL_DV();
             List<string> tablasCorruptas = bllDV.VerificarIntegridad();
             bool hayInconsistencia = tablasCorruptas.Count > 0;
-            if (hayInconsistencia)
-            {
-                MessageBox.Show("Atención, las siguientes tablas fallaron la verificación de integridad:\n\n" +
-                                string.Join("\n", tablasCorruptas),
-                                "Depuración de DV", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
             Application.Run(new Form1(hayInconsistencia));
         }
     }
