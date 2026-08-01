@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 namespace BLL
 {
@@ -23,7 +24,8 @@ namespace BLL
         public void AgregarFamilia(BE_Familia familia)
         {
             ValidarDatosDeFamilia(familia);
-            if(familia != null)
+            ValidarIDFamilia(familia);
+            if (familia != null)
             {
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 ormFamilia.AgregarFamilia(familia);
@@ -59,6 +61,14 @@ namespace BLL
                 ormFamilia.ModificarFamilia(familia);
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Familia", "Gestion de Familia", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
+            }
+        }
+        private void ValidarIDFamilia(BE_Familia familia)
+        {
+            string patron = @"^[AGCSE].*$";
+            if (!Regex.IsMatch(familia.Id_rol, patron))
+            {
+                throw new Exception("El ID de la familia debe comenzar con A, G, C, S o E");
             }
         }
         public void AsignarFamilia(BE_Rol rol, BE_Familia familia)

@@ -23,6 +23,7 @@ namespace BLL
         public void AgregarRol(BE_Rol rol)
         {
             ValidarDatosDelRol(rol);
+            ValidarIDRol(rol);
             if (ormRol.TotalAdministradoresActivos() <= 0)
             {
                 throw new Exception("Operación inválida: El sistema requiere al menos un rol de Administrador configurado.");
@@ -70,10 +71,20 @@ namespace BLL
                 ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Modificar Rol", "Gestion de Rol", 1, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
             }
         }
+        private void ValidarIDRol(BE_Rol rol)
+        {
+            //validacion del id para luego validar si cada familia o patente pertenece a un rol o no
+            string patron = @"^[AGCSE].*$";
+            if (!Regex.IsMatch(rol.Id_rol, patron))
+            {
+                throw new Exception("El ID del rol debe comenzar con A, G, C, S o E");
+            }
+        }
         public void Asignar(BE_Usuario usuario, BE_Rol rol)
         {
             if(usuario != null && rol != null)
             {
+                if(usuario.Rol != rol.Titulo) { throw new Exception($"El rol seleccionado no coincide con el rol del usuario.{Environment.NewLine}Ejemplo: Si el usuario posee el rol Gerente, no se deberia asignarle un rol distinto.{Environment.NewLine}Para eso modifique el rol del usuario. "); }
                 ormRol.Asignar(usuario, rol);
             }
         }
@@ -96,7 +107,7 @@ namespace BLL
         public List<BE_Rol> ObtenerFamiliaDelUsuario(string idUsuario)
         {
             List<BE_Rol> auxFamilias = new List<BE_Rol>();
-            BE_Rol familia = ormRol.ObtenerFamiliaDelUsuario(idUsuario);
+            BE_Rol familia = ormRol.ObtenerRolRaizDelUsuario(idUsuario);
             auxFamilias.Add(familia);
             return auxFamilias;
         }

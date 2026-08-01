@@ -101,10 +101,10 @@ namespace ORM
             int cantFamilias= filaRol.GetChildRows(dao.RelRolAFamilia).Length;
             DataRow filaAEliminar = dao.DtUsuarioXRol.Rows.Find(new object[] { usuario.Id_usuario, rol.Id_rol });
 
-            if (filaAEliminar == null || cantFamilias > 0)
-            {
-                throw new Exception("No se puede desasignar el rol del usuario si tiene familias relacionadas");
-            }
+            //if (filaAEliminar == null || cantFamilias > 0)
+            //{
+            //    throw new Exception("No se puede desasignar el rol del usuario si tiene familias relacionadas");
+            //}
             filaAEliminar.Delete();
             ormDV.ActualizarDVH(dao.DtUsuarioXRol);
             ormDV.ActualizarDVV(dao.DtUsuarioXRol, "UsuarioXRol", new string[] { "Id_Usuario", "Id_Rol" });
@@ -152,7 +152,7 @@ namespace ORM
             }
             return cantidadRolesFamilias;
         }
-        public BE_Rol ObtenerFamiliaDelUsuario(string idUsuario)
+        public BE_Rol ObtenerRolRaizDelUsuario(string idUsuario)
         {
             BE_Rol rol = new BE_Familia();
             BE_Familia familiaRaiz = null;
@@ -172,6 +172,22 @@ namespace ORM
 
                         if (filaRol != null)
                         {
+                            // Obtener las patentes asociadas al rol
+                            DataRow[] filasRolXPatente = filaRol.GetChildRows(dao.RelRol_A_Patente);
+                            if(filasRolXPatente.Length > 0)
+                            {
+                                foreach (DataRow filaRolXPatente in filasRolXPatente)
+                                {
+                                    string _idRol = filaRolXPatente.Field<string>("Id_Rol");
+                                    string idPatente = filaRolXPatente.Field<string>("Id_Patente");
+                                    DataRow filaPatente = dao.DtPatente.Rows.Find(new object[] {_idRol,idPatente});
+                                    if (filaPatente != null)
+                                    {
+                                        BE_Patente patente = new BE_Patente(filaPatente.ItemArray);
+                                        (rol as BE_Familia).AgregarComponente(patente);
+                                    }
+                                }
+                            }
                             DataRow[] filasRolXFamilia = filaRol.GetChildRows(dao.RelRolAFamilia);
                             if (filasRolXFamilia.Length > 0)
                             {

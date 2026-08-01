@@ -24,6 +24,14 @@ namespace BE
                 componentes.Add(componente);
             }
         }
+        public void QuitarComponente(BE_Rol componente)
+        {
+            BE_Rol? rol = componentes.Find(r => r.Id_rol == componente.Id_rol);
+            if (rol != null)
+            {
+                componentes.Remove(rol);
+            }
+        }   
         public override List<BE_Rol> RetornarComponentes() => componentes;
         public List<BE_Rol> RetornarComponentesPlanos()
         {

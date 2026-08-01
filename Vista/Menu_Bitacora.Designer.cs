@@ -217,7 +217,7 @@
             skyButton1.Size = new Size(198, 55);
             skyButton1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton1.TabIndex = 27;
-            skyButton1.Tag = "MODULO_ADMIN";
+            skyButton1.Tag = "Limpiar";
             skyButton1.Text = "LIMPIAR";
             skyButton1.Click += skyButton1_Click;
             // 
@@ -255,7 +255,7 @@
             skyButton2.Size = new Size(198, 55);
             skyButton2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton2.TabIndex = 28;
-            skyButton2.Tag = "MODULO_ADMIN";
+            skyButton2.Tag = "Aplicar";
             skyButton2.Text = "APLICAR";
             skyButton2.Click += skyButton2_Click;
             // 

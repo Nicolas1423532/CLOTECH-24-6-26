@@ -13,7 +13,7 @@ namespace DAO
     {
         SqlConnection conexion;
         DataSet ds;
-        DataTable dtUsuario, dtProducto, dtCliente, dtProveedor, dtFactura, dtDetalle, dtBitacora,dtDevolucion, dtDevolucionDetalle, dtOrdenCompra, dtOrdenCompraDetalle, dtIdioma,dtUsuarioXIdioma, dtRol, dtFamilia, dtPatente, dtRolXFamilia,dtFamiliaXFamilia,dtRolXPatente,dtPatenteXFamilia, dtUsuarioXRol, dtDVV;
+        DataTable dtUsuario, dtProducto, dtCliente, dtProveedor, dtFactura, dtDetalle, dtBitacora,dtDevolucion, dtDevolucionDetalle, dtOrdenCompra, dtOrdenCompraDetalle, dtIdioma,dtUsuarioXIdioma, dtRol, dtFamilia, dtPatente,dtRolXFamilia,dtFamiliaXFamilia,dtRolXPatente,dtPatenteXFamilia, dtUsuarioXRol, dtDVV;
         public DataTable DtUsuario { get => dtUsuario; set => dtUsuario = value; }
         public DataTable DtBitacora { get => dtBitacora; set=> dtBitacora = value; }
         public DataTable DtProducto { get => dtProducto; set => dtProducto = value; }
@@ -34,7 +34,7 @@ namespace DAO
         public DataTable DtDVV { get => dtDVV; set => dtDVV = value; }
         SqlDataAdapter adapUsuario, adapBitacora,adapProducto, adapCliente, adapProveedor, adapFactura, adapDetalle, adapDevolucion, adapDevolucionDetalle, adapOrdenCompra, adapOrdenCompraDetalle, adapIdioma, adapUsuarioXIdioma,adapUsuarioXRol,adapRol, adapFamilia, adapPatente, adapRolXFamilia, adapFamiliaXFamilia,adapRolXPatente,adapPatenteXFamilia, adapDVV;
         SqlCommandBuilder? cmbUsuario, cmbBitacora,cmbProducto, cmbCliente, cmbProveedor, cmbFactura, cmbDetalle, cmbDevolucion, cmbDevolucionDetalle, cmbOrdenCompra, cmbOrdenCompraDetalle,cmbIdioma,cmbUsuarioXIdioma,cmbUsuarioXRol ,cmbRol, cmbFamilia, cmbPatente, cmbRolXFamilia, cmbRolXPatente, cmbFamiliaXFamilia, cmbPatenteXFamilia, cmbDVV;
-        DataRelation relUsuario_A_Rol,relRol_A_Usuario,relRolAFamilia, relFamiliaAlRol, relFamiliaAPatente,relPatenteAFamilia, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre;
+        DataRelation relUsuario_A_Rol,relRolAPatente,relRol_A_Usuario,relRolAFamilia, relFamiliaAlRol, relFamiliaAPatente,relPatenteAFamilia, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre;
         public DataRelation RelRolAFamilia { get => relRolAFamilia; set => relRolAFamilia = value; }
         public DataRelation RelFamiliaAlRol { get => relFamiliaAlRol; set => relFamiliaAlRol = value; }
         public DataRelation RelFamiliaAPatente { get => relFamiliaAPatente; set => relFamiliaAPatente = value; }
@@ -43,6 +43,7 @@ namespace DAO
         public DataRelation RelPatenteAFamilia { get => relPatenteAFamilia; set=> relPatenteAFamilia = value; }
         public DataRelation RelUsuario_A_Rol { get => relUsuario_A_Rol; set => relUsuario_A_Rol = value; }
         public DataRelation RelRol_A_Usuario { get => relRol_A_Usuario; set=> relRol_A_Usuario = value; }
+        public DataRelation RelRol_A_Patente { get=> relRolAPatente; set => relRolAPatente = value; }
         static DAO_? instancia;
         private DAO_()
         {
@@ -131,7 +132,8 @@ namespace DAO
             relPatenteAFamilia = new DataRelation("Patente_A_Familia", dtPatente.Columns["Id_Patente"], dtPatenteXFamilia.Columns["Id_Patente"]);
             relUsuario_A_Rol = new DataRelation("Usuario_A_Rol", dtUsuario.Columns["Id_Usuario"], dtUsuarioXRol.Columns["Id_Usuario"]);
             relRol_A_Usuario = new DataRelation("Rol_A_Usuario", dtRol.Columns["Id_Rol"], dtUsuarioXRol.Columns["Id_Rol"]);
-            ds.Relations.AddRange(new DataRelation[] { relUsuario_A_Rol,relRol_A_Usuario,relRolAFamilia, relFamiliaAlRol, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre, relFamiliaAPatente, relPatenteAFamilia });
+            relRolAPatente = new DataRelation("Rol_A_Patente", dtRol.Columns["Id_Rol"], dtRolXPatente.Columns["Id_Rol"]);
+            ds.Relations.AddRange(new DataRelation[] { relUsuario_A_Rol,relRol_A_Usuario,relRolAPatente,relRolAFamilia, relFamiliaAlRol, relFamiliaPadre_A_SubFamilia, relFamiliaHija_A_FamiliaPadre, relFamiliaAPatente, relPatenteAFamilia });
             
         }
         private void ActualizarTablas()

@@ -3,6 +3,7 @@ using BLL;
 using Microsoft.VisualBasic;
 using ORM;
 using ReaLTaiizor.Controls;
+using SERVICIO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace Vista
         BLL_Familia familiaBll;
         BLL_Rol rolBll;
         BLL_Usuario usuarioBll;
+        BLL_Patente patenteBll;
         public Menu_GestionFamilia()
         {
             InitializeComponent();
@@ -123,8 +125,29 @@ namespace Vista
             usuarioBll = new BLL_Usuario();
             rolBll = new BLL_Rol();
             familiaBll = new BLL_Familia();
+            patenteBll = new BLL_Patente();
             Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             Mostrar(poisonDataGridView2, familiaBll.ObtenerTodasLasFamilias());
+
+            if (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual != null)
+            {
+                List<BE_Rol> patentes = (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual as BE_Familia).RetornarComponentesPlanos();
+                ValidarPermisosUI(this.Controls, patentes);
+            }
+        }
+        private void ValidarPermisosUI(Control.ControlCollection controles, List<BE_Rol> patentesUsuario)
+        {
+            foreach (Control c in controles)
+            {
+                if (c.Tag != null && !string.IsNullOrEmpty(c.Tag.ToString()))
+                {
+                    string patenteRequerida = c.Tag.ToString();
+                    bool tieneAcceso = patentesUsuario.Any(p => p.Titulo == patenteRequerida);
+                    c.Visible = tieneAcceso;
+                }
+                if (c.Controls.Count > 0)
+                    ValidarPermisosUI(c.Controls, patentesUsuario);
+            }
         }
 
         private void skyButton10_Click(object sender, EventArgs e)
@@ -141,7 +164,7 @@ namespace Vista
                 if (foreverTreeView1.SelectedNode.Parent == null)
                 {
                     BE_Rol rolRaiz = objetoNodo as BE_Rol;
-                    familiaBll.AsignarFamilia(rolRaiz,familiaAAgregar);
+                    familiaBll.AsignarFamilia(rolRaiz, familiaAAgregar);
                 }
                 else
                 {
@@ -197,6 +220,18 @@ namespace Vista
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            Mostrar(poisonDataGridView2, familiaBll.ObtenerTodasLasFamilias());
+            Mostrar(poisonDataGridView3, null);
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
+            Mostrar(poisonDataGridView2, null);
         }
     }
 }

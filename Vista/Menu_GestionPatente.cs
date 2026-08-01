@@ -2,6 +2,7 @@
 using BLL;
 using Microsoft.VisualBasic;
 using ReaLTaiizor.Controls;
+using SERVICIO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,7 +35,7 @@ namespace Vista
                 BE_Patente patente = new BE_Patente();
                 patente.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
                 patente.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
-                patenteBll.AsignarPatente(patente, familia);
+                patenteBll.AsignarPatenteAFamilia(patente, familia);
                 LlenarTreeViewPermisos(usuario.Id_usuario);
 
             }
@@ -91,6 +92,26 @@ namespace Vista
             usuarioBll = new BLL_Usuario();
             Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             Mostrar(poisonDataGridView2, patenteBll.ObtenerTodasLasPatentes());
+
+            if (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual != null)
+            {
+                List<BE_Rol> patentes = (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual as BE_Familia).RetornarComponentesPlanos();
+                ValidarPermisosUI(this.Controls, patentes);
+            }
+        }
+        private void ValidarPermisosUI(Control.ControlCollection controles, List<BE_Rol> patentesUsuario)
+        {
+            foreach (Control c in controles)
+            {
+                if (c.Tag != null && !string.IsNullOrEmpty(c.Tag.ToString()))
+                {
+                    string patenteRequerida = c.Tag.ToString();
+                    bool tieneAcceso = patentesUsuario.Any(p => p.Titulo == patenteRequerida);
+                    c.Visible = tieneAcceso;
+                }
+                if (c.Controls.Count > 0)
+                    ValidarPermisosUI(c.Controls, patentesUsuario);
+            }
         }
         private void Mostrar(PoisonDataGridView pDv, object datos)
         {
@@ -122,7 +143,7 @@ namespace Vista
                 var familia = foreverTreeView1.SelectedNode.Tag as BE_Familia;
                 BE_Patente patente = new BE_Patente();
                 patente.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
-                patenteBll.DesasignarPatente(patente,familia);
+                patenteBll.DesasignarPatenteAFamilia(patente,familia);
                 LlenarTreeViewPermisos(usuario.Id_usuario);
             }
             catch (Exception ex)

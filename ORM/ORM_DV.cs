@@ -94,6 +94,7 @@ namespace ORM
         }
         public List<string> VerificarIntegridadCompleta()
         {
+            //se agrega la vericicacion de la tabla ROLXPATENTE
             var tablasCorruptas = new List<string>();
             var tablas = new (DataTable dt, string nombre, string[] pks)[]
             {
@@ -105,6 +106,7 @@ namespace ORM
                 (dao.DtUsuarioXIdioma_,  "UsuarioXIdioma",  new[] { "Id_Usuario"}),
                 (dao.DtUsuarioXRol,     "UsuarioXRol",     new[] { "Id_Usuario", "Id_Rol" }),
                 (dao.DtRolXFamilia,     "RolXFamilia",     new[] { "Id_Rol", "Id_Familia" }),
+                (dao.DtRolXPatente,    "RolXPatente",     new[] { "Id_Rol", "Id_Patente" }),
                 (dao.DtFamiliaXFamilia, "FamiliaXFamilia", new[] { "Id_Familia", "Id_SubFamilia" }),
                 (dao.DtPatenteXFamilia, "PatenteXFamilia", new[] { "Id_Patente", "Id_Familia" }),
             };
@@ -119,6 +121,7 @@ namespace ORM
         }
         public void RecalcularTodo()
         {
+            //se agrega el recalculo de la tabla ROLXPATENTE
             var tablas = new (DataTable dt, string nombre, string[] pk)[]
             {
                 (dao.DtUsuario,         "Usuario",         new[] { "Id_Usuario" }),
@@ -129,6 +132,7 @@ namespace ORM
                 (dao.DtUsuarioXRol,      "UsuarioXRol",     new[] { "Id_Usuario", "Id_Rol" }),
                 (dao.DtUsuarioXIdioma_,   "UsuarioXIdioma",  new[] { "Id_Usuario"}),
                 (dao.DtRolXFamilia,      "RolXFamilia",     new[] { "Id_Rol",     "Id_Familia" }),
+                (dao.DtRolXPatente,    "RolXPatente",     new[] { "Id_Rol", "Id_Patente" }),
                 (dao.DtFamiliaXFamilia,  "FamiliaXFamilia", new[] { "Id_Familia", "Id_SubFamilia" }),
                 (dao.DtPatenteXFamilia,  "PatenteXFamilia", new[] { "Id_Patente", "Id_Familia" }),
             };

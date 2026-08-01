@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BLL
@@ -39,7 +40,7 @@ namespace BLL
                 ormPatente.ModificarPatente(patente);
             }
         }
-        public void AsignarPatente(BE_Patente patente, BE_Familia familia)
+        public void AsignarPatenteAFamilia(BE_Patente patente, BE_Familia familia)
         {
             if(patente != null && familia != null)
             {
@@ -47,14 +48,25 @@ namespace BLL
                 {
                     throw new Exception("No se puede asignar los permisos superiores a un usuario que no sea administrador");
                 }
-                ormPatente.AsignarPatente(patente, familia);
+                ormPatente.AsignarPatenteAFamilia(patente, familia);
             }
         }
-        public void DesasignarPatente(BE_Patente patente, BE_Familia familia)
+        public void AsignarPatenteARol(BE_Patente patente, BE_Rol rol)
+        {
+            if (patente != null && rol != null)
+            {
+                if (patente.Id_rol[0] != rol.Id_rol[0])
+                {
+                    throw new Exception("No se puede asignar los permisos superiores a un usuario con rol jerarquico inferior");
+                }
+                ormPatente.AsignarPatenteARol(patente, rol);
+            }
+        }
+        public void DesasignarPatenteAFamilia(BE_Patente patente, BE_Familia familia)
         {
             if (patente != null && familia != null)
             {
-                ormPatente.DesasignarPatente(patente, familia);
+                ormPatente.DesasignarPatenteAFamilia(patente, familia);
             }
         }
         public List<object> ObtenerTodasLasPatentes()
@@ -66,6 +78,14 @@ namespace BLL
             if (string.IsNullOrWhiteSpace(patente.Id_rol) && string.IsNullOrWhiteSpace(patente.Titulo))
             {
                 throw new Exception("Los datos del son incorrectos");
+            }
+        }
+        private void ValidarIDPatente(BE_Patente patente)
+        {
+            string patron = @"^[AGCSE].*$";
+            if (!Regex.IsMatch(patente.Id_rol, patron))
+            {
+                throw new Exception("El ID de la patente debe comenzar con A, G, C, S o E");
             }
         }
     }

@@ -55,7 +55,7 @@ namespace ORM
                 dao.GuardarCambios();
             }
         }
-        public void AsignarPatente(BE_Patente patente, BE_Familia familia)
+        public void AsignarPatenteAFamilia(BE_Patente patente, BE_Familia familia)
         {
             DataRow relacionExistente = dao.DtPatenteXFamilia.Rows.Find(new object[] { patente.Id_rol, familia.Id_rol });
             if (relacionExistente != null)
@@ -69,7 +69,32 @@ namespace ORM
             ormDV.ActualizarDVV(dao.DtPatenteXFamilia, "PatenteXFamilia", new string[] {"Id_Patente","Id_Familia"});
             dao.GuardarCambios();
         }
-        public void DesasignarPatente(BE_Patente patente, BE_Familia familia)
+        public void AsignarPatenteARol(BE_Patente patente, BE_Rol rol)
+        {
+            DataRow relacionExistente = dao.DtRolXPatente.Rows.Find(new object[] { patente.Id_rol, rol.Id_rol });
+            if (relacionExistente != null)
+            {
+                throw new Exception("La patente ya se encuentra asignada al Rol seleccionado.");
+            }
+            DataRow nuevaFila = dao.DtRolXPatente.NewRow();
+            nuevaFila.ItemArray = new object[] { patente.Id_rol, rol.Id_rol };
+            dao.DtRolXPatente.Rows.Add(nuevaFila);
+            ormDV.ActualizarDVH(dao.DtRolXPatente);
+            ormDV.ActualizarDVV(dao.DtRolXPatente, "RolXPatente", new string[] { "Id_Patente", "Id_Rol" });
+            dao.GuardarCambios();
+        }
+        public void DesasignarPatenteARol(BE_Patente patente, BE_Rol rol)
+        {
+            DataRow filaRolXPatente = dao.DtRolXPatente.Rows.Find(new object[] { patente.Id_rol, rol.Id_rol });
+            if (filaRolXPatente != null)
+            {
+                filaRolXPatente.Delete();
+                ormDV.ActualizarDVH(dao.DtRolXPatente);
+                ormDV.ActualizarDVV(dao.DtRolXPatente, "RolXPatente", new string[] { "Id_Patente", "Id_Rol" });
+                dao.GuardarCambios();
+            }
+        }
+        public void DesasignarPatenteAFamilia(BE_Patente patente, BE_Familia familia)
         {
             DataRow filaRolXFamilia = dao.DtPatenteXFamilia.Rows.Find(new object[] { patente.Id_rol, familia.Id_rol });
             if (filaRolXFamilia != null)

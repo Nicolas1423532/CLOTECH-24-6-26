@@ -27,7 +27,9 @@ namespace BLL
         {
             if (usuario != null)
             {
+
                 ValidarDatosDelUsuario(usuario);
+                ValidarNombreRolDelUsuario(usuario.Rol);
                 EstablecerFormatoCorreoContraBase(usuario);
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Registrar Usuario", "Administracion", 1 ,DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
@@ -66,6 +68,7 @@ namespace BLL
                 }
                 EstablecerFormatoCorreoContraBase(usuario);
                 ValidarDatosDelUsuario(usuario);
+                ValidarNombreRolDelUsuario(usuario.Rol);
                 ormUsuario.ModificarUsuario(usuario);
             }
         }
@@ -138,7 +141,7 @@ namespace BLL
                 }
                 resultado = true;
                 ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Log In", "Usuario", 1,DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
-                BE_Rol permisosUsuario = ormRol.ObtenerFamiliaDelUsuario(usuario.Id_usuario);
+                BE_Rol permisosUsuario = ormRol.ObtenerRolRaizDelUsuario(usuario.Id_usuario);
                 if (permisosUsuario != null) { SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual = permisosUsuario; }
             }
             else { resultado = false; }
@@ -148,7 +151,7 @@ namespace BLL
         {
             string patronDni = @"^\d{7,8}$";
             string dniUsuario = usuario.Dni.ToString();
-            if (string.IsNullOrWhiteSpace(usuario.Id_usuario) || Information.IsNumeric(usuario.Nombre) || Information.IsNumeric(usuario.Apellido) || !Regex.IsMatch(dniUsuario,patronDni) || !Information.IsNumeric(usuario.Edad))
+            if (string.IsNullOrWhiteSpace(usuario.Id_usuario) || Information.IsNumeric(usuario.Nombre) || Information.IsNumeric(usuario.Apellido) || !Information.IsNumeric(dniUsuario)||!Regex.IsMatch(dniUsuario,patronDni) || !Information.IsNumeric(usuario.Edad) || string.IsNullOrWhiteSpace(usuario.Rol))
             {
                 throw new Exception("Los datos de usuario son incorrectos");
             }
@@ -198,6 +201,14 @@ namespace BLL
             ormUsuario.ModificarUsuario(usuario);
             var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
             ormBitacora.AgregarBitacora(idBitacora, usuario.Email, "Cambio de Contraseña", "Usuario", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
+        }
+        private void ValidarNombreRolDelUsuario(string rol)
+        {
+            List<string> roles = new List<string> { "ADMINISTRADOR", "GERENTE", "CAJERO", "SUPERVISOR", "ENCARGADO DEPOSITO" };
+            if (!roles.Contains(rol.ToUpper()))
+            {
+                throw new Exception("El rol del usuario no es válido. Debe ser uno de los siguientes: Administrador, Gerente, Cajero, Supervisor o Encargado Deposito.");
+            }
         }
     }
 }

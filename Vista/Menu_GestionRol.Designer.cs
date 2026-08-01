@@ -37,6 +37,9 @@
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             foreverTreeView1 = new ReaLTaiizor.Controls.ForeverTreeView();
             poisonDataGridView1 = new ReaLTaiizor.Controls.PoisonDataGridView();
             skyButton2 = new ReaLTaiizor.Controls.SkyButton();
@@ -45,11 +48,15 @@
             poisonDataGridView2 = new ReaLTaiizor.Controls.PoisonDataGridView();
             skyButton10 = new ReaLTaiizor.Controls.SkyButton();
             skyButton11 = new ReaLTaiizor.Controls.SkyButton();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            poisonDataGridView3 = new ReaLTaiizor.Controls.PoisonDataGridView();
             crownLabel1 = new ReaLTaiizor.Controls.CrownLabel();
-            crownLabel2 = new ReaLTaiizor.Controls.CrownLabel();
             crownLabel3 = new ReaLTaiizor.Controls.CrownLabel();
+            crownLabel2 = new ReaLTaiizor.Controls.CrownLabel();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)poisonDataGridView3).BeginInit();
             SuspendLayout();
             // 
             // foreverTreeView1
@@ -58,7 +65,7 @@
             foreverTreeView1.Font = new Font("Segoe UI", 8F);
             foreverTreeView1.ForeColor = Color.White;
             foreverTreeView1.LineColor = Color.FromArgb(25, 27, 29);
-            foreverTreeView1.Location = new Point(131, 48);
+            foreverTreeView1.Location = new Point(82, 71);
             foreverTreeView1.Name = "foreverTreeView1";
             treeNode1.Name = "Nodo2";
             treeNode1.Text = "Patente";
@@ -67,7 +74,7 @@
             treeNode3.Name = "Nodo0";
             treeNode3.Text = "Rol";
             foreverTreeView1.Nodes.AddRange(new TreeNode[] { treeNode3 });
-            foreverTreeView1.Size = new Size(210, 214);
+            foreverTreeView1.Size = new Size(259, 535);
             foreverTreeView1.TabIndex = 2;
             // 
             // poisonDataGridView1
@@ -99,7 +106,7 @@
             poisonDataGridView1.EnableHeadersVisualStyles = false;
             poisonDataGridView1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView1.GridColor = Color.FromArgb(255, 255, 255);
-            poisonDataGridView1.Location = new Point(368, 48);
+            poisonDataGridView1.Location = new Point(371, 71);
             poisonDataGridView1.Name = "poisonDataGridView1";
             poisonDataGridView1.ReadOnly = true;
             poisonDataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -138,7 +145,7 @@
             skyButton2.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton2.HoverForeColor = Color.White;
             skyButton2.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton2.Location = new Point(473, 382);
+            skyButton2.Location = new Point(913, 424);
             skyButton2.Name = "skyButton2";
             skyButton2.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton2.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -151,7 +158,7 @@
             skyButton2.Size = new Size(198, 55);
             skyButton2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton2.TabIndex = 7;
-            skyButton2.Tag = "MODULO_ADMIN";
+            skyButton2.Tag = "ModificarRol";
             skyButton2.Text = "MODIFICAR ROL";
             skyButton2.Click += skyButton2_Click;
             // 
@@ -176,7 +183,7 @@
             skyButton1.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton1.HoverForeColor = Color.White;
             skyButton1.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton1.Location = new Point(473, 297);
+            skyButton1.Location = new Point(913, 339);
             skyButton1.Name = "skyButton1";
             skyButton1.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton1.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -189,7 +196,7 @@
             skyButton1.Size = new Size(198, 55);
             skyButton1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton1.TabIndex = 6;
-            skyButton1.Tag = "MODULO_ADMIN";
+            skyButton1.Tag = "AgregarRol";
             skyButton1.Text = "AGREGAR ROL";
             skyButton1.Click += skyButton1_Click;
             // 
@@ -214,7 +221,7 @@
             skyButton3.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton3.HoverForeColor = Color.White;
             skyButton3.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton3.Location = new Point(473, 463);
+            skyButton3.Location = new Point(913, 505);
             skyButton3.Name = "skyButton3";
             skyButton3.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton3.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -227,7 +234,7 @@
             skyButton3.Size = new Size(198, 55);
             skyButton3.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton3.TabIndex = 8;
-            skyButton3.Tag = "MODULO_ADMIN";
+            skyButton3.Tag = "BorrarRol";
             skyButton3.Text = "ELIMINAR ROL";
             skyButton3.Click += skyButton3_Click;
             // 
@@ -260,7 +267,7 @@
             poisonDataGridView2.EnableHeadersVisualStyles = false;
             poisonDataGridView2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView2.GridColor = Color.FromArgb(255, 255, 255);
-            poisonDataGridView2.Location = new Point(131, 297);
+            poisonDataGridView2.Location = new Point(670, 440);
             poisonDataGridView2.Name = "poisonDataGridView2";
             poisonDataGridView2.ReadOnly = true;
             poisonDataGridView2.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
@@ -274,7 +281,7 @@
             poisonDataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             poisonDataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             poisonDataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            poisonDataGridView2.Size = new Size(210, 214);
+            poisonDataGridView2.Size = new Size(259, 246);
             poisonDataGridView2.TabIndex = 15;
             // 
             // skyButton10
@@ -298,7 +305,7 @@
             skyButton10.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton10.HoverForeColor = Color.White;
             skyButton10.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton10.Location = new Point(910, 48);
+            skyButton10.Location = new Point(913, 71);
             skyButton10.Name = "skyButton10";
             skyButton10.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton10.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -311,7 +318,7 @@
             skyButton10.Size = new Size(198, 55);
             skyButton10.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton10.TabIndex = 16;
-            skyButton10.Tag = "MODULO_ADMIN";
+            skyButton10.Tag = "AsignarRol";
             skyButton10.Text = "ASIGNAR ROL";
             skyButton10.Click += skyButton10_Click;
             // 
@@ -336,7 +343,7 @@
             skyButton11.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton11.HoverForeColor = Color.White;
             skyButton11.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton11.Location = new Point(910, 133);
+            skyButton11.Location = new Point(913, 156);
             skyButton11.Name = "skyButton11";
             skyButton11.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton11.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -349,39 +356,109 @@
             skyButton11.Size = new Size(198, 55);
             skyButton11.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton11.TabIndex = 19;
-            skyButton11.Tag = "MODULO_ADMIN";
+            skyButton11.Tag = "DesasignarRol";
             skyButton11.Text = "DESASIGNAR ROL";
             skyButton11.Click += skyButton11_Click;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(715, 400);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(65, 19);
+            radioButton2.TabIndex = 40;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "Patente";
+            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.CheckedChanged += radioButton2_CheckedChanged;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(715, 360);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(42, 19);
+            radioButton1.TabIndex = 39;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "Rol";
+            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.CheckedChanged += radioButton1_CheckedChanged;
+            // 
+            // poisonDataGridView3
+            // 
+            poisonDataGridView3.AllowUserToAddRows = false;
+            poisonDataGridView3.AllowUserToDeleteRows = false;
+            poisonDataGridView3.AllowUserToResizeRows = false;
+            poisonDataGridView3.BackgroundColor = Color.FromArgb(255, 255, 255);
+            poisonDataGridView3.BorderStyle = BorderStyle.None;
+            poisonDataGridView3.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            poisonDataGridView3.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            poisonDataGridView3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle8.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            poisonDataGridView3.DefaultCellStyle = dataGridViewCellStyle8;
+            poisonDataGridView3.EnableHeadersVisualStyles = false;
+            poisonDataGridView3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            poisonDataGridView3.GridColor = Color.FromArgb(255, 255, 255);
+            poisonDataGridView3.Location = new Point(405, 360);
+            poisonDataGridView3.Name = "poisonDataGridView3";
+            poisonDataGridView3.ReadOnly = true;
+            poisonDataGridView3.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView3.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            poisonDataGridView3.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            poisonDataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            poisonDataGridView3.Size = new Size(259, 246);
+            poisonDataGridView3.TabIndex = 41;
             // 
             // crownLabel1
             // 
             crownLabel1.AutoSize = true;
             crownLabel1.ForeColor = Color.FromArgb(220, 220, 220);
-            crownLabel1.Location = new Point(74, 48);
+            crownLabel1.Location = new Point(82, 37);
             crownLabel1.Name = "crownLabel1";
-            crownLabel1.Size = new Size(24, 15);
-            crownLabel1.TabIndex = 20;
-            crownLabel1.Text = "Rol";
-            // 
-            // crownLabel2
-            // 
-            crownLabel2.AutoSize = true;
-            crownLabel2.ForeColor = Color.FromArgb(220, 220, 220);
-            crownLabel2.Location = new Point(74, 74);
-            crownLabel2.Name = "crownLabel2";
-            crownLabel2.Size = new Size(45, 15);
-            crownLabel2.TabIndex = 21;
-            crownLabel2.Text = "Familia";
+            crownLabel1.Size = new Size(186, 15);
+            crownLabel1.TabIndex = 42;
+            crownLabel1.Text = "Rol, Familia y Patentes del usuario";
             // 
             // crownLabel3
             // 
             crownLabel3.AutoSize = true;
             crownLabel3.ForeColor = Color.FromArgb(220, 220, 220);
-            crownLabel3.Location = new Point(74, 100);
+            crownLabel3.Location = new Point(405, 324);
             crownLabel3.Name = "crownLabel3";
-            crownLabel3.Size = new Size(47, 15);
-            crownLabel3.TabIndex = 22;
-            crownLabel3.Text = "Patente";
+            crownLabel3.Size = new Size(115, 15);
+            crownLabel3.TabIndex = 44;
+            crownLabel3.Text = "Patentes disponibles";
+            // 
+            // crownLabel2
+            // 
+            crownLabel2.AutoSize = true;
+            crownLabel2.ForeColor = Color.FromArgb(220, 220, 220);
+            crownLabel2.Location = new Point(749, 304);
+            crownLabel2.Name = "crownLabel2";
+            crownLabel2.Size = new Size(98, 15);
+            crownLabel2.TabIndex = 43;
+            crownLabel2.Text = "Roles disponibles";
             // 
             // Menu_GestionRol
             // 
@@ -392,6 +469,9 @@
             Controls.Add(crownLabel3);
             Controls.Add(crownLabel2);
             Controls.Add(crownLabel1);
+            Controls.Add(poisonDataGridView3);
+            Controls.Add(radioButton2);
+            Controls.Add(radioButton1);
             Controls.Add(skyButton11);
             Controls.Add(skyButton10);
             Controls.Add(poisonDataGridView2);
@@ -405,6 +485,7 @@
             Load += Menu_GestionRol_Load;
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)poisonDataGridView3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -419,8 +500,11 @@
         private ReaLTaiizor.Controls.PoisonDataGridView poisonDataGridView2;
         private ReaLTaiizor.Controls.SkyButton skyButton10;
         private ReaLTaiizor.Controls.SkyButton skyButton11;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
+        private ReaLTaiizor.Controls.PoisonDataGridView poisonDataGridView3;
         private ReaLTaiizor.Controls.CrownLabel crownLabel1;
-        private ReaLTaiizor.Controls.CrownLabel crownLabel2;
         private ReaLTaiizor.Controls.CrownLabel crownLabel3;
+        private ReaLTaiizor.Controls.CrownLabel crownLabel2;
     }
 }

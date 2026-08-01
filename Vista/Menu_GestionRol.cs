@@ -39,9 +39,33 @@ namespace Vista
                 }
             }
             usuarioBll = new BLL_Usuario();
+            patenteBll = new BLL_Patente();
             rolBll = new BLL_Rol();
             Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
+            //mostrar roles y patentes disponibles en el datagridview2
             Mostrar(poisonDataGridView2, rolBll.ObtenerTodosLosRoles());
+            Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
+            radioButton1.Checked = true;
+
+            if (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual != null)
+            {
+                List<BE_Rol> patentes = (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual as BE_Familia).RetornarComponentesPlanos();
+                ValidarPermisosUI(this.Controls, patentes);
+            }
+        }
+        private void ValidarPermisosUI(Control.ControlCollection controles, List<BE_Rol> patentesUsuario)
+        {
+            foreach (Control c in controles)
+            {
+                if (c.Tag != null && !string.IsNullOrEmpty(c.Tag.ToString()))
+                {
+                    string patenteRequerida = c.Tag.ToString();
+                    bool tieneAcceso = patentesUsuario.Any(p => p.Titulo == patenteRequerida);
+                    c.Visible = tieneAcceso;
+                }
+                if (c.Controls.Count > 0)
+                    ValidarPermisosUI(c.Controls, patentesUsuario);
+            }
         }
         private void Mostrar(PoisonDataGridView pDv, object datos)
         {
@@ -152,11 +176,22 @@ namespace Vista
             {
                 BE_Usuario usuario = new BE_Usuario();
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
                 BE_Rol rol = new BE_Familia();
                 rol.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
                 if (usuario != null && rol != null)
                 {
-                    rolBll.Asignar(usuario, rol);
+                    if(radioButton1.Checked)
+                    {
+                        rolBll.Asignar(usuario, rol);
+                    }
+                    else if(radioButton2.Checked)
+                    {
+                        //si el usuario ya tiene rol asignado, se le puede agregar patentes 
+                        BE_Patente patente = new BE_Patente();
+                        patente.Id_rol = poisonDataGridView3.SelectedRows[0].Cells[0].Value.ToString();
+                        patenteBll.AsignarPatenteARol(patente,rol);
+                    }
                 }
                 //BE_Usuario usuario = new BE_Usuario();
                 //usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
@@ -210,6 +245,18 @@ namespace Vista
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            //Mostrar(poisonDataGridView2, rolBll.ObtenerTodosLosRoles());
+            //Mostrar(poisonDataGridView3, null);
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            //Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
+            //Mostrar(poisonDataGridView2, null);
         }
     }
 }

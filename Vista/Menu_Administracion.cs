@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE;
+using SERVICIO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,7 +59,25 @@ namespace Vista
 
         private void Menu_Administracion_Load(object sender, EventArgs e)
         {
-
+            if (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual != null)
+            {
+                List<BE_Rol> patentes = (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual as BE_Familia).RetornarComponentesPlanos();
+                ValidarPermisosUI(this.Controls, patentes);
+            }
+        }
+        private void ValidarPermisosUI(Control.ControlCollection controles, List<BE_Rol> patentesUsuario)
+        {
+            foreach (Control c in controles)
+            {
+                if (c.Tag != null && !string.IsNullOrEmpty(c.Tag.ToString()))
+                {
+                    string patenteRequerida = c.Tag.ToString();
+                    bool tieneAcceso = patentesUsuario.Any(p => p.Titulo == patenteRequerida);
+                    c.Visible = tieneAcceso;
+                }
+                if (c.Controls.Count > 0)
+                    ValidarPermisosUI(c.Controls, patentesUsuario);
+            }
         }
     }
 }

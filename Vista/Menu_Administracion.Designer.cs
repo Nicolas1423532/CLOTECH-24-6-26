@@ -74,7 +74,7 @@
             skyButton1.Size = new Size(198, 55);
             skyButton1.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton1.TabIndex = 3;
-            skyButton1.Tag = "MODULO_ADMIN";
+            skyButton1.Tag = "MODULO_GESTION_USUARIO";
             skyButton1.Text = "GESTION DE USUARIO";
             skyButton1.Click += skyButton1_Click;
             // 
@@ -112,7 +112,7 @@
             skyButton2.Size = new Size(198, 55);
             skyButton2.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton2.TabIndex = 4;
-            skyButton2.Tag = "MODULO_ADMIN";
+            skyButton2.Tag = "MODULO_GESTION_ROL";
             skyButton2.Text = "GESTION DE ROL";
             skyButton2.Click += skyButton2_Click;
             // 
@@ -209,7 +209,7 @@
             skyButton4.Size = new Size(198, 55);
             skyButton4.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton4.TabIndex = 12;
-            skyButton4.Tag = "MODULO_ADMIN";
+            skyButton4.Tag = "MODULO_BITACORA";
             skyButton4.Text = "AUDITAR BITACORA";
             skyButton4.Click += skyButton4_Click;
             // 
@@ -247,7 +247,7 @@
             skyButton5.Size = new Size(198, 55);
             skyButton5.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton5.TabIndex = 13;
-            skyButton5.Tag = "MODULO_ADMIN";
+            skyButton5.Tag = "MODULO_GESTION_PATENTE";
             skyButton5.Text = "GESTION DE PATENTE";
             skyButton5.Click += skyButton5_Click;
             // 
@@ -285,7 +285,7 @@
             skyButton6.Size = new Size(198, 55);
             skyButton6.SmoothingType = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             skyButton6.TabIndex = 14;
-            skyButton6.Tag = "MODULO_ADMIN";
+            skyButton6.Tag = "MODULO_RESPALDO";
             skyButton6.Text = "GESTION DE RESPALDO";
             skyButton6.Click += skyButton6_Click;
             // 

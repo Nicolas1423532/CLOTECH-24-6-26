@@ -1,4 +1,8 @@
-﻿using ReaLTaiizor.Controls;
+﻿using BE;
+using BLL;
+using Microsoft.VisualBasic;
+using ReaLTaiizor.Controls;
+using SERVICIO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,9 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BLL;
-using BE;
-using Microsoft.VisualBasic;
 namespace Vista
 {
     public partial class Menu_GestionUsuario : Form
@@ -34,6 +35,26 @@ namespace Vista
             usuarioBll = new BLL_Usuario();
             Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             Mostrar(poisonDataGridView2, usuarioBll.ObtenerTodosLosUsuariosDesactivos());
+
+            if (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual != null)
+            {
+                List<BE_Rol> patentes = (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual as BE_Familia).RetornarComponentesPlanos();
+                ValidarPermisosUI(this.Controls, patentes);
+            }
+        }
+        private void ValidarPermisosUI(Control.ControlCollection controles, List<BE_Rol> patentesUsuario)
+        {
+            foreach (Control c in controles)
+            {
+                if (c.Tag != null && !string.IsNullOrEmpty(c.Tag.ToString()))
+                {
+                    string patenteRequerida = c.Tag.ToString();
+                    bool tieneAcceso = patentesUsuario.Any(p => p.Titulo == patenteRequerida);
+                    c.Visible = tieneAcceso;
+                }
+                if (c.Controls.Count > 0)
+                    ValidarPermisosUI(c.Controls, patentesUsuario);
+            }
         }
         private void Mostrar(PoisonDataGridView pDv, object datos)
         {
