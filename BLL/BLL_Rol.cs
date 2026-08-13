@@ -13,22 +13,41 @@ namespace BLL
     public class BLL_Rol
     {
         ORM_Rol ormRol;
+        ORM_Familia ormFamilia;
+        ORM_Patente ormPatente;
         ORM_Bitacora ormBitacora;
         BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
         public BLL_Rol()
         {
             ormRol = new ORM_Rol();
+            ormFamilia = new ORM_Familia();
+            ormPatente = new ORM_Patente();
             ormBitacora = new ORM_Bitacora();
         }
         public void AgregarRol(BE_Rol rol)
         {
             ValidarDatosDelRol(rol);
             ValidarIDRol(rol);
+            if(rol.RetornarComponentes().Count == 0)
+            {
+                throw new Exception("El rol debe contener al menos un componente (familia o patente).");
+            }
             if (ormRol.TotalAdministradoresActivos() <= 0)
             {
                 throw new Exception("Operación inválida: El sistema requiere al menos un rol de Administrador configurado.");
             }
+
             ormRol.AgregarRol(rol);
+            //Si seleccione una familia antes de crear el rol, asigno la familia al rol creado
+            if (rol.RetornarComponentes().FirstOrDefault() is BE_Familia)
+            {
+                ormFamilia.AsignarFamilia(rol, rol.RetornarComponentes().FirstOrDefault() as BE_Familia);
+            }
+            //Si seleccione una patente antes de crear el rol, asigno la patente al rol creado
+            else if (rol.RetornarComponentes().FirstOrDefault() is BE_Patente)
+            {
+                ormPatente.AsignarPatenteARol(rol.RetornarComponentes().FirstOrDefault() as BE_Patente, rol);
+            }
             var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
             ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Rol", "Gestion de Rol", 1, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
         }
@@ -54,16 +73,17 @@ namespace BLL
             {
                 List<BE_Rol> todosLosRoles = ormRol.ObtenerTodosLosRoles();
                 BE_Rol rolExistente = todosLosRoles.Find(r => r.Id_rol == rol.Id_rol);
-                if (rolExistente.Titulo.ToUpper().Contains("ADMINISTRADOR"))
+                //if (rolExistente.Titulo.ToUpper().Contains("ADMINISTRADOR"))
+                //{
+                //    int adminsActivos = todosLosRoles.Count(r => r.Titulo.ToUpper().Contains("ADMINISTRADOR"));
+                //    if (adminsActivos <= 1)
+                //    {
+                //        throw new Exception("No se puede modificar el rol Administrador si en el sistema.");
+                //    }
+                //}
+                if(rolExistente == null)
                 {
-                    if (rolExistente.Estado == true && rol.Estado == false)
-                    {
-                        int adminsActivos = todosLosRoles.Count(r => r.Titulo.ToUpper().Contains("ADMINISTRADOR"));
-                        if (adminsActivos <= 1)
-                        {
-                            throw new Exception("No se puede desactivar el rol Administrador porque es el único rol de gestión activo en el sistema.");
-                        }
-                    }
+                    throw new Exception("El rol que intenta modificar no existe en el sistema.");
                 }
                 ValidarDatosDelRol(rol);
                 ormRol.ModificarRol(rol);
@@ -104,6 +124,7 @@ namespace BLL
         {
             return ormRol.ObtenerCantidadRolesFamiliasAsignadas(idUsuario);
         }
+        //cambiar nombre del metodo a: ObtenerRolRaizDelUsuario
         public List<BE_Rol> ObtenerFamiliaDelUsuario(string idUsuario)
         {
             List<BE_Rol> auxFamilias = new List<BE_Rol>();
@@ -113,7 +134,7 @@ namespace BLL
         }
         public List<object> ObtenerTodosLosRoles()
         {
-            return (from r in ormRol.ObtenerTodosLosRoles() select new { ID = r.Id_rol, TITULO = r.Titulo, ESTADO = r.Estado}).ToList<object>();
+            return (from r in ormRol.ObtenerTodosLosRoles() select new { ID = r.Id_rol, TITULO = r.Titulo}).ToList<object>();
         }
         private void ValidarDatosDelRol(BE_Rol rol)
         {

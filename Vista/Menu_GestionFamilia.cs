@@ -34,10 +34,29 @@ namespace Vista
         {
             try
             {
+                BE_Patente patente;
+                BE_Familia subFamilia;
+                var idSubFamilia = "";
+                var tituloSubFamilia = "";
+                var idPatente = "";
+                var tituloPatente = "";
                 BE_Familia familia = new BE_Familia();
-                familia.Id_rol = Interaction.InputBox("Id familia: ");
-                familia.Titulo = Interaction.InputBox("Titulo familia: ");
-                familia.Estado = MessageBox.Show("Estado del rol", "", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
+                if (radioButton1.Checked)
+                {
+                    idSubFamilia = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                    tituloSubFamilia = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+                    subFamilia = new BE_Familia(); subFamilia.Id_rol = idSubFamilia; subFamilia.Titulo = tituloSubFamilia;
+                    familia.AgregarComponente(subFamilia);
+                }
+                if (radioButton2.Checked) 
+                { 
+                    idPatente = poisonDataGridView3.SelectedRows[0].Cells[0].Value.ToString();
+                    tituloPatente = poisonDataGridView3.SelectedRows[0].Cells[1].Value.ToString();
+                    patente = new BE_Patente(); patente.Id_rol = idPatente; patente.Titulo = tituloPatente;
+                    familia.AgregarComponente(patente);
+                }
+                familia.Id_rol = textBox1.Text;
+                familia.Titulo = textBox2.Text;
                 familiaBll.AgregarFamilia(familia);
                 Mostrar(poisonDataGridView2, familiaBll.ObtenerTodasLasFamilias());
             }
@@ -213,7 +232,7 @@ namespace Vista
             {
                 BE_Familia familia = new BE_Familia();
                 familia.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
-                familia.Titulo = Interaction.InputBox("Titulo familia: ");
+                familia.Titulo = textBox2.Text;
                 familiaBll.ModificarFamilia(familia);
             }
             catch (Exception ex)
@@ -232,6 +251,19 @@ namespace Vista
         {
             Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
             Mostrar(poisonDataGridView2, null);
+        }
+
+        private void poisonDataGridView2_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                textBox1.Text = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                textBox2.Text = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+            }
+            catch (Exception ex)
+            {   
+
+            }
         }
     }
 }

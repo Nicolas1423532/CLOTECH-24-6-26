@@ -12,23 +12,33 @@ namespace BLL
     public class BLL_Familia
     {
         ORM_Familia ormFamilia;
-        ORM_Usuario ormUsuario;
+        ORM_Patente ormPatente;
         ORM_Bitacora ormBitacora;
         BE_Usuario usuarioActual = SERVICIO_SesionUsuario.ObtenerInstancia().UsuarioActual;
         public BLL_Familia()
         {
             ormFamilia = new ORM_Familia();
-            ormUsuario = new ORM_Usuario();
+            ormPatente = new ORM_Patente();
             ormBitacora = new ORM_Bitacora();
         }
         public void AgregarFamilia(BE_Familia familia)
         {
             ValidarDatosDeFamilia(familia);
-            ValidarIDFamilia(familia);
+            ////ValidarIDFamilia(familia);
+            if(familia.RetornarComponentes().Count == 0) { throw new Exception("La familia debe tener al menos un componente asignado."); }
+            
             if (familia != null)
             {
                 var idBitacora = SERVICIO_Criptografia.GenerarIDBitacora();
                 ormFamilia.AgregarFamilia(familia);
+                if(familia.RetornarComponentes().FirstOrDefault() is BE_Familia)
+                {
+                    ormFamilia.AsignarSubfamilia(familia, familia.RetornarComponentes().FirstOrDefault() as BE_Familia);
+                }
+                else if( familia.RetornarComponentes().FirstOrDefault() is BE_Patente)
+                {
+                    ormPatente.AsignarPatenteAFamilia(familia.RetornarComponentes().FirstOrDefault() as BE_Patente,familia);
+                }
                 ormBitacora.AgregarBitacora(idBitacora, usuarioActual.Email, "Agregar Familia", "Gestion de Familia", 2, DateTime.Parse(DateTime.Now.ToShortDateString()), DateTime.Now.TimeOfDay);
             }
         }
@@ -135,7 +145,7 @@ namespace BLL
         }
         public List<object> ObtenerTodasLasFamilias()
         {
-            return (from f in ormFamilia.ObtenerTodasLasFamilias() select new { ID = f.Id_rol, Titulo =  f.Titulo, Estado = f.Estado }).ToList<object>();
+            return (from f in ormFamilia.ObtenerTodasLasFamilias() select new { ID = f.Id_rol, Titulo =  f.Titulo }).ToList<object>();
         }
         private void ValidarDatosDeFamilia(BE_Familia familia)
         {

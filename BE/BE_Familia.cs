@@ -8,14 +8,8 @@ namespace BE
 {
     public class BE_Familia : BE_Rol
     {
-        //string? id_familia;
-        //string? titulo;
-        //bool estado;
         List<BE_Rol> componentes = new List<BE_Rol>();
         List<BE_Rol> componentesAux;
-        //public string Id_familia { get => id_familia; set => id_familia = value; }
-        //public string Titulo { get => titulo; set => titulo = value; }
-        //public bool Estado { get => estado; set => estado = value; }
         public void AgregarComponente(BE_Rol componente)
         {
             BE_Rol? rol = componentes.Find(r => r.Id_rol == componente.Id_rol);
@@ -68,7 +62,6 @@ namespace BE
         {
             this.Id_rol = datos[0].ToString();
             this.Titulo = datos[1].ToString();
-            this.Estado = Convert.ToBoolean(datos[2]);
         }
     }
 }

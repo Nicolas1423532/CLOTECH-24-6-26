@@ -23,7 +23,7 @@ namespace ORM
             if (filaExistente == null)
             {
                 DataRow fila = dao.DtPatente.NewRow();
-                fila.ItemArray = new object[] { patente.Id_rol, patente.Titulo, patente.Estado };
+                fila.ItemArray = new object[] { patente.Id_rol, patente.Titulo };
                 dao.DtPatente.Rows.Add(fila);
                 ormDV.ActualizarDVH(dao.DtPatente);
                 ormDV.ActualizarDVV(dao.DtPatente,"Patente","Id_Patente");
@@ -37,7 +37,7 @@ namespace ORM
             int filaRelacionada = fila.GetChildRows(dao.RelPatenteAFamilia).Length;
             if (fila != null && filaRelacionada < 1)
             {
-                fila.ItemArray = new object[] { fila.Field<string>(0), patente.Titulo, patente.Estado };
+                fila.ItemArray = new object[] { fila.Field<string>(0), patente.Titulo };
                 ormDV.ActualizarDVH(dao.DtPatente);
                 ormDV.ActualizarDVV(dao.DtPatente, "Patente", "Id_Patente");
                 dao.GuardarCambios();
@@ -71,26 +71,26 @@ namespace ORM
         }
         public void AsignarPatenteARol(BE_Patente patente, BE_Rol rol)
         {
-            DataRow relacionExistente = dao.DtRolXPatente.Rows.Find(new object[] { patente.Id_rol, rol.Id_rol });
+            DataRow relacionExistente = dao.DtRolXPatente.Rows.Find(new object[] { rol.Id_rol, patente.Id_rol });
             if (relacionExistente != null)
             {
                 throw new Exception("La patente ya se encuentra asignada al Rol seleccionado.");
             }
             DataRow nuevaFila = dao.DtRolXPatente.NewRow();
-            nuevaFila.ItemArray = new object[] { patente.Id_rol, rol.Id_rol };
+            nuevaFila.ItemArray = new object[] { rol.Id_rol, patente.Id_rol };
             dao.DtRolXPatente.Rows.Add(nuevaFila);
             ormDV.ActualizarDVH(dao.DtRolXPatente);
-            ormDV.ActualizarDVV(dao.DtRolXPatente, "RolXPatente", new string[] { "Id_Patente", "Id_Rol" });
+            ormDV.ActualizarDVV(dao.DtRolXPatente, "RolXPatente", new string[] { "Id_Rol","Id_Patente" });
             dao.GuardarCambios();
         }
         public void DesasignarPatenteARol(BE_Patente patente, BE_Rol rol)
         {
-            DataRow filaRolXPatente = dao.DtRolXPatente.Rows.Find(new object[] { patente.Id_rol, rol.Id_rol });
+            DataRow filaRolXPatente = dao.DtRolXPatente.Rows.Find(new object[] { rol.Id_rol, patente.Id_rol });
             if (filaRolXPatente != null)
             {
                 filaRolXPatente.Delete();
                 ormDV.ActualizarDVH(dao.DtRolXPatente);
-                ormDV.ActualizarDVV(dao.DtRolXPatente, "RolXPatente", new string[] { "Id_Patente", "Id_Rol" });
+                ormDV.ActualizarDVV(dao.DtRolXPatente, "RolXPatente", new string[] {"Id_Rol", "Id_Patente" });
                 dao.GuardarCambios();
             }
         }

@@ -20,7 +20,7 @@ namespace ORM
         public void AgregarRol(BE_Rol rol)
         {
             DataRow filaRolNueva = dao.DtRol.NewRow();
-            filaRolNueva.ItemArray = new object[] { rol.Id_rol, rol.Titulo, rol.Estado };
+            filaRolNueva.ItemArray = new object[] { rol.Id_rol, rol.Titulo };
             dao.DtRol.Rows.Add(filaRolNueva);
             ormDV.ActualizarDVH(dao.DtRol);
             ormDV.ActualizarDVV(dao.DtRol,"Rol","Id_Rol");
@@ -31,20 +31,24 @@ namespace ORM
         public void ModificarRol(BE_Rol rol)
         {
             DataRow fila = dao.DtRol.Rows.Find(rol.Id_rol);
-            int filasUsuarioXRol = fila.GetChildRows(dao.RelRol_A_Usuario).Length;
-            int filasRolXFamilia = fila.GetChildRows(dao.RelRolAFamilia).Length;
-            int combinacion = filasUsuarioXRol + filasRolXFamilia;
-            if (fila != null && combinacion < 1)
-            {
-                fila.ItemArray = new object[] { fila.Field<string>(0), rol.Titulo, rol.Estado };
-                ormDV.ActualizarDVH(dao.DtRol);
-                ormDV.ActualizarDVV(dao.DtRol, "Rol", "Id_Rol");
-                dao.GuardarCambios();
-            }
-            else
-            {
-                throw new Exception("El rol que intenta modificar no existe en la base de datos o el rol esta asignado a un usuario");
-            }
+            //int filasUsuarioXRol = fila.GetChildRows(dao.RelRol_A_Usuario).Length;
+            //int filasRolXFamilia = fila.GetChildRows(dao.RelRolAFamilia).Length;
+            //int combinacion = filasUsuarioXRol + filasRolXFamilia;
+            //if (fila != null && combinacion < 1)
+            //{
+            //    fila.ItemArray = new object[] { fila.Field<string>(0), rol.Titulo };
+            //    ormDV.ActualizarDVH(dao.DtRol);
+            //    ormDV.ActualizarDVV(dao.DtRol, "Rol", "Id_Rol");
+            //    dao.GuardarCambios();
+            //}
+            fila.ItemArray = new object[] { fila.Field<string>(0), rol.Titulo };
+            ormDV.ActualizarDVH(dao.DtRol);
+            ormDV.ActualizarDVV(dao.DtRol, "Rol", "Id_Rol");
+            dao.GuardarCambios();
+            //else
+            //{
+            //    throw new Exception("El rol que intenta modificar no existe en la base de datos o el rol esta asignado a un usuario");
+            //}
         }
         public void BorrarRol(BE_Rol rol)
         {
@@ -60,7 +64,7 @@ namespace ORM
             }
             else
             {
-                throw new Exception("El rol que intenta eliminar no existe en la base de datos o el rol contiene familias");
+                throw new Exception("No puede borrar el rol si esta asignado a varios usuarios");
             }
         }
         //public bool PoseeUsuariosAsignados(string idRol)
@@ -127,10 +131,7 @@ namespace ORM
             List<BE_Rol> listaRoles = new List<BE_Rol>();
             foreach(DataRow dataRow in dao.DtRol.Rows)
             {
-                if (dataRow.Field<bool>("Estado"))
-                {
-                    listaRoles.Add(new BE_Familia(dataRow.ItemArray));
-                }
+                listaRoles.Add(new BE_Familia(dataRow.ItemArray));               
             }
             return listaRoles;
         }
@@ -178,9 +179,9 @@ namespace ORM
                             {
                                 foreach (DataRow filaRolXPatente in filasRolXPatente)
                                 {
-                                    string _idRol = filaRolXPatente.Field<string>("Id_Rol");
+                                    //string _idRol = filaRolXPatente.Field<string>("Id_Rol");
                                     string idPatente = filaRolXPatente.Field<string>("Id_Patente");
-                                    DataRow filaPatente = dao.DtPatente.Rows.Find(new object[] {_idRol,idPatente});
+                                    DataRow filaPatente = dao.DtPatente.Rows.Find(new object[] {idPatente});
                                     if (filaPatente != null)
                                     {
                                         BE_Patente patente = new BE_Patente(filaPatente.ItemArray);

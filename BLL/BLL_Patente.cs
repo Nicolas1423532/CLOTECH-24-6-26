@@ -57,9 +57,16 @@ namespace BLL
             {
                 if (patente.Id_rol[0] != rol.Id_rol[0])
                 {
-                    throw new Exception("No se puede asignar los permisos superiores a un usuario con rol jerarquico inferior");
+                    throw new Exception("No se pueden asignar permisos que no correspondan al rol del usuario");
                 }
                 ormPatente.AsignarPatenteARol(patente, rol);
+            }
+        }
+        public void DesasignarPatenteARol(BE_Patente patente, BE_Rol rol)
+        {
+            if (patente != null && rol != null)
+            {
+                ormPatente.DesasignarPatenteARol(patente, rol);
             }
         }
         public void DesasignarPatenteAFamilia(BE_Patente patente, BE_Familia familia)
@@ -71,7 +78,7 @@ namespace BLL
         }
         public List<object> ObtenerTodasLasPatentes()
         {
-            return (from p in ormPatente.ObtenerTodasLasPatentes() select new { ID = p.Id_rol, TITULO = p.Titulo, ESTADO = p.Estado}).ToList<object>();
+            return (from p in ormPatente.ObtenerTodasLasPatentes() select new { ID = p.Id_rol, TITULO = p.Titulo}).ToList<object>();
         }
         private void ValidarDatosDePatente(BE_Patente patente)
         {

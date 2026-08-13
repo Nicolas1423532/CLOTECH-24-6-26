@@ -41,11 +41,12 @@ namespace Vista
             usuarioBll = new BLL_Usuario();
             patenteBll = new BLL_Patente();
             rolBll = new BLL_Rol();
+            familiaBll = new BLL_Familia();
             Mostrar(poisonDataGridView1, usuarioBll.ObtenerTodosLosUsuariosActivos());
             //mostrar roles y patentes disponibles en el datagridview2
             Mostrar(poisonDataGridView2, rolBll.ObtenerTodosLosRoles());
             Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
-            radioButton1.Checked = true;
+            Mostrar(poisonDataGridView4, familiaBll.ObtenerTodasLasFamilias());
 
             if (SERVICIO_SesionUsuario.ObtenerInstancia().FamiliaActual != null)
             {
@@ -126,10 +127,29 @@ namespace Vista
         {
             try
             {
+                //AGREGAR ROL
+
+                var idFamilia = "";
+                var idFamiliaTitulo = "";
+                var idPatente = "";
+                var idPatenteTitulo = "";
                 BE_Rol rol = new BE_Familia();
-                rol.Id_rol = Interaction.InputBox("Id del rol: ");
-                rol.Titulo = Interaction.InputBox("Titulo del rol: ");
-                rol.Estado = MessageBox.Show("Estado del rol", "", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
+                rol.Id_rol = textBox1.Text;
+                rol.Titulo = textBox2.Text;
+                if (radioButton3.Checked) //Si familia esta seleccionado
+                {
+                    idFamilia = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                    idFamiliaTitulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+                    BE_Rol familia = new BE_Familia() { Id_rol = idFamilia, Titulo = idFamiliaTitulo };
+                    (rol as BE_Familia).AgregarComponente(familia);
+                }
+                else if (radioButton4.Checked) //Si patente esta seleccionado
+                {
+                    idPatente = poisonDataGridView3.SelectedRows[0].Cells[0].Value.ToString();
+                    idPatenteTitulo = poisonDataGridView3.SelectedRows[0].Cells[1].Value.ToString();
+                    BE_Patente patente = new BE_Patente() { Id_rol = idPatente, Titulo = idPatenteTitulo };
+                    (rol as BE_Familia).AgregarComponente(patente);
+                }
 
                 //BE_Usuario usuario = poisonDataGridView1.SelectedRows[0].DataBoundItem as BE_Usuario;
                 rolBll.AgregarRol(rol);
@@ -179,18 +199,19 @@ namespace Vista
                 usuario.Rol = poisonDataGridView1.SelectedRows[0].Cells[6].Value.ToString();
                 BE_Rol rol = new BE_Familia();
                 rol.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                rol.Titulo = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
                 if (usuario != null && rol != null)
                 {
-                    if(radioButton1.Checked)
+                    if (radioButton1.Checked)
                     {
                         rolBll.Asignar(usuario, rol);
                     }
-                    else if(radioButton2.Checked)
+                    else if (radioButton2.Checked)
                     {
                         //si el usuario ya tiene rol asignado, se le puede agregar patentes 
                         BE_Patente patente = new BE_Patente();
                         patente.Id_rol = poisonDataGridView3.SelectedRows[0].Cells[0].Value.ToString();
-                        patenteBll.AsignarPatenteARol(patente,rol);
+                        patenteBll.AsignarPatenteARol(patente, rol);
                     }
                 }
                 //BE_Usuario usuario = new BE_Usuario();
@@ -216,7 +237,20 @@ namespace Vista
                 usuario.Id_usuario = poisonDataGridView1.SelectedRows[0].Cells[0].Value.ToString();
                 if (foreverTreeView1.SelectedNode.Text == "") { throw new Exception("El treeview no tiene roles, familia o patentes para mostrar"); }
                 BE_Rol rol = foreverTreeView1.SelectedNode.Tag as BE_Rol;
-                rolBll.Desasignar(usuario, rol);
+                if (radioButton1.Checked)
+                {
+                    rolBll.Desasignar(usuario, rol);
+
+                }
+                else if (radioButton2.Checked)
+                {
+                    BE_Patente patente = foreverTreeView1.SelectedNode.Tag as BE_Patente;
+                    if (patente != null)
+                    {
+                        patenteBll.DesasignarPatenteARol(patente, rol);
+                    }
+                }
+
                 LlenarTreeViewPermisos(usuario.Id_usuario);
                 //BE_Rol rolRaiz = foreverTreeView1.SelectedNode.Tag as BE_Rol;
                 //if (rolRaiz != null)
@@ -236,8 +270,7 @@ namespace Vista
             {
                 BE_Rol rol = new BE_Familia();
                 rol.Id_rol = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
-                rol.Titulo = Interaction.InputBox("Titulo del rol: ");
-                rol.Estado = MessageBox.Show("Estado del rol", "", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
+                rol.Titulo = textBox2.Text;
                 rolBll.ModificarRol(rol);
                 Mostrar(poisonDataGridView2, rolBll.ObtenerTodosLosRoles());
             }
@@ -256,7 +289,32 @@ namespace Vista
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             //Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
-            //Mostrar(poisonDataGridView2, null);
+            //Mostrar(poisonDataGridView4, null);
+        }
+
+        private void poisonDataGridView2_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                textBox1.Text = poisonDataGridView2.SelectedRows[0].Cells[0].Value.ToString();
+                textBox2.Text = poisonDataGridView2.SelectedRows[0].Cells[1].Value.ToString();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            Mostrar(poisonDataGridView4, familiaBll.ObtenerTodasLasFamilias());
+            Mostrar(poisonDataGridView3, null);
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            Mostrar(poisonDataGridView3, patenteBll.ObtenerTodasLasPatentes());
+            Mostrar(poisonDataGridView4, null);
         }
     }
 }

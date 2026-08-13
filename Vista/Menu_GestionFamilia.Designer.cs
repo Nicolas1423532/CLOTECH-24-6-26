@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle37 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle38 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle39 = new DataGridViewCellStyle();
-            TreeNode treeNode13 = new TreeNode("Patente");
-            TreeNode treeNode14 = new TreeNode("Familia", new TreeNode[] { treeNode13 });
-            TreeNode treeNode15 = new TreeNode("Rol", new TreeNode[] { treeNode14 });
-            DataGridViewCellStyle dataGridViewCellStyle40 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle41 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle42 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle43 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle44 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle45 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            TreeNode treeNode1 = new TreeNode("Patente");
+            TreeNode treeNode2 = new TreeNode("Familia", new TreeNode[] { treeNode1 });
+            TreeNode treeNode3 = new TreeNode("Rol", new TreeNode[] { treeNode2 });
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
             skyButton4 = new ReaLTaiizor.Controls.SkyButton();
             skyButton5 = new ReaLTaiizor.Controls.SkyButton();
             skyButton6 = new ReaLTaiizor.Controls.SkyButton();
@@ -54,6 +54,10 @@
             radioButton2 = new RadioButton();
             crownLabel2 = new ReaLTaiizor.Controls.CrownLabel();
             crownLabel3 = new ReaLTaiizor.Controls.CrownLabel();
+            metroLabel2 = new ReaLTaiizor.Controls.MetroLabel();
+            metroLabel1 = new ReaLTaiizor.Controls.MetroLabel();
+            textBox2 = new TextBox();
+            textBox1 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)poisonDataGridView3).BeginInit();
@@ -80,7 +84,7 @@
             skyButton4.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton4.HoverForeColor = Color.White;
             skyButton4.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton4.Location = new Point(818, 334);
+            skyButton4.Location = new Point(1063, 335);
             skyButton4.Name = "skyButton4";
             skyButton4.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton4.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -118,7 +122,7 @@
             skyButton5.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton5.HoverForeColor = Color.White;
             skyButton5.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton5.Location = new Point(818, 500);
+            skyButton5.Location = new Point(1063, 501);
             skyButton5.Name = "skyButton5";
             skyButton5.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton5.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -157,7 +161,7 @@
             skyButton6.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton6.HoverForeColor = Color.White;
             skyButton6.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton6.Location = new Point(818, 419);
+            skyButton6.Location = new Point(1063, 420);
             skyButton6.Name = "skyButton6";
             skyButton6.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton6.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -183,23 +187,23 @@
             poisonDataGridView1.BorderStyle = BorderStyle.None;
             poisonDataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.None;
             poisonDataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle37.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle37.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle37.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle37.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle37.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle37.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle37.WrapMode = DataGridViewTriState.True;
-            poisonDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle37;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle1.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle1.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             poisonDataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle38.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle38.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle38.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle38.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle38.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle38.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle38.WrapMode = DataGridViewTriState.False;
-            poisonDataGridView1.DefaultCellStyle = dataGridViewCellStyle38;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle2.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            poisonDataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             poisonDataGridView1.EnableHeadersVisualStyles = false;
             poisonDataGridView1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView1.GridColor = Color.FromArgb(255, 255, 255);
@@ -207,17 +211,17 @@
             poisonDataGridView1.Name = "poisonDataGridView1";
             poisonDataGridView1.ReadOnly = true;
             poisonDataGridView1.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle39.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle39.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle39.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle39.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle39.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle39.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle39.WrapMode = DataGridViewTriState.True;
-            poisonDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle39;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle3.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle3.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             poisonDataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             poisonDataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            poisonDataGridView1.Size = new Size(476, 214);
+            poisonDataGridView1.Size = new Size(691, 214);
             poisonDataGridView1.TabIndex = 20;
             poisonDataGridView1.SelectionChanged += poisonDataGridView1_SelectionChanged;
             // 
@@ -229,13 +233,13 @@
             foreverTreeView1.LineColor = Color.FromArgb(25, 27, 29);
             foreverTreeView1.Location = new Point(54, 65);
             foreverTreeView1.Name = "foreverTreeView1";
-            treeNode13.Name = "Nodo2";
-            treeNode13.Text = "Patente";
-            treeNode14.Name = "Nodo1";
-            treeNode14.Text = "Familia";
-            treeNode15.Name = "Nodo0";
-            treeNode15.Text = "Rol";
-            foreverTreeView1.Nodes.AddRange(new TreeNode[] { treeNode15 });
+            treeNode1.Name = "Nodo2";
+            treeNode1.Text = "Patente";
+            treeNode2.Name = "Nodo1";
+            treeNode2.Text = "Familia";
+            treeNode3.Name = "Nodo0";
+            treeNode3.Text = "Rol";
+            foreverTreeView1.Nodes.AddRange(new TreeNode[] { treeNode3 });
             foreverTreeView1.Size = new Size(238, 214);
             foreverTreeView1.TabIndex = 19;
             // 
@@ -260,7 +264,7 @@
             skyButton11.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton11.HoverForeColor = Color.White;
             skyButton11.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton11.Location = new Point(818, 142);
+            skyButton11.Location = new Point(1063, 178);
             skyButton11.Name = "skyButton11";
             skyButton11.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton11.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -298,7 +302,7 @@
             skyButton10.HoverBorderColorD = Color.FromArgb(200, 25, 73, 109);
             skyButton10.HoverForeColor = Color.White;
             skyButton10.HoverShadowForeColor = Color.FromArgb(200, 0, 0, 0);
-            skyButton10.Location = new Point(818, 65);
+            skyButton10.Location = new Point(1063, 101);
             skyButton10.Name = "skyButton10";
             skyButton10.NormalBGColorA = Color.FromArgb(245, 245, 245);
             skyButton10.NormalBGColorB = Color.FromArgb(230, 230, 230);
@@ -324,23 +328,23 @@
             poisonDataGridView2.BorderStyle = BorderStyle.None;
             poisonDataGridView2.CellBorderStyle = DataGridViewCellBorderStyle.None;
             poisonDataGridView2.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle40.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle40.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle40.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle40.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle40.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle40.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle40.WrapMode = DataGridViewTriState.True;
-            poisonDataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle40;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle4.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle4.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             poisonDataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle41.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle41.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle41.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle41.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle41.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle41.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle41.WrapMode = DataGridViewTriState.False;
-            poisonDataGridView2.DefaultCellStyle = dataGridViewCellStyle41;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle5.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            poisonDataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
             poisonDataGridView2.EnableHeadersVisualStyles = false;
             poisonDataGridView2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView2.GridColor = Color.FromArgb(255, 255, 255);
@@ -348,18 +352,19 @@
             poisonDataGridView2.Name = "poisonDataGridView2";
             poisonDataGridView2.ReadOnly = true;
             poisonDataGridView2.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle42.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle42.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle42.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle42.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle42.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle42.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle42.WrapMode = DataGridViewTriState.True;
-            poisonDataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle42;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle6.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle6.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             poisonDataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             poisonDataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            poisonDataGridView2.Size = new Size(238, 214);
+            poisonDataGridView2.Size = new Size(238, 266);
             poisonDataGridView2.TabIndex = 23;
+            poisonDataGridView2.RowEnter += poisonDataGridView2_RowEnter;
             // 
             // crownLabel1
             // 
@@ -380,23 +385,23 @@
             poisonDataGridView3.BorderStyle = BorderStyle.None;
             poisonDataGridView3.CellBorderStyle = DataGridViewCellBorderStyle.None;
             poisonDataGridView3.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle43.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle43.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle43.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle43.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle43.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle43.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle43.WrapMode = DataGridViewTriState.True;
-            poisonDataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle43;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle7.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle7.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle7.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle7.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             poisonDataGridView3.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle44.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle44.BackColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle44.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle44.ForeColor = Color.FromArgb(136, 136, 136);
-            dataGridViewCellStyle44.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle44.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle44.WrapMode = DataGridViewTriState.False;
-            poisonDataGridView3.DefaultCellStyle = dataGridViewCellStyle44;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle8.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle8.ForeColor = Color.FromArgb(136, 136, 136);
+            dataGridViewCellStyle8.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle8.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            poisonDataGridView3.DefaultCellStyle = dataGridViewCellStyle8;
             poisonDataGridView3.EnableHeadersVisualStyles = false;
             poisonDataGridView3.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
             poisonDataGridView3.GridColor = Color.FromArgb(255, 255, 255);
@@ -404,23 +409,23 @@
             poisonDataGridView3.Name = "poisonDataGridView3";
             poisonDataGridView3.ReadOnly = true;
             poisonDataGridView3.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle45.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle45.BackColor = Color.FromArgb(0, 174, 219);
-            dataGridViewCellStyle45.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
-            dataGridViewCellStyle45.ForeColor = Color.FromArgb(255, 255, 255);
-            dataGridViewCellStyle45.SelectionBackColor = Color.FromArgb(0, 198, 247);
-            dataGridViewCellStyle45.SelectionForeColor = Color.FromArgb(17, 17, 17);
-            dataGridViewCellStyle45.WrapMode = DataGridViewTriState.True;
-            poisonDataGridView3.RowHeadersDefaultCellStyle = dataGridViewCellStyle45;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(0, 174, 219);
+            dataGridViewCellStyle9.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Pixel);
+            dataGridViewCellStyle9.ForeColor = Color.FromArgb(255, 255, 255);
+            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(0, 198, 247);
+            dataGridViewCellStyle9.SelectionForeColor = Color.FromArgb(17, 17, 17);
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            poisonDataGridView3.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             poisonDataGridView3.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             poisonDataGridView3.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            poisonDataGridView3.Size = new Size(238, 214);
+            poisonDataGridView3.Size = new Size(262, 266);
             poisonDataGridView3.TabIndex = 35;
             // 
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.Location = new Point(602, 324);
+            radioButton1.Location = new Point(1290, 137);
             radioButton1.Name = "radioButton1";
             radioButton1.Size = new Size(63, 19);
             radioButton1.TabIndex = 37;
@@ -432,7 +437,7 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(602, 364);
+            radioButton2.Location = new Point(1290, 177);
             radioButton2.Name = "radioButton2";
             radioButton2.Size = new Size(65, 19);
             radioButton2.TabIndex = 38;
@@ -461,12 +466,58 @@
             crownLabel3.TabIndex = 40;
             crownLabel3.Text = "Patentes disponibles";
             // 
+            // metroLabel2
+            // 
+            metroLabel2.Font = new Font("Microsoft Sans Serif", 10F);
+            metroLabel2.IsDerivedStyle = true;
+            metroLabel2.Location = new Point(661, 384);
+            metroLabel2.Name = "metroLabel2";
+            metroLabel2.Size = new Size(58, 23);
+            metroLabel2.Style = ReaLTaiizor.Enum.Metro.Style.Light;
+            metroLabel2.StyleManager = null;
+            metroLabel2.TabIndex = 54;
+            metroLabel2.Text = "Titulo";
+            metroLabel2.ThemeAuthor = "Taiizor";
+            metroLabel2.ThemeName = "MetroLight";
+            // 
+            // metroLabel1
+            // 
+            metroLabel1.Font = new Font("Microsoft Sans Serif", 10F);
+            metroLabel1.IsDerivedStyle = true;
+            metroLabel1.Location = new Point(673, 335);
+            metroLabel1.Name = "metroLabel1";
+            metroLabel1.Size = new Size(46, 23);
+            metroLabel1.Style = ReaLTaiizor.Enum.Metro.Style.Light;
+            metroLabel1.StyleManager = null;
+            metroLabel1.TabIndex = 53;
+            metroLabel1.Text = "ID";
+            metroLabel1.ThemeAuthor = "Taiizor";
+            metroLabel1.ThemeName = "MetroLight";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(725, 384);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(184, 23);
+            textBox2.TabIndex = 52;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(725, 335);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(184, 23);
+            textBox1.TabIndex = 51;
+            // 
             // Menu_GestionFamilia
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.CadetBlue;
-            ClientSize = new Size(1098, 577);
+            ClientSize = new Size(1384, 661);
+            Controls.Add(metroLabel2);
+            Controls.Add(metroLabel1);
+            Controls.Add(textBox2);
+            Controls.Add(textBox1);
             Controls.Add(crownLabel3);
             Controls.Add(crownLabel2);
             Controls.Add(radioButton2);
@@ -507,5 +558,9 @@
         private RadioButton radioButton2;
         private ReaLTaiizor.Controls.CrownLabel crownLabel2;
         private ReaLTaiizor.Controls.CrownLabel crownLabel3;
+        private ReaLTaiizor.Controls.MetroLabel metroLabel2;
+        private ReaLTaiizor.Controls.MetroLabel metroLabel1;
+        private TextBox textBox2;
+        private TextBox textBox1;
     }
 }

@@ -159,7 +159,6 @@ namespace Vista
                 BE_Patente patente = new BE_Patente();
                 patente.Id_rol = Interaction.InputBox("Ingrese el id de la patente");
                 patente.Titulo = Interaction.InputBox("Ingrese el titulo de la patente");
-                patente.Estado = MessageBox.Show("Desea que la patente este activa?", "Estado de la patente", MessageBoxButtons.YesNo) == DialogResult.Yes ? true : false;
                 patenteBll.AgregarPatente(patente);
             }
             catch (Exception ex)

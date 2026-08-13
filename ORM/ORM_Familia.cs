@@ -24,7 +24,7 @@ namespace ORM
             if(filaExistente == null)
             {
                 DataRow fila = dao.DtFamilia.NewRow();
-                fila.ItemArray = new object[] { familia.Id_rol, familia.Titulo, familia.Estado };
+                fila.ItemArray = new object[] { familia.Id_rol, familia.Titulo };
                 dao.DtFamilia.Rows.Add(fila);
                 ormDV.ActualizarDVH(dao.DtFamilia);
                 ormDV.ActualizarDVV(dao.DtFamilia, "Familia","Id_Familia");
@@ -41,7 +41,7 @@ namespace ORM
             int combinacion = filasConectadasARol + filasConectadasASubfamilia + filasConectadasAPatente;
             if (fila != null && combinacion < 1)
             {
-                fila.ItemArray = new object[] { fila.Field<string>(0), familia.Titulo, familia.Estado};
+                fila.ItemArray = new object[] { fila.Field<string>(0), familia.Titulo};
                 ormDV.ActualizarDVH(dao.DtFamilia);
                 ormDV.ActualizarDVV(dao.DtFamilia, "Familia", "Id_Familia");
                 dao.GuardarCambios();
@@ -144,9 +144,7 @@ namespace ORM
             List<BE_Familia> lstFamilias = new List<BE_Familia>();
             foreach (DataRow fila in dao.DtFamilia.Rows)
             {
-               
                lstFamilias.Add(new BE_Familia(fila.ItemArray));
-
             }
             return lstFamilias;
         }
